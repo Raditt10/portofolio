@@ -361,7 +361,7 @@ const projectsData = [
     gambar: "kultilas.png",
     judul: "Kultilas",
     parag: "Kultilas is a web-based application designed to facilitate the management of student extracurricular activities in schools.",
-    tech: ["Vuejs", "MySQL"],
+    tech: ["Nextjs","Vuejs", "MySQL"],
     linkDemo : "#",
     linkCode : "https://github.com/Raditt10/Kultilas"
   },

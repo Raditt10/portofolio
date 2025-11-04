@@ -256,20 +256,91 @@ const Footer = () => {
             />
           </div>
 
-          <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 group-hover:border-purple-500/50 transition-all duration-300">
-            <img
-              src="/img/Monogram_RS.png"
-              className="w-24 sm:w-32 md:w-36 lg:w-[142px] hover:scale-110 transition-transform duration-300 filter drop-shadow-lg"
-              alt="LOGO RS"
-            />
-            <h3 className="text-white font-bold text-2xl sm:text-3xl md:text-4xl mt-2 sm:mt-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              RAFADITYA S
-            </h3>
-            <h4 className="text-cyan-300 font-medium text-sm sm:text-base md:text-lg mt-1 sm:mt-2 tracking-wide">
-              Front-End Developer & UI/UX Designer
-            </h4>
-          </div>
+         <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 group-hover:border-purple-500/50 transition-all duration-300">
+  {/* Cyberpunk Frame untuk Gambar */}
+  <div className="relative inline-block group/img">
+    {/* Outer Glow Effect */}
+    <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-purple-600/30 to-cyan-500/30 blur-xl opacity-0 group-hover/img:opacity-100 transition-opacity duration-500"></div>
+    
+    {/* Animated Border Frame */}
+    <div className="absolute -inset-2 rounded-xl overflow-hidden opacity-0 group-hover/img:opacity-100 transition-all duration-700">
+      <div 
+        className="absolute inset-0 rounded-xl opacity-80"
+        style={{
+          backgroundImage: `
+            linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
+            linear-gradient(180deg, transparent 95%, #06b6d4 100%)
+          `,
+          backgroundSize: '15px 15px',
+          animation: 'gridMove 1.5s linear infinite'
+        }}
+      />
+      
+      {/* Rotating Corner Brackets */}
+      <div className="absolute top-1 left-1 w-4 h-4 border-l-2 border-t-2 border-cyan-400 animate-spin" style={{animationDuration: '3s'}} />
+      <div className="absolute top-1 right-1 w-4 h-4 border-r-2 border-t-2 border-purple-400 animate-spin" style={{animationDuration: '3s', animationDelay: '0.5s'}} />
+      <div className="absolute bottom-1 left-1 w-4 h-4 border-l-2 border-b-2 border-purple-400 animate-spin" style={{animationDuration: '3s', animationDelay: '1s'}} />
+      <div className="absolute bottom-1 right-1 w-4 h-4 border-r-2 border-b-2 border-cyan-400 animate-spin" style={{animationDuration: '3s', animationDelay: '1.5s'}} />
+      
+      {/* Scanning Lines */}
+      <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan rounded-full" style={{animationDuration: '2s'}} />
+      <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-scan rounded-full" style={{animationDuration: '2s', animationDelay: '1s', top: '30%'}} />
+    </div>
+
+    {/* Main Image Container */}
+    <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-purple-900/50 to-cyan-900/50 p-1 backdrop-blur-sm">
+      {/* Inner Glow */}
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-500/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-500"></div>
+      
+      {/* Holographic Effect Overlay */}
+      <div className="absolute inset-0 rounded-lg opacity-0 group-hover/img:opacity-30 transition-opacity duration-500 mix-blend-overlay bg-gradient-to-br from-purple-400 via-transparent to-cyan-400"></div>
+      
+      {/* The Image */}
+      <img
+        src="/img/meow.jpg"
+        className="relative w-24 sm:w-32 md:w-36 lg:w-[142px] rounded-lg transition-all duration-500 group-hover/img:scale-110 group-hover/img:rotate-1 filter group-hover/img:brightness-110 group-hover/img:contrast-110 drop-shadow-2xl z-10"
+        alt="LOGO RS"
+        style={{
+          transformStyle: 'preserve-3d',
+          boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)'
+        }}
+      />
+      
+      {/* Floating Particles around image */}
+      <div className="absolute -inset-2 pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-float opacity-0 group-hover/img:opacity-100"
+            style={{
+              left: `${20 + (i * 15)}%`,
+              top: `${10 + (i * 15)}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${3 + i}s`
+            }}
+          />
+        ))}
+      </div>
+    </div>
+
+    {/* Pulse Ring Effect */}
+    <div className="absolute inset-0 rounded-lg border-2 border-transparent opacity-0 group-hover/img:opacity-100 group-hover/img:border-cyan-400/50 transition-all duration-1000 animate-pulse"></div>
         </div>
+
+        <h3 className="text-white font-bold text-2xl sm:text-3xl md:text-4xl mt-4 sm:mt-5 bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent group-hover:animate-pulse transition-all duration-300">
+          R'e 
+        </h3>
+        <h4 className="text-cyan-300 font-medium text-sm sm:text-base md:text-lg mt-2 sm:mt-3 tracking-wide group-hover:text-cyan-400 group-hover:tracking-wider transition-all duration-300 flex items-center justify-center gap-2">
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+          Front-End Developer & UI/UX Designer
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200"></span>
+        </h4>
+
+        {/* Additional floating elements */}
+        <div className="absolute -top-2 -right-2 w-4 h-4 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-300"></div>
+        <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-500" style={{animationDelay: '0.3s'}}></div>
+      </div>
+              </div>
 
         {/* Contact Section */}
         <div 
@@ -398,57 +469,149 @@ const Footer = () => {
             </form>
           </div>
         </div>
+      {/* Social Section */}
+<div 
+  ref={socialSectionRef}
+  className="flex flex-col items-center lg:items-end order-3 lg:order-3 group relative"
+>
+  {/* Cyberpunk border effect */}
+  <div className="absolute -inset-4 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">
+    <div 
+      className="absolute inset-[-2px] rounded-2xl opacity-70"
+      style={{
+        backgroundImage: `
+          linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
+          linear-gradient(180deg, transparent 95%, #06b6d4 100%)
+        `,
+        backgroundSize: '20px 20px',
+        animation: 'gridMove 2s linear infinite'
+      }}
+    />
+    {/* Scanning Lines */}
+    <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan rounded-full" />
+    <div className="absolute top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-purple-400 to-transparent animate-scan-horizontal rounded-full" style={{animationDuration: '3s'}} />
+    
+    {/* Pulsing Corner Brackets */}
+    <div className="absolute top-3 left-3 w-3 h-3 border-l-2 border-t-2 border-cyan-400 animate-pulse" />
+    <div className="absolute top-3 right-3 w-3 h-3 border-r-2 border-t-2 border-purple-400 animate-pulse" style={{animationDelay: '0.3s'}} />
+    <div className="absolute bottom-3 left-3 w-3 h-3 border-l-2 border-b-2 border-purple-400 animate-pulse" style={{animationDelay: '0.6s'}} />
+    <div className="absolute bottom-3 right-3 w-3 h-3 border-r-2 border-b-2 border-cyan-400 animate-pulse" style={{animationDelay: '0.9s'}} />
+  </div>
 
-        {/* Social Section */}
-        <div 
-          ref={socialSectionRef}
-          className="flex flex-col items-center lg:items-end order-3 lg:order-3 group relative"
+  {/* Main Content */}
+  <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 group-hover:border-purple-500/50 transition-all duration-300">
+    <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 sm:mb-6 text-center lg:text-right bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+      Social
+    </h2>
+    <div className="flex justify-center gap-4 sm:gap-6 items-center">
+      {[
+        { 
+          href: "https://www.instagram.com/rafaa_ndl?igsh=MXVuenhyaHgzeGhjMw==", 
+          src: "https://cdn-icons-png.flaticon.com/512/2111/2111463.png", 
+          alt: "Instagram",
+          glow: "purple"
+        },
+        { 
+          href: "https://www.youtube.com/@iniakuraditt", 
+          src: "https://cdn-icons-png.flaticon.com/512/1384/1384060.png", 
+          alt: "YouTube",
+          glow: "red"
+        },
+        { 
+          href: "https://github.com/yourusername", 
+          src: "https://cdn-icons-png.flaticon.com/512/25/25231.png", 
+          alt: "GitHub", 
+          glow: "blue"
+        },
+      ].map((social, index) => (
+        <a
+          key={index}
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block group/social relative"
+          aria-label={social.alt}
         >
-          {/* Cyberpunk border effect */}
-          <div className="absolute -inset-4 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">
-            <div 
-              className="absolute inset-[-2px] rounded-2xl opacity-70"
-              style={{
-                backgroundImage: `
-                  linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
-                  linear-gradient(180deg, transparent 95%, #06b6d4 100%)
-                `,
-                backgroundSize: '20px 20px',
-                animation: 'gridMove 2s linear infinite'
-              }}
-            />
+          {/* Hover glow effect */}
+          <div className={`absolute inset-0 rounded-full opacity-0 group-hover/social:opacity-100 transition-opacity duration-300 blur-md ${
+            social.glow === 'purple' ? 'bg-purple-500/40' : 
+            social.glow === 'red' ? 'bg-red-500/40' :
+            social.glow === 'blue' ? 'bg-blue-500/40' : 'bg-cyan-500/40'
+          }`} />
+          
+          {/* Animated border */}
+          <div className="absolute -inset-2 rounded-full opacity-0 group-hover/social:opacity-100 transition-all duration-500">
+            <div className={`absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r ${
+              social.glow === 'purple' ? 'from-cyan-400 to-purple-400' :
+              social.glow === 'red' ? 'from-red-400 to-pink-400' :
+              social.glow === 'blue' ? 'from-blue-400 to-cyan-400' : 'from-cyan-400 to-blue-400'
+            } animate-spin`} style={{animationDuration: '2s'}} />
           </div>
 
-          <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 group-hover:border-purple-500/50 transition-all duration-300">
-            <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 sm:mb-6 text-center lg:text-right bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              Social
-            </h2>
-            <div className="flex justify-center gap-4 sm:gap-6 items-center">
-              {[
-                { href: "https://www.instagram.com/rafaa_ndl?igsh=MXVuenhyaHgzeGhjMw==", src: "/img/instagram.png", alt: "Instagram" },
-                { href: "https://www.youtube.com/@iniakuraditt", src: "/img/youtube.png", alt: "YouTube" }
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block group/social relative"
-                  aria-label={social.alt}
-                >
-                  {/* Hover glow effect */}
-                  <div className="absolute inset-0 rounded-full opacity-0 group-hover/social:opacity-100 transition-opacity duration-300 bg-purple-500/20 blur-md" />
-                  
-                  <img
-                    src={social.src}
-                    alt={social.alt}
-                    className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 cursor-pointer transition-all duration-300 filter brightness-0 invert hover:brightness-100 hover:invert-0 relative z-10 hover:scale-110"
-                  />
-                </a>
+          {/* Icon with enhanced effects */}
+          <div className="relative transform transition-all duration-300 group-hover/social:scale-110 group-hover/social:rotate-12">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-white rounded-full p-2 cursor-pointer transition-all duration-300 relative z-10 drop-shadow-lg overflow-hidden">
+              {/* Holographic overlay */}
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover/social:opacity-30 transition-opacity duration-500 mix-blend-overlay bg-gradient-to-br from-white via-transparent to-gray-300" />
+              
+              <img
+                src={social.src}
+                alt={social.alt}
+                className="w-full h-full object-contain transition-all duration-300 group-hover/social:brightness-110"
+              />
+            </div>
+            
+            {/* Floating particles */}
+            <div className="absolute -inset-1 pointer-events-none">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className={`absolute w-1 h-1 rounded-full opacity-0 group-hover/social:opacity-100 animate-float ${
+                    social.glow === 'purple' ? 'bg-purple-400' : 
+                    social.glow === 'red' ? 'bg-red-400' :
+                    social.glow === 'blue' ? 'bg-blue-400' : 'bg-cyan-400'
+                  }`}
+                  style={{
+                    left: `${30 + (i * 20)}%`,
+                    top: `${20 + (i * 20)}%`,
+                    animationDelay: `${i * 0.3}s`,
+                    animationDuration: `${2 + i}s`
+                  }}
+                />
               ))}
             </div>
           </div>
-        </div>
+
+          {/* Pulse effect */}
+          <div className={`absolute inset-0 rounded-full border-2 border-transparent opacity-0 group-hover/social:opacity-100 group-hover/social:border-${
+            social.glow === 'purple' ? 'purple' : 
+            social.glow === 'red' ? 'red' :
+            social.glow === 'blue' ? 'blue' : 'cyan'
+          }-400/50 transition-all duration-1000 animate-pulse`}></div>
+
+          {/* Tooltip */}
+          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/social:opacity-100 transition-opacity duration-300 whitespace-nowrap text-xs text-white bg-black/80 backdrop-blur-sm px-2 py-1 rounded border border-gray-600">
+            {social.alt}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+      {/* Floating elements */}
+      <div className="absolute -top-2 -right-2 w-3 h-3 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-200"></div>
+      <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-400" style={{animationDelay: '0.2s'}}></div>
+    </div>
+
+    <style jsx>{`
+      @keyframes scan-horizontal {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(400%); }
+      }
+      .animate-scan-horizontal {
+        animation: scan-horizontal 4s linear infinite;
+      }
+    `}</style>
       </div>
 
       {/* Bottom section dengan copyright */}
