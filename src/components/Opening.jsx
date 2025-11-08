@@ -263,7 +263,6 @@ const Opening = () => {
       }}
       className="fixed bg-black h-screen w-screen flex flex-col items-center justify-center z-[500] overflow-hidden top-0 left-0"
     >
-      {/* Background Noise Texture */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -271,7 +270,6 @@ const Opening = () => {
         }}
       />
 
-      {/* Animated Radial Gradient */}
       <motion.div
         className="absolute inset-0"
         style={{
@@ -288,7 +286,6 @@ const Opening = () => {
         }}
       />
 
-      {/* Gradient Overlays */}
       <div
         className="absolute inset-0"
         style={{
@@ -303,7 +300,6 @@ const Opening = () => {
         }}
       />
 
-      {/* Animated Circles */}
       <motion.div
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
         style={{
@@ -358,7 +354,6 @@ const Opening = () => {
         }}
       />
 
-      {/* CountUp Animation */}
       {showCount && (
         <motion.div
           animate={controls1}
@@ -369,7 +364,6 @@ const Opening = () => {
         </motion.div>
       )}
 
-      {/* Text Animations */}
       <motion.div
         animate={controls2}
         initial={{ opacity: 0, y: 50, scale: 0.95, filter: "blur(20px)" }}
@@ -400,7 +394,6 @@ const Opening = () => {
         </FuturisticText>
       </motion.div>
 
-      {/* Corner Dots */}
       <motion.div
         className="absolute top-8 left-8"
         animate={{
@@ -456,7 +449,6 @@ const Opening = () => {
         <div className="w-2 h-2 bg-blue-400 rounded-full" style={{ boxShadow: "0 0 20px rgba(100, 200, 255, 0.8)" }} />
       </motion.div>
 
-      {/* Bottom Line */}
       <motion.div
         className="absolute bottom-16 left-1/2 transform -translate-x-1/2 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"
         style={{ width: "60%" }}
@@ -534,7 +526,6 @@ const Opening = () => {
         />
       ))}
 
-      {/* Vertical Lightning Bolts */}
       {[...Array(4)].map((_, i) => (
         <motion.div
           key={`lightning-${i}`}
@@ -556,14 +547,6 @@ const Opening = () => {
           }}
         />
       ))}
-
-      {/* Optional: Progress Bar */}
-      <motion.div 
-        className="absolute top-0 left-0 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 z-[600]"
-        initial={{ width: "0%" }}
-        animate={{ width: "100%" }}
-        transition={{ duration: 6.5, ease: "easeInOut" }}
-      />
     </motion.div>
   );
 };
