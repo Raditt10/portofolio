@@ -126,21 +126,35 @@ const Opening = () => {
   const [showCount, setShowCount] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
 
-  // FIXED: Simple and effective scroll management
+  // FIXED: Enhanced scroll management
   useLayoutEffect(() => {
-    // Scroll to top immediately
+    // Save current scroll position
+    const scrollY = window.scrollY;
+    const body = document.body;
+    
+    // Immediately scroll to top
     window.scrollTo(0, 0);
     
-    // Prevent scrolling during animation
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+    // Prevent scrolling with multiple methods
+    body.style.overflow = 'hidden';
+    body.style.height = '100vh';
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.width = '100%';
 
     return () => {
-      // Restore scrolling after animation
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      // Final scroll to top
-      window.scrollTo(0, 0);
+      // Restore all styles and scroll position
+      const scrollY = parseInt(body.style.top || '0') * -1;
+      body.style.overflow = '';
+      body.style.height = '';
+      body.style.position = '';
+      body.style.top = '';
+      body.style.width = '';
+      
+      // Force scroll to top after cleanup
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+      });
     };
   }, []);
 
@@ -221,13 +235,22 @@ const Opening = () => {
         transition: { duration: 1, ease: "easeInOut" },
       });
 
-      // Simple unmount sequence
+      // FIXED: Enhanced unmount sequence with multiple scroll guarantees
       setTimeout(() => {
-        setIsVisible(false);
-        // Restore scrolling and ensure top position
-        document.body.style.overflow = '';
-        document.documentElement.style.overflow = '';
+        // Force scroll to top multiple times to ensure it sticks
         window.scrollTo(0, 0);
+        
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          setIsVisible(false);
+          
+          // Final guarantee after unmount
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+          }, 50);
+        }, 100);
       }, 300);
     };
 

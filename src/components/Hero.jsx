@@ -419,17 +419,16 @@ const Hero = () => {
               <div className="relative w-16 h-16 bg-gradient-to-br from-gray-900 to-black rounded-full flex items-center justify-center 
                             border border-white/20 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 
                             group-hover:border-cyan-400/50 group-hover:shadow-2xl group-hover:shadow-cyan-500/25">
-                
+                {/* Inline GitHub SVG - crisp at all sizes; fill controlled via Tailwind classes */}
                 <svg
                   role="img"
                   aria-label="GitHub"
                   viewBox="0 0 24 24"
-                  className="w-8 h-8 transition-all duration-300 transform-gpu group-hover:scale-110 fill-white group-hover:fill-cyan-400"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="w-8 h-8 transition-all duration-300 transform-gpu group-hover:scale-110 fill-white group-hover:fill-cyan-400"
                 >
                   <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.111.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.089-.745.084-.73.084-.73 1.205.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.305-5.466-1.332-5.466-5.931 0-1.31.47-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.52 11.52 0 0 1 3.003-.404c1.02.005 2.045.138 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.804 5.624-5.475 5.921.43.372.823 1.103.823 2.222 0 1.606-.014 2.896-.014 3.286 0 .319.216.694.825.576C20.565 22.092 24 17.592 24 12.297 24 5.67 18.627.297 12 .297z" />
                 </svg>
-                
                 {/* Ring animation */}
                 <div className={`absolute inset-0 rounded-full border-2 transition-all duration-500 ${
                   isHovered 
