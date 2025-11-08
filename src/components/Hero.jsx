@@ -392,7 +392,7 @@ const Hero = () => {
             Front-end Developer • UI/UX Designer • Artist
           </p>
           <p className="text-lg sm:text-xl md:text-2xl hero-description bg-gradient-to-r from-white via-gray-300 to-gray-400 bg-clip-text text-transparent leading-relaxed">
-            Photography Enthusiast • Digital Creator
+            Photography Enthusiast 
           </p>
           <p className="text-base sm:text-lg text-gray-400 mt-6 max-w-2xl mx-auto">
             Crafting digital experiences with passion and precision
