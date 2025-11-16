@@ -31,8 +31,19 @@ const Footer = () => {
   
   const fullText = "Front-End Developer & UI/UX Designer";
 
-  // Typing effect with glitch
+  // Typing effect with glitch (desktop only)
   useEffect(() => {
+    // Check if mobile (screen width < 768px)
+    const isMobile = window.innerWidth < 768;
+    
+    // If mobile, show full text immediately without animation
+    if (isMobile) {
+      setTypedText(fullText);
+      setIsTyping(false);
+      return;
+    }
+
+    // Desktop typing animation
     let currentIndex = 0;
     let typingInterval;
     let glitchInterval;
