@@ -11,13 +11,6 @@ const Hero = () => {
   const containerRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-  const [typedRole, setTypedRole] = useState("");
-  const [typedHobby, setTypedHobby] = useState("");
-  const [showRoleCursor, setShowRoleCursor] = useState(true);
-  const [showHobbyCursor, setShowHobbyCursor] = useState(false);
-
-  const roleText = "Front-end Developer • UI/UX Designer • Artist";
-  const hobbyText = "Photography Enthusiast";
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -33,109 +26,6 @@ const Hero = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Typing effect for role and hobby with looping (desktop only)
-  useEffect(() => {
-    // Check if mobile (screen width < 768px)
-    const isMobile = window.innerWidth < 768;
-    
-    // If mobile, show full text immediately without animation
-    if (isMobile) {
-      setTypedRole(roleText);
-      setTypedHobby(hobbyText);
-      setShowRoleCursor(false);
-      setShowHobbyCursor(false);
-      return;
-    }
-
-    // Desktop typing animation
-    let roleIndex = 0;
-    let hobbyIndex = 0;
-    let isDeleting = false;
-    let isTypingRole = true;
-    let typingTimer;
-
-    const typeEffect = () => {
-      if (isTypingRole) {
-        // Typing role
-        if (!isDeleting) {
-          if (roleIndex <= roleText.length) {
-            setTypedRole(roleText.substring(0, roleIndex));
-            setShowRoleCursor(true);
-            setShowHobbyCursor(false);
-            roleIndex++;
-            typingTimer = setTimeout(typeEffect, 80);
-          } else {
-            // Role complete, pause then switch to hobby
-            typingTimer = setTimeout(() => {
-              isTypingRole = false;
-              isDeleting = false;
-              hobbyIndex = 0;
-              setShowRoleCursor(false);
-              typeEffect();
-            }, 1000);
-          }
-        }
-      } else {
-        // Typing hobby
-        if (!isDeleting) {
-          if (hobbyIndex <= hobbyText.length) {
-            setTypedHobby(hobbyText.substring(0, hobbyIndex));
-            setShowHobbyCursor(true);
-            hobbyIndex++;
-            typingTimer = setTimeout(typeEffect, 80);
-          } else {
-            // Hobby complete, pause then start deleting
-            typingTimer = setTimeout(() => {
-              isDeleting = true;
-              typeEffect();
-            }, 2000);
-          }
-        } else {
-          // Deleting hobby
-          if (hobbyIndex > 0) {
-            setTypedHobby(hobbyText.substring(0, hobbyIndex - 1));
-            hobbyIndex--;
-            typingTimer = setTimeout(typeEffect, 50);
-          } else {
-            // Hobby deleted, now delete role
-            setShowHobbyCursor(false);
-            isTypingRole = true;
-            deleteRole();
-          }
-        }
-      }
-    };
-
-    const deleteRole = () => {
-      if (roleIndex > 0) {
-        setTypedRole(roleText.substring(0, roleIndex - 1));
-        setShowRoleCursor(true);
-        roleIndex--;
-        typingTimer = setTimeout(deleteRole, 50);
-      } else {
-        // Everything deleted, restart
-        setShowRoleCursor(false);
-        typingTimer = setTimeout(() => {
-          isDeleting = false;
-          isTypingRole = true;
-          roleIndex = 0;
-          hobbyIndex = 0;
-          typeEffect();
-        }, 500);
-      }
-    };
-
-    // Start after initial delay
-    const startDelay = setTimeout(() => {
-      typeEffect();
-    }, 2000);
-
-    return () => {
-      clearTimeout(startDelay);
-      clearTimeout(typingTimer);
-    };
   }, []);
 
   useGSAP(() => {
@@ -499,79 +389,17 @@ const Hero = () => {
             {renderNameWithSpans()}
           </h2>
           
-          {/* Role with Typing Effect */}
-          <div className="relative mt-6 min-h-[4rem] sm:min-h-[5rem] md:min-h-[6rem] lg:min-h-[3.5rem]">
+          {/* Role */}
+          <div className="relative mt-6">
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent leading-relaxed font-semibold">
-              <span className="relative inline-block max-w-full break-words">
-                {typedRole}
-                {showRoleCursor && (
-                  <span className="inline-block w-0.5 sm:w-1 h-5 sm:h-6 md:h-7 lg:h-8 bg-gradient-to-b from-cyan-400 via-purple-400 to-pink-400 ml-1 animate-pulse-fast" 
-                    style={{
-                      boxShadow: '0 0 10px rgba(34,211,238,0.8), 0 0 20px rgba(168,85,247,0.6)',
-                      animation: 'pulse-fast 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                    }}
-                  />
-                )}
-                
-                {/* Glitch Effect Overlay */}
-                <span 
-                  className="absolute top-0 left-0 text-purple-500/40 pointer-events-none"
-                  style={{ 
-                    clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)',
-                    animation: 'text-glitch-1 3s infinite'
-                  }}
-                >
-                  {typedRole}
-                </span>
-                <span 
-                  className="absolute top-0 left-0 text-cyan-500/40 pointer-events-none"
-                  style={{ 
-                    clipPath: 'polygon(0 55%, 100% 55%, 100% 100%, 0 100%)',
-                    animation: 'text-glitch-2 3s infinite'
-                  }}
-                >
-                  {typedRole}
-                </span>
-              </span>
+              Front-end Developer • UI/UX Designer • Artist
             </p>
           </div>
           
-          {/* Hobby with Typing Effect */}
-          <div className="relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] lg:min-h-[3.5rem]">
+          {/* Hobby */}
+          <div className="relative mt-2">
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-gradient-to-r from-purple-200 via-pink-200 to-orange-200 bg-clip-text text-transparent leading-relaxed font-semibold">
-              <span className="relative inline-block max-w-full break-words">
-                {typedHobby}
-                {showHobbyCursor && (
-                  <span className="inline-block w-0.5 sm:w-1 h-5 sm:h-6 md:h-7 lg:h-8 bg-gradient-to-b from-pink-400 via-orange-400 to-purple-400 ml-1 animate-pulse-fast"
-                    style={{
-                      boxShadow: '0 0 10px rgba(236,72,153,0.8), 0 0 20px rgba(251,146,60,0.6)',
-                      animation: 'pulse-fast 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                    }}
-                  />
-                )}
-                
-                {/* Glitch Effect Overlay */}
-                <span 
-                  className="absolute top-0 left-0 text-orange-500/40 pointer-events-none"
-                  style={{ 
-                    clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)',
-                    animation: 'text-glitch-1 3s infinite',
-                    animationDelay: '0.5s'
-                  }}
-                >
-                  {typedHobby}
-                </span>
-                <span 
-                  className="absolute top-0 left-0 text-pink-500/40 pointer-events-none"
-                  style={{ 
-                    clipPath: 'polygon(0 55%, 100% 55%, 100% 100%, 0 100%)',
-                    animation: 'text-glitch-2 3s infinite',
-                    animationDelay: '0.5s'
-                  }}
-                >
-                  {typedHobby}
-                </span>
-              </span>
+              Photography Enthusiast
             </p>
           </div>
           
