@@ -255,103 +255,163 @@ const navlinks = [
 const techstack = [
   {
     id: 1,
-    src: "Frame-1.png"
+    src: "Frame-1.png",
+    name: "HTML5",
+    description: "Markup language for structuring web content",
+    category: "Frontend"
   },
 
   {
     id: 2,
-    src: "Frame-2.png"
+    src: "Frame-2.png",
+    name: "CSS3",
+    description: "Stylesheet language for designing web layouts",
+    category: "Frontend"
   },
 
   {
     id: 3,
-    src: "Frame-3.png"
+    src: "Frame-3.png",
+    name: "JavaScript",
+    description: "Programming language for interactive web features",
+    category: "Frontend"
   },
 
   {
     id: 4,
-    src: "Frame-4.png"
+    src: "Frame-4.png",
+    name: "React",
+    description: "JavaScript library for building user interfaces",
+    category: "Frontend"
   },
 
   {
     id: 5,
-    src: "Frame-5.png"
+    src: "Frame-5.png",
+    name: "Tailwind CSS",
+    description: "Utility-first CSS framework for rapid UI development",
+    category: "Frontend"
   },
 
   {
     id: 6,
-    src: "Frame-6.png"
+    src: "Frame-6.png",
+    name: "Bootstrap",
+    description: "Popular CSS framework for responsive design",
+    category: "Frontend"
   },
 
   {
     id: 7,
-    src: "Frame-7.png"
+    src: "Frame-7.png",
+    name: "Node.js",
+    description: "JavaScript runtime for server-side development",
+    category: "Backend"
   },
 
   {
     id: 8,
-    src: "Frame-8.png"
+    src: "Frame-8.png",
+    name: "PHP",
+    description: "Server-side scripting language for web development",
+    category: "Backend"
   },
 
   {
     id: 9,
-    src: "Frame-9.png"
+    src: "Frame-9.png",
+    name: "Laravel",
+    description: "PHP framework for elegant web applications",
+    category: "Backend"
   },
   
 
   {
     id: 10,
-    src: "Frame-10.png"
+    src: "Frame-10.png",
+    name: "MySQL",
+    description: "Relational database management system",
+    category: "Database"
   },
 
   {
     id: 11,
-    src: "Frame-11.png"
+    src: "Frame-11.png",
+    name: "Git",
+    description: "Version control system for tracking code changes",
+    category: "Tools"
   },
 
   {
     id: 12,
-    src: "Frame-12.png"
+    src: "Frame-12.png",
+    name: "GitHub",
+    description: "Platform for code hosting and collaboration",
+    category: "Tools"
   },
 
   {
     id: 13,
-    src: "Frame-13.png"
+    src: "Frame-13.png",
+    name: "Figma",
+    description: "Collaborative interface design tool",
+    category: "Design"
   },
 
   {
     id: 14,
-    src: "Frame-14.png"
+    src: "Frame-14.png",
+    name: "Adobe Photoshop",
+    description: "Professional image editing software",
+    category: "Design"
   },
 
   {
     id: 15,
-    src: "Frame-15.png"
+    src: "Frame-15.png",
+    name: "Adobe Illustrator",
+    description: "Vector graphics editor for design work",
+    category: "Design"
   },
 
   {
     id: 16,
-    src: "Frame-16.png"
+    src: "Frame-16.png",
+    name: "Postman",
+    description: "API development and testing platform",
+    category: "Tools"
   },
 
   {
     id: 17,
-    src: "Frame-17.png"
+    src: "Frame-17.png",
+    name: "VS Code",
+    description: "Lightweight but powerful source code editor",
+    category: "Tools"
   },
 
   {
     id: 18,
-    src: "Frame-18.png"
+    src: "Frame-18.png",
+    name: "Vercel",
+    description: "Platform for frontend deployment and hosting",
+    category: "Deployment"
   },
 
   {
     id: 19,
-    src: "Frame.png"
+    src: "Frame.png",
+    name: "Python",
+    description: "Versatile programming language for various applications",
+    category: "Backend"
   },
 
   {
     id: 20,
-    src: "Vector.png"
+    src: "Vector.png",
+    name: "C++",
+    description: "High-performance programming language",
+    category: "Backend"
   },
 ]
 
