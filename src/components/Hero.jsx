@@ -371,7 +371,7 @@ const Hero = () => {
       {/* Music Player Button */}
       <button
         onClick={toggleMusic}
-        className="fixed top-6 right-6 z-50 group"
+        className="fixed top-6 right-6 md:top-6 md:right-6 bottom-6 md:bottom-auto z-50 group"
         aria-label="Toggle music"
       >
         <div className="relative">
