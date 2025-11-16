@@ -381,7 +381,7 @@ const Hero = () => {
           </h1>
           <h2
             id="nama"
-            className="text-3xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] text-white font-bold leading-tight mb-6 tracking-tight px-4"
+            className="text-2xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] text-white font-bold leading-tight mb-6 tracking-tight px-4"
             style={{
               textShadow: '0 0 30px rgba(255,255,255,0.3)'
             }}
