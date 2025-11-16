@@ -194,10 +194,10 @@ const Footer = () => {
 
       {/* Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(2)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-purple-500 rounded-full animate-float"
+            className="absolute w-1 h-1 bg-purple-400 rounded-full animate-float"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -298,6 +298,7 @@ const Footer = () => {
       {/* The Image */}
       <img
         src="/img/meow.jpg"
+        loading="lazy"
         className="relative w-24 sm:w-32 md:w-36 lg:w-[142px] rounded-lg transition-all duration-500 group-hover/img:scale-110 group-hover/img:rotate-1 filter group-hover/img:brightness-110 group-hover/img:contrast-110 drop-shadow-2xl z-10"
         alt="LOGO RS"
         style={{

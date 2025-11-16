@@ -137,6 +137,7 @@ const About = () => {
                     <img
                       src={tech.logo}
                       alt={tech.name}
+                      loading="lazy"
                       className="w-28 h-28 drop-shadow-2xl filter brightness-200 transition-transform duration-300 hover:scale-110"
                       style={{
                         filter: `drop-shadow(0 0 30px ${colors[rowIndex]})`,

@@ -23,6 +23,7 @@ import { dataCerti } from '../../constant';
 gsap.registerPlugin(ScrollTrigger);
 
 const Achievements = () => {
+  // Refs
   const sectionRef = useRef(null);
   const mainTitleRef = useRef(null);
   const competitionTitleRef = useRef(null);
@@ -30,10 +31,13 @@ const Achievements = () => {
   const certificationTitleRef = useRef(null);
   const swiperRef = useRef(null);
   const glowRef = useRef(null);
+
+  // States
+  const [activeIndex, setActiveIndex] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredCardId, setHoveredCardId] = useState(null);
 
+  // Mouse move effect
   useEffect(() => {
     const handleMouseMove = (e) => {
       const section = sectionRef.current;
@@ -50,6 +54,7 @@ const Achievements = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // GSAP Animations
   useEffect(() => {
     const section = sectionRef.current;
     const mainTitle = mainTitleRef.current;
@@ -57,6 +62,8 @@ const Achievements = () => {
     const competitionCard = competitionCardRef.current;
     const certificationTitle = certificationTitleRef.current;
     const swiper = swiperRef.current;
+
+    if (!section || !mainTitle) return;
 
     gsap.set(mainTitle, { 
       opacity: 0, 
@@ -175,7 +182,6 @@ const Achievements = () => {
         }}
       />
       
-
       {/* Animated Grid Background */}
       <div className="absolute inset-0 opacity-[0.05] z-0">
         <div className="absolute inset-0" style={{
@@ -205,7 +211,7 @@ const Achievements = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-purple-600/15 to-transparent animate-pulse-slow" 
              style={{ filter: 'blur(80px)', animationDelay: '0s' }} />
-        <div className="absolute top-3/4 right-1/4 w-[500px] h-[500px] rounded-full bg-linear-to-l from-cyan-600/12 to-transparent animate-pulse-slow" 
+        <div className="absolute top-3/4 right-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-l from-cyan-600/12 to-transparent animate-pulse-slow" 
              style={{ filter: 'blur(70px)', animationDelay: '2s' }} />
         <div className="absolute top-1/2 left-1/2 w-[700px] h-[700px] rounded-full bg-gradient-to-br from-pink-600/10 to-transparent animate-pulse-slow" 
              style={{ filter: 'blur(90px)', animationDelay: '4s', transform: 'translate(-50%, -50%)' }} />
@@ -219,7 +225,7 @@ const Achievements = () => {
           return (
             <div
               key={i}
-              className={`floating-particle absolute rounded-full ${isSpecial ? 'animate-float-special' : 'animate-float'}`}
+              className={`absolute rounded-full ${isSpecial ? 'animate-float-special' : 'animate-float'}`}
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -261,7 +267,7 @@ const Achievements = () => {
         <div className="relative mb-12 sm:mb-16 md:mb-20">
           <h1 
             ref={mainTitleRef}
-            className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent font-bold text-center relative z-30 overflow-hidden'
+            className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent font-bold text-center relative z-30 whitespace-nowrap'
             style={{
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
@@ -279,97 +285,36 @@ const Achievements = () => {
         <div className="mb-16 sm:mb-20 md:mb-24">
           <h2 
             ref={competitionTitleRef}
-            className='text-white text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3'
+            className='text-white text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3 whitespace-nowrap'
           >
-            <span className="w-2 h-8 bg-gradient-to-b from-purple-500 to-cyan-500 rounded-full animate-pulse" />
+            <span className="w-2 h-8 bg-gradient-to-b from-purple-500 to-cyan-500 rounded-full animate-pulse flex-shrink-0" />
             Competition
-            <div className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-transparent" />
+            <div className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-transparent flex-shrink-0" />
           </h2>
+          
           <div 
             ref={competitionCardRef}
-            className='flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-8 md:gap-10'
+            className='flex justify-center items-center'
           >
-            <div 
-              className="relative group perspective-1000"
-            >
-              {/* Enhanced Cyberpunk Glow */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-xl"
-                style={{
-                  background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(0, 255, 249, 0.2) 50%, transparent 70%)',
-                  filter: 'blur(25px)',
-                  transform: 'scale(1.2)',
-                  animation: 'pulse 2s ease-in-out infinite'
-                }}
-              />
-              
-              {/* Animated Holographic Border */}
-              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">
-                <div 
-                  className="absolute -inset-0.5 rounded-xl"
-                  style={{
-                    background: 'linear-gradient(45deg, #8b5cf6, #00fff9, #ff00de, #8b5cf6)',
-                    backgroundSize: '400% 400%',
-                    animation: 'gradientShift 3s ease infinite',
-                    opacity: 0.6
-                  }}
-                />
-                <div className="absolute inset-0.5 bg-black rounded-xl" />
-                
-                {/* Animated Grid Pattern */}
-                <div 
-                  className="absolute inset-0 rounded-xl opacity-40"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(90deg, transparent 90%, #8b5cf6 100%),
-                      linear-gradient(180deg, transparent 90%, #06b6d4 100%)
-                    `,
-                    backgroundSize: '25px 25px',
-                    animation: 'gridMove 2s linear infinite'
-                  }}
-                />
-                
-                {/* Multiple Scanning Lines */}
-                <div className="absolute left-0 right-0 h-1 bg-linear-to-r from-transparent via-cyan-400 to-transparent animate-scan rounded-full" />
-                <div className="absolute left-0 right-0 h-px bg-linear-to-r from-transparent via-purple-400 to-transparent animate-scan" style={{animationDelay: '1s', animationDuration: '4s'}} />
-                
-                {/* Animated Corner Brackets with Glow */}
-                <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-cyan-400 animate-pulse-corner" 
-                     style={{boxShadow: '0 0 10px rgba(0, 255, 249, 0.8)'}} />
-                <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-purple-400 animate-pulse-corner" 
-                     style={{animationDelay: '0.3s', boxShadow: '0 0 10px rgba(139, 92, 246, 0.8)'}} />
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-purple-400 animate-pulse-corner" 
-                     style={{animationDelay: '0.6s', boxShadow: '0 0 10px rgba(139, 92, 246, 0.8)'}} />
-                <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-cyan-400 animate-pulse-corner" 
-                     style={{animationDelay: '0.9s', boxShadow: '0 0 10px rgba(0, 255, 249, 0.8)'}} />
-              </div>
-
-              {/* Card with 3D Transform */}
-              <div className="relative transform transition-all duration-500 group-hover:scale-105 group-hover:rotate-y-2 rounded-xl overflow-hidden"
-                   style={{transformStyle: 'preserve-3d'}}>
-                <CompetitionCard />
-                
-              </div>
-            </div>
+            <CompetitionCard />
           </div>
         </div>
         
-        {/* Certification Section with Enhanced Swiper */}
+        {/* Certification Section */}
         <div>
           <h2 
             ref={certificationTitleRef}
-            className='text-white text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3'
+            className='text-white text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3 whitespace-nowrap'
           >
-            <span className="w-2 h-8 bg-linear-to-b from-cyan-500 to-purple-500 rounded-full animate-pulse" />
+            <span className="w-2 h-8 bg-gradient-to-b from-cyan-500 to-purple-500 rounded-full animate-pulse flex-shrink-0" />
             Certification
-            <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent" />
+            <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent flex-shrink-0" />
           </h2>
           
           <div 
             ref={swiperRef}
             className="flex justify-center items-center relative"
           >
-
             <Swiper
               modules={[Navigation, Pagination, EffectCoverflow]}
               effect="coverflow"
@@ -446,7 +391,6 @@ const Achievements = () => {
                           judul={d.judul} 
                           link={d.link} 
                         />
-                      
                       </div>
                     </div>
                   </div>
@@ -517,25 +461,10 @@ const Achievements = () => {
           100% { transform: translateX(500vw); opacity: 0; }
         }
 
-        @keyframes pulse-corner {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.2); }
-        }
-
         @keyframes gradientShift {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
-        }
-
-        @keyframes shine {
-          0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-          100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        @keyframes pulse-width {
-          0%, 100% { width: 128px; opacity: 0.5; }
-          50% { width: 256px; opacity: 1; }
         }
 
         .animate-float {
@@ -560,26 +489,6 @@ const Achievements = () => {
 
         .animate-scan-vertical {
           animation: scan-vertical 8s linear infinite;
-        }
-
-        .animate-pulse-corner {
-          animation: pulse-corner 2s ease-in-out infinite;
-        }
-
-        .animate-shine {
-          animation: shine 3s ease-in-out infinite;
-        }
-
-        .animate-pulse-width {
-          animation: pulse-width 3s ease-in-out infinite;
-        }
-
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-
-        .rotate-y-2 {
-          transform: rotateY(2deg);
         }
 
         /* Enhanced Swiper Styles */
@@ -624,60 +533,6 @@ const Achievements = () => {
           transform: scale(1.3);
           box-shadow: 0 0 15px rgba(139, 92, 246, 0.8);
           border-color: rgba(139, 92, 246, 0.8) !important;
-        }
-        
-        @media (max-width: 768px) {
-          .swiper-button-next,
-          .swiper-button-prev {
-            width: 45px !important;
-            height: 45px !important;
-            margin-top: -22.5px !important;
-          }
-          
-          .swiper-button-next:after,
-          .swiper-button-prev:after {
-            font-size: 18px !important;
-          }
-        }
-        
-        @media (max-width: 640px) {
-          .swiper-button-next,
-          .swiper-button-prev {
-            width: 40px !important;
-            height: 40px !important;
-          }
-          
-          .swiper-button-next:after,
-          .swiper-button-prev:after {
-            font-size: 16px !important;
-          }
-        }
-
-        /* Swiper Slide Shadow Enhancement */
-        .swiper-slide {
-          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .swiper-slide-active {
-          filter: brightness(1.1);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: rgba(0, 0, 0, 0.5);
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #8b5cf6, #00fff9);
-          border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #a78bfa, #06b6d4);
         }
       `}</style>
     </section>

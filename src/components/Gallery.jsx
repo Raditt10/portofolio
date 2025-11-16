@@ -133,7 +133,7 @@ const Gallery = () => {
       className={`${aspectClass} bg-gray-800 rounded-lg overflow-hidden relative group cursor-pointer transform transition-all duration-500 hover:scale-105 ${className}`}
       style={{ transformStyle: 'preserve-3d' }}
     >
-      <div className="relative flex items-center justify-center h-full bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 group-hover:border-cyan-500/50 transition-all duration-300 overflow-hidden">
+      <div className="relative flex items-center justify-center h-full bg-gradient-to-br from-gray-900/80 to-gray-800/50 rounded-xl border border-gray-700/50 group-hover:border-cyan-500/50 transition-all duration-300 overflow-hidden">
 
         {/* Subtle glow on hover */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
@@ -347,7 +347,7 @@ const Gallery = () => {
                   <h2 className="text-3xl xl:text-4xl font-bold text-cyan-400 mb-1 tracking-tight">MORE</h2>
                   <div className="text-3xl xl:text-4xl font-bold text-white mb-2 tracking-tight flex items-center">
                     ON
-                    <img src="/img/instagram.png" className="w-7 h-7 xl:w-8 xl:h-8 ml-2" alt="Instagram" />
+                    <img src="/img/instagram.png" className="w-7 h-7 xl:w-8 xl:h-8 ml-2" alt="Instagram" loading="lazy" />
                   </div>
                 </div>
                 <div className="text-sm text-gray-400 group-hover:text-cyan-400 transition-colors relative z-10">@radittt_xxyu</div>
@@ -361,7 +361,7 @@ const Gallery = () => {
 
       {selectedImage !== null && imageInfo && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/98 backdrop-blur-xl"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95"
           onClick={closeLightbox}
         >
           <button
@@ -414,7 +414,7 @@ const Gallery = () => {
             />
 
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-6 rounded-b-lg border-t border-cyan-400/20">
-              <h3 className="text-white text-2xl font-bold mb-2 drop-shadow-lg text-cyan-400">{imageInfo.title}</h3>
+              <h3 className="text-cyan-400 text-2xl font-bold mb-2 drop-shadow-lg">{imageInfo.title}</h3>
               <p className="text-gray-300 text-base drop-shadow-lg">{imageInfo.description}</p>
               <div className="mt-3 text-cyan-400 text-sm font-semibold flex items-center gap-2">
                 <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />

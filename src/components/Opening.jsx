@@ -300,14 +300,12 @@ const Opening = () => {
           boxShadow: "0 0 80px rgba(0, 200, 255, 0.25)",
         }}
         animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.4, 0.7, 0.4],
-          rotate: [0, 360],
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
-          duration: 15,
+          duration: 4,
           repeat: Infinity,
-          ease: "linear"
+          ease: "easeInOut"
         }}
       />
 

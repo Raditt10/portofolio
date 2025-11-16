@@ -388,7 +388,7 @@ const dataCerti = [
   {
     id: 2,
     gambar: "UPT.jpg",
-    judul : "Participation in POSTER MAKER UPT (Perpustakaan Universitas Tarumanagara)",
+    judul : "Participation in POSTER MAKER UPT",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
@@ -409,21 +409,21 @@ const dataCerti = [
     {
     id: 5,
     gambar: "indo.png",
-    judul : "1st Place ISSC (Indonesian Student Science Competition) in Indonesian Language 2025 at the National Level",
+    judul : "1st Place ISSC (Indonesian Student Science Competition)",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
   
    {
     id: 6,
     gambar: "sejarah.png",
-    judul : "2st Place OSNK (Olimpiade Siswa Nasional Kesatuan Intermediate) in History Subject 2025 at the National Level",
+    judul : "2nd Place OSNK in History Subject 2025",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
     {
     id: 7,
     gambar: "aws.png",
-    judul : "AWS Cloud Practitioner Essentials (Amazon Web Services) and more AWS Cloud Computing",
+    judul : "AWS Cloud Practitioner Essentials (Fundamental Level)",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 

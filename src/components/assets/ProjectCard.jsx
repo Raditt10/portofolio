@@ -9,17 +9,19 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode }) => {
         <img 
           className="rounded-t-2xl w-full h-48 sm:h-52 md:h-56 object-cover" 
           src={`/img/${gambar}`} 
-          alt="Projects Image" 
+          alt="Projects Image"
+          loading="lazy"
         />
       </div>
       
       {/* Year Section */}
       <div className="flex items-center justify-start w-full gap-2 mt-4 md:mt-7 px-4 md:px-6">
         <div className="w-[10px] h-[10px] flex-shrink-0">
-          <img
+                    <img
             src="/img/Tahun.png"
             className="w-full h-full object-cover"
-            alt=""
+            alt="Year Icon"
+            loading="lazy"
           />
         </div>
         <span className="font-light text-sm text-white">2025</span>

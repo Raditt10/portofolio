@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import React, { useEffect, useRef, useCallback, useMemo, useState } from "react";
 import "./ProfileCard.css";
 
 const DEFAULT_BEHIND_GRADIENT =
@@ -284,6 +284,18 @@ const ProfileCardComponent = ({
     onContactClick?.();
   }, [onContactClick]);
 
+  // Local state for expanded info overlay
+  const [expanded, setExpanded] = useState(false);
+  const openInfo = useCallback((e) => {
+    // prevent click from bubbling to the card (which may trigger device permission handler)
+    if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
+    setExpanded(true);
+  }, []);
+  const closeInfo = useCallback((e) => {
+    if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
+    setExpanded(false);
+  }, []);
+
   return (
     <div
       ref={wrapRef}
@@ -304,6 +316,7 @@ const ProfileCardComponent = ({
                 const target = e.target;
                 target.style.display = "none";
               }}
+              onClick={(e) => openInfo(e)}
             />
             {showUserInfo && (
               <div className="pc-user-info">
@@ -347,6 +360,38 @@ const ProfileCardComponent = ({
           </div>
         </div>
       </section>
+
+      {/* Info overlay shown when avatar is clicked */}
+      {expanded && (
+        <div
+          className="pc-info-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm"
+          onClick={closeInfo}
+          role="dialog"
+          aria-modal="true"
+          aria-label="About me"
+        >
+          <div
+            className="bg-gradient-to-br from-gray-900/90 to-black/80 rounded-2xl p-6 max-w-lg w-[92%] mx-4 text-white shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold mb-1">{name}</h2>
+                <p className="text-cyan-300 mb-3">{title}</p>
+                <p className="text-sm text-gray-300 mb-4">I&apos;m a front-end developer focusing on building interactive, accessible, and performant user interfaces. I enjoy working with React, Tailwind CSS, and modern animation libraries.</p>
+                <div className="flex gap-3 items-center">
+                  <a href="https://github.com/raditt10" target="_blank" rel="noopener noreferrer" className="text-sm px-3 py-2 bg-white/5 rounded-md hover:bg-white/10">GitHub</a>
+                  <a href="https://www.instagram.com/rafaa_ndl" target="_blank" rel="noopener noreferrer" className="text-sm px-3 py-2 bg-white/5 rounded-md hover:bg-white/10">Instagram</a>
+                  <a href="mailto:example@example.com" className="text-sm px-3 py-2 bg-white/5 rounded-md hover:bg-white/10">Email</a>
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                <button onClick={closeInfo} aria-label="Close" className="text-gray-300 hover:text-white bg-white/5 p-2 rounded-md">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
