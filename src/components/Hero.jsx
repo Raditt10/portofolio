@@ -487,9 +487,9 @@ const Hero = () => {
           </h2>
           
           {/* Role with Typing Effect */}
-          <div className="relative mt-6 min-h-[2rem] sm:min-h-[2.5rem] md:min-h-[3rem] lg:min-h-[3.5rem]">
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent leading-relaxed font-semibold">
-              <span className="relative inline-block">
+          <div className="relative mt-6 min-h-[4rem] sm:min-h-[5rem] md:min-h-[6rem] lg:min-h-[3.5rem]">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent leading-relaxed font-semibold">
+              <span className="relative inline-block max-w-full break-words">
                 {typedRole}
                 {showRoleCursor && (
                   <span className="inline-block w-0.5 sm:w-1 h-5 sm:h-6 md:h-7 lg:h-8 bg-gradient-to-b from-cyan-400 via-purple-400 to-pink-400 ml-1 animate-pulse-fast" 
@@ -524,9 +524,9 @@ const Hero = () => {
           </div>
           
           {/* Hobby with Typing Effect */}
-          <div className="relative min-h-[2rem] sm:min-h-[2.5rem] md:min-h-[3rem] lg:min-h-[3.5rem]">
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl bg-gradient-to-r from-purple-200 via-pink-200 to-orange-200 bg-clip-text text-transparent leading-relaxed font-semibold">
-              <span className="relative inline-block">
+          <div className="relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] lg:min-h-[3.5rem]">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-gradient-to-r from-purple-200 via-pink-200 to-orange-200 bg-clip-text text-transparent leading-relaxed font-semibold">
+              <span className="relative inline-block max-w-full break-words">
                 {typedHobby}
                 {showHobbyCursor && (
                   <span className="inline-block w-0.5 sm:w-1 h-5 sm:h-6 md:h-7 lg:h-8 bg-gradient-to-b from-pink-400 via-orange-400 to-purple-400 ml-1 animate-pulse-fast"
