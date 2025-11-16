@@ -229,14 +229,18 @@ const navlinks = [
 
   {
     id: 3,
-    "text" : "My Gallery",
-    "link" : "#gallery"
+    text: "My Gallery",
+    link: "#gallery"
   },
-
   {
     id: 4,
-    "text" : "Projects",
-    "link" : "#projects"
+    text: "Journey",
+    link: "#journey"
+  },
+  {
+    id: 5,
+    text: "Projects",
+    link: "#projects"
   },
 
   {

@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero';
 import TechStack from './components/TechStack';
 import Gallery from './components/Gallery';
+import Journey from './components/Journey';
 import Projetcs from './components/Projetcs';
 import Achievements from './components/Achievements';
 import Footer from './components/Footer';
@@ -29,6 +30,7 @@ function App() {
       <About />
       <TechStack />
       <Gallery />
+      <Journey />
       <Projetcs />
       <Achievements />
       <Footer />

@@ -3,8 +3,17 @@ import React, { useEffect, useRef, useState } from 'react';
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const cursorDotRef = useRef(null);
+
   const [isPointer, setIsPointer] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+  const [isGalleryModal, setIsGalleryModal] = useState(false);
+  useEffect(() => {
+    const handleGalleryModal = (e) => {
+      setIsGalleryModal(!!(e.detail && e.detail.open));
+    };
+    window.addEventListener('gallery-modal', handleGalleryModal);
+    return () => window.removeEventListener('gallery-modal', handleGalleryModal);
+  }, []);
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -82,8 +91,13 @@ const CustomCursor = () => {
   // Hide custom cursor on mobile devices
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
+
   if (isMobile) {
     return null;
+  }
+  if (isGalleryModal) {
+    // Saat modal gallery aktif, sembunyikan custom cursor dan munculkan cursor default hanya di overlay
+    return <style>{`.gallery-modal-overlay, .gallery-modal-overlay * { cursor: default !important; }`}</style>;
   }
 
   return (
@@ -133,7 +147,7 @@ const CustomCursor = () => {
         }}
       />
 
-      {/* Hide default cursor */}
+      {/* Hide default cursor kecuali saat modal gallery aktif */}
       <style>{`
         * {
           cursor: none !important;
