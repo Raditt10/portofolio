@@ -463,8 +463,15 @@ const dataCerti = [
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
-    {
+  {
     id: 8,
+    gambar: "ruangguru.jpg",
+    judul : "Participation in Event KSR 2025 By Ruangguru",
+    link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
+  },
+
+    {
+    id: 9,
     gambar: "aws.png",
     judul : "AWS Cloud Practitioner Essentials (Fundamental Level)",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
