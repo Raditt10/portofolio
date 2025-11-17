@@ -431,7 +431,7 @@ const dataCerti = [
   {
     id: 3,
     gambar: "jhic.png",
-    judul : "Participation in Competitonn and Bootcamp JHIC",
+    judul : "Semi finalist in Competition and Bootcamp JHIC",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
