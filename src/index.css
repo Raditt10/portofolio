@@ -1,8 +1,42 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 
+/* Minecraft Font */
+@font-face {
+  font-family: 'Minecraft';
+  src: url('https://fonts.cdnfonts.com/s/12442/Minecraft.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --font-sora: "Sora", sans-serif;
+  --font-minecraft: "Minecraft", monospace;
+}
+
+/* Logo R'e Styling */
+.logo-minecraft {
+  font-family: 'Minecraft', monospace;
+  font-weight: bold;
+  text-shadow: 
+    3px 3px 0px rgba(0, 0, 0, 0.9),
+    4px 4px 0px rgba(0, 0, 0, 0.7),
+    5px 5px 0px rgba(255, 255, 255, 0.15),
+    0 0 20px rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.08em;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+.logo-minecraft:hover {
+  text-shadow: 
+    3px 3px 0px rgba(0, 0, 0, 0.9),
+    4px 4px 0px rgba(0, 0, 0, 0.7),
+    5px 5px 0px rgba(255, 255, 255, 0.2),
+    0 0 30px rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
 }
 
 .cool-border-gradient {

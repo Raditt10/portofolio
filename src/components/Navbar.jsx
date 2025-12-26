@@ -36,7 +36,7 @@ const Navbar = () => {
             <div className="flex items-center gap-8">
               {/* Logo */}
               <div className="relative px-4 py-2">
-                <h1 className='text-2xl text-white' style={{ fontFamily: 'Minecraft, monospace' }}>
+                <h1 className='text-2xl text-white logo-minecraft'>
                   R'e
                 </h1>
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-8 bg-gray-600" />
@@ -70,7 +70,7 @@ const Navbar = () => {
           : 'bg-transparent'
       }`}>
         <div className="relative z-10">
-          <h1 className='text-xl font-semibold text-white' style={{ fontFamily: 'Minecraft, monospace' }}>
+          <h1 className='text-xl font-semibold text-white logo-minecraft'>
             R'e
           </h1>
         </div>
@@ -110,7 +110,7 @@ const Navbar = () => {
       >
         {/* Header */}
         <div className='flex justify-between items-center p-6 border-b border-gray-700/50 relative z-10'>
-          <h1 className='text-xl font-bold text-white' style={{ fontFamily: 'Minecraft, monospace' }}>R'e</h1>
+          <h1 className='text-xl font-bold text-white logo-minecraft'>R'e</h1>
           <button
             onClick={closeSidebar}
             className='text-white p-2 hover:bg-gray-800/60 rounded-lg transition-all duration-200 border border-gray-700/50'
