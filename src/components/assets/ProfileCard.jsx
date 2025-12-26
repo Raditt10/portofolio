@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useCallback, useMemo, useState } from "react"
 import "./ProfileCard.css";
 
 const DEFAULT_BEHIND_GRADIENT =
-  "radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y),rgba(255,255,255,var(--card-opacity)) 6%,rgba(255,245,232,calc(var(--card-opacity)*0.75)) 14%,rgba(255,237,214,calc(var(--card-opacity)*0.45)) 46%,rgba(0,0,0,0) 100%),radial-gradient(35% 52% at 55% 20%,rgba(255,255,255,0.2) 0%,rgba(7,58,255,0) 100%),radial-gradient(100% 100% at 50% 50%,rgba(255,234,209,0.18) 1%,rgba(7,58,255,0) 76%),conic-gradient(from 124deg at 50% 50%,rgba(255,255,255,0.4) 0%,rgba(248,236,214,0.22) 40%,rgba(248,236,214,0.22) 60%,rgba(255,255,255,0.4) 100%)";
+  "radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y),hsla(266,100%,90%,var(--card-opacity)) 4%,hsla(266,50%,80%,calc(var(--card-opacity)*0.75)) 10%,hsla(266,25%,70%,calc(var(--card-opacity)*0.5)) 50%,hsla(266,0%,60%,0) 100%),radial-gradient(35% 52% at 55% 20%,#00ffaac4 0%,#073aff00 100%),radial-gradient(100% 100% at 50% 50%,#00c1ffff 1%,#073aff00 76%),conic-gradient(from 124deg at 50% 50%,#c137ffff 0%,#07c6ffff 40%,#07c6ffff 60%,#c137ffff 100%)";
 
 const DEFAULT_INNER_GRADIENT =
-  "linear-gradient(145deg,rgba(255,255,255,0.14) 0%,rgba(243,233,213,0.26) 100%)";
+  "linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)";
 
 const ANIMATION_CONFIG = {
   SMOOTH_DURATION: 600,
@@ -351,10 +351,10 @@ const ProfileCardComponent = ({
                   width: 14,
                   height: 14,
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #fff 65%, #f3e7d3 100%)',
-                  boxShadow: '0 0 10px 3px rgba(255,255,255,0.85), 0 0 18px 6px rgba(243,231,211,0.55)',
+                  background: 'linear-gradient(135deg, #fff 60%, #38bdf8 100%)',
+                  boxShadow: '0 0 8px 2px #fff, 0 0 16px 4px #38bdf8',
                   opacity: 0.98,
-                  border: '2px solid rgba(255,255,255,0.7)',
+                  border: '2px solid #a21caf',
                 }}></span>
               </span>
             </div>
@@ -375,7 +375,7 @@ const ProfileCardComponent = ({
                   </div>
                   <div className="pc-user-text">
                     <div className="pc-handle font-semibold text-lg text-white/90">@{handle}</div>
-                    <div className="pc-status text-xs text-white/80 font-medium">{status}</div>
+                    <div className="pc-status text-xs text-cyan-300 font-medium">{status}</div>
                   </div>
                 </div>
                 <a href="https://www.instagram.com/rafaa_ndl?igsh=MXVuenhyaHgzeGhjMw==" target="_blank" rel="noopener noreferrer">
@@ -395,7 +395,7 @@ const ProfileCardComponent = ({
           <div className="pc-content">
             <div className="pc-details">
               <h3 className="font-bold text-2xl text-white/95 mb-1 tracking-wide profile-name-luxury">{name}</h3>
-              <p className="text-white/85 text-base font-medium mb-2 profile-title-luxury">{title}</p>
+              <p className="text-cyan-200 text-base font-medium mb-2 profile-title-luxury">{title}</p>
             </div>
           </div>
         </div>
@@ -416,10 +416,10 @@ const ProfileCardComponent = ({
             <div className="flex items-start justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-bold mb-1 profile-name-luxury">{name}</h2>
-                <p className="text-white/85 mb-3 profile-title-luxury">{title}</p>
+                <p className="text-cyan-300 mb-3 profile-title-luxury">{title}</p>
                 <p className="text-sm text-gray-300 mb-4">I&apos;m a front-end developer focusing on building interactive, accessible, and performant user interfaces. I enjoy working with React, Tailwind CSS, and modern animation libraries.</p>
                 <div className="flex gap-3 items-center">
-                  <a href="https://github.com/raditt10" target="_blank" rel="noopener noreferrer" className="text-sm px-3 py-2 bg-white/5 rounded-md hover:bg-white/15 transition">GitHub</a>
+                  <a href="https://github.com/raditt10" target="_blank" rel="noopener noreferrer" className="text-sm px-3 py-2 bg-white/5 rounded-md hover:bg-cyan-500/20 transition">GitHub</a>
                   <a href="https://www.instagram.com/rafaa_ndl" target="_blank" rel="noopener noreferrer" className="text-sm px-3 py-2 bg-white/5 rounded-md hover:bg-pink-500/20 transition">Instagram</a>
                   <a href="mailto:example@example.com" className="text-sm px-3 py-2 bg-white/5 rounded-md hover:bg-emerald-500/20 transition">Email</a>
                 </div>

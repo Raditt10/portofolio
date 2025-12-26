@@ -204,42 +204,14 @@ const TechStack = () => {
             />
             
             {/* Card Container - Mobile Optimized */}
-            <div className="relative flex items-center justify-center aspect-square p-2.5 sm:p-3 md:p-4 lg:p-5 bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-sm rounded-lg sm:rounded-xl border border-gray-700/50 md:group-hover:border-white/40 transition-all duration-200 overflow-hidden touch-manipulation active:scale-95">
+            <div className="relative flex items-center justify-center aspect-square p-2.5 sm:p-3 md:p-4 lg:p-5 bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-sm rounded-lg sm:rounded-xl border border-gray-700/50 transition-all duration-200 overflow-hidden touch-manipulation active:scale-95">
               
-              {/* Hover Shine Effect - Desktop Only */}
-              <div className="hidden md:block absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              
-              {/* Animated Border - Cyberpunk Grid */}
-              <div className="absolute inset-0 rounded-lg sm:rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">
-                {/* Grid Pattern */}
-                <div 
-                  className="absolute inset-[-2px] rounded-lg sm:rounded-xl opacity-70"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
-                      linear-gradient(180deg, transparent 95%, #06b6d4 100%)
-                    `,
-                    backgroundSize: '15px 15px',
-                    animation: 'gridMove 2s linear infinite'
-                  }}
-                />
-                
-                {/* Scanning Line */}
-                <div className="absolute left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan rounded-full" />
-                
-                {/* Pulsing Corner Brackets - Responsive sizes */}
-                <div className="absolute top-0.5 sm:top-1 left-0.5 sm:left-1 w-2 h-2 sm:w-3 sm:h-3 border-l-2 border-t-2 border-cyan-400 animate-pulse" />
-                <div className="absolute top-0.5 sm:top-1 right-0.5 sm:right-1 w-2 h-2 sm:w-3 sm:h-3 border-r-2 border-t-2 border-purple-400 animate-pulse" style={{animationDelay: '0.3s'}} />
-                <div className="absolute bottom-0.5 sm:bottom-1 left-0.5 sm:left-1 w-2 h-2 sm:w-3 sm:h-3 border-l-2 border-b-2 border-purple-400 animate-pulse" style={{animationDelay: '0.6s'}} />
-                <div className="absolute bottom-0.5 sm:bottom-1 right-0.5 sm:right-1 w-2 h-2 sm:w-3 sm:h-3 border-r-2 border-b-2 border-cyan-400 animate-pulse" style={{animationDelay: '0.9s'}} />
-              </div>
-
               {/* Tech Icon - Responsive sizing */}
               <div className="relative z-10 w-full h-full flex items-center justify-center">
                 <img 
                   src={"/img/" + tech.src} 
                   alt={`${tech.name || 'Tech'} Stack`}
-                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain transition-all duration-300 group-hover:brightness-125 group-hover:scale-110"
+                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain transition-all duration-300"
                   style={{
                     filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))'
                   }}
