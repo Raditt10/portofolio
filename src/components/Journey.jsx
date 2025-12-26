@@ -80,9 +80,9 @@ const Journey = () => {
     const ctx = gsap.context(() => {
       gsap.from(titleRef.current, {
         opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power3.out",
+        y: 30,
+        duration: 0.8,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 80%",

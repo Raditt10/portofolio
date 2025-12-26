@@ -64,17 +64,15 @@ const Hero = () => {
         margin-left: 4px;
         vertical-align: middle;
         animation: blink 0.9s infinite;
-        box-shadow: 0 0 10px rgba(214, 225, 255, 0.35);
+        box-shadow: 0 0 8px rgba(214, 225, 255, 0.25);
         border-radius: 999px;
       `;
       
       gsap.set(chars, { 
         opacity: 0, 
-        y: 24, 
-        scale: 0.9, 
-        rotateX: -70, 
-        transformOrigin: "50% 50%",
-        textShadow: "0 0 6px rgba(255,255,255,0.3)"
+        y: 12, 
+        scale: 0.95, 
+        transformOrigin: "50% 50%"
       });
       
       // Enter animation

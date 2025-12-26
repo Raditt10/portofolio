@@ -72,7 +72,7 @@ const About = () => {
           avatarUrl="/img/radit2.jpg"
           miniAvatarUrl="/img/meow.jpg"
           showUserInfo={true}
-          enableTilt={true}
+          enableTilt={false}
           enableMobileTilt={false}
           onContactClick={() => console.log("Contact clicked")}
         />

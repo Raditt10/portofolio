@@ -80,17 +80,17 @@ const TechStack = () => {
       ease: "elastic.out(1, 0.5)"
     }, "-=0.4");
 
-    // Parallax effect
-    gsap.to(items, {
-      scrollTrigger: {
-        trigger: section,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1
-      },
-      y: (i) => (i % 2 === 0 ? -30 : 30),
-      ease: "none"
-    });
+    // Parallax effect (disabled for performance)
+    // gsap.to(items, {
+    //   scrollTrigger: {
+    //     trigger: section,
+    //     start: "top bottom",
+    //     end: "bottom top",
+    //     scrub: 1
+    //   },
+    //   y: (i) => (i % 2 === 0 ? -30 : 30),
+    //   ease: "none"
+    // });
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -109,22 +109,18 @@ const TechStack = () => {
     setHoveredTech(tech);
     
     const item = itemsRef.current[index];
-    if (item) {
+    if (item && window.innerWidth >= 768) {
       gsap.to(item, {
-        scale: 1.2,
-        z: 50,
-        rotationY: 10,
-        rotationX: -10,
-        duration: 0.3,
-        ease: "power2.out"
+        scale: 1.08,
+        duration: 0.25,
+        ease: "power1.out"
       });
 
-      // Enhanced glow effect pada item yang dihover
       gsap.to(item.querySelector('.tech-glow'), {
         opacity: 1,
-        scale: 1.2,
-        duration: 0.3,
-        ease: "power2.out"
+        scale: 1.1,
+        duration: 0.25,
+        ease: "power1.out"
       });
     }
   };
@@ -133,22 +129,18 @@ const TechStack = () => {
     setHoveredTech(null);
     
     const item = itemsRef.current[index];
-    if (item) {
+    if (item && window.innerWidth >= 768) {
       gsap.to(item, {
         scale: 1,
-        z: 0,
-        rotationY: 0,
-        rotationX: 0,
-        duration: 0.4,
-        ease: "power2.out"
+        duration: 0.3,
+        ease: "power1.out"
       });
 
-      // Reset glow effect
       gsap.to(item.querySelector('.tech-glow'), {
         opacity: 0,
         scale: 1,
-        duration: 0.3,
-        ease: "power2.out"
+        duration: 0.25,
+        ease: "power1.out"
       });
     }
   };
@@ -221,7 +213,6 @@ const TechStack = () => {
       <div 
         ref={gridRef}
         className="relative z-20 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8 mt-8 sm:mt-12 md:mt-16 lg:mt-20 items-center justify-items-center max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
-        style={{ perspective: '1000px' }}
       >
         {techstack.map((tech, index) => (
           <div
@@ -230,7 +221,6 @@ const TechStack = () => {
             onMouseEnter={(e) => handleTechHover(tech, e, index)}
             onMouseLeave={() => handleTechLeave(index)}
             className="relative group cursor-pointer w-full"
-            style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Glow Background */}
             <div 
@@ -243,10 +233,10 @@ const TechStack = () => {
             />
             
             {/* Card Container - Mobile Optimized */}
-            <div className="relative flex items-center justify-center aspect-square p-2.5 sm:p-3 md:p-4 lg:p-5 bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-sm rounded-lg sm:rounded-xl border border-gray-700/50 group-hover:border-purple-500/50 transition-all duration-300 overflow-hidden touch-manipulation active:scale-95">
+            <div className="relative flex items-center justify-center aspect-square p-2.5 sm:p-3 md:p-4 lg:p-5 bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-sm rounded-lg sm:rounded-xl border border-gray-700/50 md:group-hover:border-white/40 transition-all duration-200 overflow-hidden touch-manipulation active:scale-95">
               
-              {/* Hover Shine Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              {/* Hover Shine Effect - Desktop Only */}
+              <div className="hidden md:block absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               
               {/* Animated Border - Cyberpunk Grid */}
               <div className="absolute inset-0 rounded-lg sm:rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">

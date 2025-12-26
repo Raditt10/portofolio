@@ -112,10 +112,9 @@ const Gallery = () => {
     <div
       ref={addToRefs}
       onClick={() => openLightbox(index)}
-      className={`${aspectClass} bg-gray-800 rounded-lg overflow-hidden relative group cursor-pointer transform transition-all duration-500 hover:scale-105 ${className}`}
-      style={{ transformStyle: 'preserve-3d' }}
+      className={`${aspectClass} bg-gray-800 rounded-lg overflow-hidden relative group cursor-pointer transform transition-all duration-300 md:hover:scale-[1.02] ${className}`}
     >
-      <div className="relative flex items-center justify-center h-full bg-gradient-to-br from-gray-900/80 to-gray-800/50 rounded-xl border border-gray-700/50 group-hover:border-cyan-500/50 transition-all duration-300 overflow-hidden">
+      <div className="relative flex items-center justify-center h-full bg-gradient-to-br from-gray-900/80 to-gray-800/50 rounded-xl border border-gray-700/50 md:group-hover:border-white/30 transition-all duration-200 overflow-hidden">
 
         {/* Subtle glow on hover */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
