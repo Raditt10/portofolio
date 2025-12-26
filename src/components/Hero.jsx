@@ -227,17 +227,15 @@ const Hero = () => {
       ref={sectionRef}
       id="home"
       style={{ fontFamily: "Sora Variable" }}
-      className="font-sora flex flex-col items-center justify-center relative min-h-screen overflow-hidden bg-gradient-to-br from-[#050607] via-[#0b0f15] to-[#0c1118] pt-20"
+      className="font-sora flex flex-col items-center justify-center relative min-h-screen overflow-hidden bg-gradient-to-br from-[#040507] via-[#0a0d12] to-[#050608] pt-20"
     >
       {/* Elegant Static Background */}
       <div className="absolute inset-0 z-0">
-        {/* Subtle radial gradients for depth */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-white/[0.015] rounded-full blur-3xl" />
-        <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-white/[0.01] rounded-full blur-2xl" />
-        
-        {/* Vignette effect */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
+        {/* Central light bloom with soft amber halo */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.26)_0%,rgba(255,255,255,0.12)_16%,rgba(255,255,255,0)_42%),radial-gradient(circle_at_68%_66%,rgba(255,214,170,0.12)_0%,rgba(255,214,170,0)_55%)]" />
+
+        {/* Luxe vignette to deepen blacks */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
       </div>
 
       {/* Music Player Button */}
