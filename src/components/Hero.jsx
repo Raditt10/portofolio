@@ -150,18 +150,6 @@ const Hero = () => {
     mm.add("(min-width: 768px)", () => {
       const mainTl = gsap.timeline();
 
-      // Background elements animation
-      gsap.fromTo(".floating-particle", 
-        { scale: 0, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.1,
-          ease: "back.out(1.7)"
-        }
-      );
-
       mainTl.to(".hero-subtitle", {
         opacity: 1,
         y: 0,
@@ -223,18 +211,6 @@ const Hero = () => {
       delay: 3
     });
 
-    // Floating particles animation (softened)
-    gsap.to(".floating-particle", {
-      y: -12,
-      x: () => gsap.utils.random(-6, 6),
-      rotation: () => gsap.utils.random(-60, 60),
-      duration: () => gsap.utils.random(4, 7),
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-      stagger: 0.12
-    });
-
   }, []);
 
   const renderNameWithSpans = () => {
@@ -253,16 +229,15 @@ const Hero = () => {
       style={{ fontFamily: "Sora Variable" }}
       className="font-sora flex flex-col items-center justify-center relative min-h-screen overflow-hidden bg-gradient-to-br from-[#050607] via-[#0b0f15] to-[#0c1118] pt-20"
     >
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 opacity-[0.015] z-0">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px',
-          backgroundPosition: 'center center'
-        }} />
+      {/* Elegant Static Background */}
+      <div className="absolute inset-0 z-0">
+        {/* Subtle radial gradients for depth */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-white/[0.015] rounded-full blur-3xl" />
+        <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-white/[0.01] rounded-full blur-2xl" />
+        
+        {/* Vignette effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
       </div>
 
       {/* Music Player Button */}
@@ -417,42 +392,6 @@ const Hero = () => {
       <audio ref={audioRef} loop>
         <source src="/music/where have you been.mp3" type="audio/mp3" />
       </audio>
-
-      {/* Enhanced Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
-        {[...Array(40)].map((_, i) => (
-          <div
-            key={i}
-            className="floating-particle absolute rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${gsap.utils.random(2, 6)}px`,
-              height: `${gsap.utils.random(2, 6)}px`,
-              background: gsap.utils.random([
-                'linear-gradient(45deg, #8b5cf6, #00fff9)',
-                'linear-gradient(45deg, #ff00de, #8b5cf6)',
-                'linear-gradient(45deg, #00fff9, #ff00de)'
-              ]),
-              boxShadow: `
-                0 0 ${gsap.utils.random(8, 15)}px 
-                ${gsap.utils.random([
-                  'rgba(139, 92, 246, 0.8)',
-                  'rgba(0, 255, 249, 0.8)',
-                  'rgba(255, 0, 222, 0.8)'
-                ])}
-              `,
-              filter: 'blur(1px)'
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Pulsing Orb Effect */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] z-0">
-        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600/10 to-cyan-600/10 animate-pulse-slow" 
-             style={{ filter: 'blur(60px)' }} />
-      </div>
 
       {/* Main Content Container - Adjusted spacing */}
       <div ref={containerRef} className="relative z-20 w-full max-w-6xl mx-auto px-6 mt-10"> {/* Added mt-10 */}

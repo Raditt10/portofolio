@@ -31,12 +31,15 @@ const Navbar = () => {
           ? 'bg-black/90 backdrop-blur-md border-b border-gray-700/50' 
           : 'bg-transparent'
       }`}>
-        <div className="relative">
-          <div className="relative px-6 py-3 rounded-full bg-gray-900/60 backdrop-blur-sm border border-gray-700/50">
+        <div className="relative group">
+          <div className="relative px-6 py-3 rounded-full bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 transition-all duration-300 group-hover:border-white/20 group-hover:bg-gray-900/70">
+            {/* Subtle inner glow on hover */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            
             <div className="flex items-center gap-8">
               {/* Logo */}
-              <div className="relative px-4 py-2">
-                <h1 className='text-2xl text-white logo-minecraft'>
+              <div className="relative px-4 py-2 group/logo">
+                <h1 className='text-2xl text-white logo-minecraft transition-all duration-200 group-hover/logo:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'>
                   R'e
                 </h1>
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-8 bg-gray-600" />
@@ -45,12 +48,14 @@ const Navbar = () => {
               {/* Navigation Links */}
               <ul className='relative flex gap-1'>
                 {navlinks.map((navlink, index) => (
-                <li key={navlink.id} className="relative">
+                <li key={navlink.id} className="relative group/item">
                   <a 
                     href={navlink.link}
-                    className='relative block text-base font-medium px-6 py-2.5 rounded-full transition-all duration-200 text-gray-300 hover:text-white hover:bg-white/5'
+                    className='relative block text-base font-medium px-6 py-2.5 rounded-full transition-all duration-200 text-gray-300 hover:text-white hover:bg-white/8 hover:scale-105 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]'
                   >
-                    {navlink.text}
+                    {/* Shine effect */}
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
+                    <span className="relative z-10">{navlink.text}</span>
                   </a>
                   {index < navlinks.length - 1 && (
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-600" />
@@ -128,13 +133,15 @@ const Navbar = () => {
           <div className="relative px-4 py-4 rounded-2xl bg-gray-900/60 backdrop-blur-sm border border-gray-700/50">
             <ul className='relative flex flex-col gap-2'>
               {navlinks.map((navlink, index) => (
-                <li key={navlink.id}>
+                <li key={navlink.id} className="group/link">
                   <a
                     href={navlink.link}
                     onClick={closeSidebar}
-                    className='block text-base font-medium px-6 py-3 rounded-lg transition-all duration-200 text-gray-300 hover:text-white hover:bg-white/5'
+                    className='relative block text-base font-medium px-6 py-3 rounded-lg transition-all duration-200 text-gray-300 hover:text-white hover:bg-white/8 hover:scale-[1.02] overflow-hidden'
                   >
-                    {navlink.text}
+                    {/* Shine effect */}
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover/link:opacity-100 transition-opacity duration-300" />
+                    <span className="relative z-10">{navlink.text}</span>
                   </a>
                   {index < navlinks.length - 1 && (
                     <div className="my-2 w-full h-px bg-gray-700" />
