@@ -202,29 +202,29 @@ const Footer = () => {
     <>
       {/* Toast Notification */}
       {toast.show && (
-        <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-[10000] animate-[slideInRight_0.5s_cubic-bezier(0.34,1.56,0.64,1)]">
-          <div className={`relative px-3 py-2.5 sm:px-6 sm:py-4 rounded-lg sm:rounded-xl backdrop-blur-xl border shadow-2xl min-w-[260px] max-w-[340px] sm:min-w-[320px] sm:max-w-md ${
+        <div className="fixed top-3 right-3 sm:top-6 sm:right-6 z-[10000] animate-[slideInRight_0.5s_cubic-bezier(0.34,1.56,0.64,1)]">
+          <div className={`relative px-2.5 py-2 sm:px-6 sm:py-4 rounded-md sm:rounded-xl backdrop-blur-xl border shadow-2xl min-w-[220px] max-w-[280px] sm:min-w-[320px] sm:max-w-md ${
             toast.type === 'success' 
               ? 'bg-gradient-to-br from-white/95 to-amber-50/95 border-white/50 shadow-amber-200/40' 
               : 'bg-gradient-to-r from-red-900/90 to-rose-900/90 border-red-500/50 shadow-red-500/20'
           }`}>
             {/* Glow Effect */}
-            <div className={`absolute inset-0 rounded-lg sm:rounded-xl blur-xl opacity-30 ${
+            <div className={`absolute inset-0 rounded-md sm:rounded-xl blur-xl opacity-30 ${
               toast.type === 'success' ? 'bg-amber-300/40' : 'bg-red-500/30'
             }`} />
             
             {/* Content */}
-            <div className="relative flex items-start gap-2 sm:gap-4">
+            <div className="relative flex items-start gap-1.5 sm:gap-4">
               {/* Icon */}
-              <div className={`flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
+              <div className={`flex-shrink-0 w-5 h-5 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
                 toast.type === 'success' ? 'bg-amber-400/20 border border-amber-400/30' : 'bg-red-500/20'
               }`}>
                 {toast.type === 'success' ? (
-                  <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-3 h-3 sm:w-5 sm:h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 ) : (
-                  <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-3 h-3 sm:w-5 sm:h-5 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 )}
@@ -232,12 +232,12 @@ const Footer = () => {
               
               {/* Message */}
               <div className="flex-1">
-                <h4 className={`font-bold text-sm sm:text-base mb-0.5 sm:mb-1 ${
+                <h4 className={`font-bold text-xs sm:text-base mb-0.5 sm:mb-1 ${
                   toast.type === 'success' ? 'text-gray-800' : 'text-red-100'
                 }`}>
                   {toast.type === 'success' ? 'Success!' : 'Error'}
                 </h4>
-                <p className={`text-xs sm:text-sm leading-relaxed ${
+                <p className={`text-[10px] sm:text-sm leading-snug sm:leading-relaxed ${
                   toast.type === 'success' ? 'text-gray-700' : 'text-red-200/90'
                 }`}>
                   {toast.message}
@@ -247,20 +247,20 @@ const Footer = () => {
               {/* Close Button */}
               <button
                 onClick={() => setToast({ show: false, message: '', type: '' })}
-                className={`flex-shrink-0 p-1 sm:p-1.5 rounded-lg transition-all duration-300 ${
+                className={`flex-shrink-0 p-0.5 sm:p-1.5 rounded-md transition-all duration-300 ${
                   toast.type === 'success' 
                     ? 'hover:bg-amber-400/20 text-gray-600 hover:text-gray-800' 
                     : 'hover:bg-red-500/20 text-red-300'
                 }`}
               >
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
             
             {/* Progress Bar */}
-            <div className={`absolute bottom-0 left-0 h-0.5 sm:h-1 rounded-b-lg sm:rounded-b-xl ${
+            <div className={`absolute bottom-0 left-0 h-0.5 sm:h-1 rounded-b-md sm:rounded-b-xl ${
               toast.type === 'success' ? 'bg-gradient-to-r from-amber-400 to-amber-500' : 'bg-red-500'
             }`} style={{
               width: '100%',
