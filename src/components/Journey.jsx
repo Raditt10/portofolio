@@ -132,7 +132,7 @@ const Journey = () => {
           </div>
 
           {/* Finish Label - Mobile */}
-          <div className="absolute left-5 md:hidden bottom-0 z-20 -translate-y-8">
+          <div className="absolute left-0 md:hidden bottom-0 z-20 -translate-y-8">
             <span className="bg-white/10 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block whitespace-nowrap">
               Finish
             </span>
