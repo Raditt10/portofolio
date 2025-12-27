@@ -280,8 +280,6 @@ const Journey = () => {
                     transition={{ duration: 0.6, repeat: isActive ? 2 : 0 }}
                   />
 
-                  />
-
                   {/* Spacer untuk desktop agar layout seimbang */}
                   <div className={`hidden md:block md:w-1/2 ${!isLeft ? 'md:order-1' : 'md:order-2'}`} />
                 </div>
