@@ -458,7 +458,7 @@ const Footer = () => {
         },
         { 
           href: "https://www.linkedin.com/in/rafaditya-syahputra-789809399/", 
-          src: "/img/linkedin.png", 
+          src: "/img/linkin.png", 
           alt: "LinkedIn", 
           glow: "blue",
           gradient: "from-blue-500 via-blue-600 to-cyan-500"
