@@ -142,6 +142,33 @@ const Journey = () => {
             </span>
           </motion.div>
 
+          {/* Finish Label - Mobile */}
+          <motion.div
+            className="absolute z-20 md:hidden"
+            style={{
+              left: 'calc(1.25rem - 2px)',
+              bottom: '-2rem',
+            }}
+          >
+            <span className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block">
+              Finish
+            </span>
+          </motion.div>
+
+          {/* Finish Label - Desktop */}
+          <motion.div
+            className="hidden md:block absolute z-20"
+            style={{
+              left: 'calc(50% + 12px)',
+              bottom: '-2rem',
+              transform: 'translateX(-50%)'
+            }}
+          >
+            <span className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block whitespace-nowrap">
+              Finish
+            </span>
+          </motion.div>
+
           {/* Progress Line - simplified */}
           <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 bg-white/10 overflow-hidden">
             <motion.div
@@ -278,7 +305,8 @@ const Journey = () => {
                     }`}
                     animate={isActive ? { scale: [1, 1.3, 0.9, 1.2, 1], opacity: [1, 0.8, 1, 0.9, 1] } : {}}
                     transition={{ duration: 0.6, repeat: isActive ? 2 : 0 }}
-                  />
+                  />\
+
 
                   {/* Spacer untuk desktop agar layout seimbang */}
                   <div className={`hidden md:block md:w-1/2 ${!isLeft ? 'md:order-1' : 'md:order-2'}`} />

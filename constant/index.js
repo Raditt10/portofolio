@@ -381,7 +381,7 @@ const projectsData = [
 
   {
     id: 3,
-    gambar: "IrmaVerse.png",
+    gambar: "coming-soon.png",
     judul: "IrmaVerse",
     parag: "Coming soon",
     tech: ["Next.js", "Three.js", "Prisma", "Supabase"],

@@ -1,43 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
-
-// Sample project data - ganti dengan data Anda
-const projectsData = [
-  {
-    gambar: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
-    judul: "Project Alpha",
-    parag: "Aplikasi web modern dengan React dan Tailwind CSS",
-    tech: ["React", "Tailwind", "Node.js"],
-    linkDemo: "#",
-    linkCode: "#",
-  },
-  {
-    gambar: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
-    judul: "Project Beta",
-    parag: "Platform e-commerce dengan fitur lengkap",
-    tech: ["Next.js", "MongoDB", "Stripe"],
-    linkDemo: "#",
-    linkCode: "#",
-  },
-  {
-    gambar: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800",
-    judul: "Project Gamma",
-    parag: "Dashboard analytics real-time",
-    tech: ["Vue.js", "Firebase", "Chart.js"],
-    linkDemo: "#",
-    linkCode: "#",
-    isComingSoon: true,
-  },
-  {
-    gambar: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800",
-    judul: "Project Delta",
-    parag: "Mobile app dengan React Native",
-    tech: ["React Native", "Redux", "API"],
-    linkDemo: "#",
-    linkCode: "#",
-  },
-];
+import { projectsData } from "../../constant";
 
 // Project Card Component - Optimized untuk mobile
 const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingSoon }) => {
@@ -46,7 +10,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
       {/* Image */}
       <div className="relative h-40 sm:h-48 md:h-52 overflow-hidden">
         <img 
-          src={gambar} 
+          src={`/img/${gambar}`} 
           alt={judul}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
@@ -70,7 +34,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
           {tech.map((t, i) => (
             <span 
               key={i}
-              className="px-2.5 py-1 text-xs font-medium bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-white/10 rounded-full text-white/90"
+              className="px-2.5 py-1 text-xs font-medium bg-white/5 border border-white/20 rounded-full text-white/70 hover:bg-white/10 transition-colors duration-200"
             >
               {t}
             </span>
@@ -83,7 +47,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
             href={linkDemo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 rounded-lg text-white text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/50"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/15 rounded-lg text-white text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-white/20"
             onClick={(e) => e.stopPropagation()}
           >
             <ExternalLink size={16} />
@@ -104,7 +68,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
 
       {/* Hover Glow */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-cyan-500/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5" />
       </div>
     </div>
   );
@@ -231,20 +195,14 @@ const Projects = () => {
     <section 
       id="projects" 
       ref={sectionRef} 
-      className="relative min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 overflow-hidden bg-[#050607]"
-      style={{ fontFamily: "Sora Variable, system-ui, sans-serif" }}
+      className="relative min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 overflow-hidden bg-gradient-to-br from-[#040507] via-[#0a0d12] to-[#050608]"
+      style={{ 
+        fontFamily: "Sora Variable, system-ui, sans-serif",
+        backgroundImage: `radial-gradient(circle at 32% 24%,rgba(255,255,255,0.26) 0%,rgba(255,255,255,0.12) 16%,rgba(255,255,255,0) 42%),
+                         radial-gradient(circle at 68% 66%,rgba(255,214,170,0.12) 0%,rgba(255,214,170,0) 55%),
+                         radial-gradient(ellipse at center,rgba(0,0,0,0) 35%,rgba(0,0,0,0.6) 100%)`
+      }}
     >
-      {/* Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(circle at 30% 20%, rgba(139,92,246,0.15) 0%, transparent 50%),
-              radial-gradient(circle at 70% 80%, rgba(6,182,212,0.12) 0%, transparent 50%)`
-          }}
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Title */}
         <motion.h1 
@@ -269,7 +227,7 @@ const Projects = () => {
           <button
             onClick={() => scrollTo('left')}
             disabled={!canScrollLeft}
-            className={`hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 z-30 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 backdrop-blur-xl border border-white/20 items-center justify-center transition-all duration-300 hover:scale-110 hover:border-white/40 ${
+            className={`hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 items-center justify-center transition-all duration-300 hover:scale-110 hover:border-white/50 hover:bg-white/15 ${
               !canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
           >
@@ -281,7 +239,7 @@ const Projects = () => {
           <button
             onClick={() => scrollTo('right')}
             disabled={!canScrollRight}
-            className={`hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 z-30 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 backdrop-blur-xl border border-white/20 items-center justify-center transition-all duration-300 hover:scale-110 hover:border-white/40 ${
+            className={`hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 items-center justify-center transition-all duration-300 hover:scale-110 hover:border-white/50 hover:bg-white/15 ${
               !canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
           >
@@ -355,10 +313,10 @@ const Projects = () => {
           <div className="max-w-2xl mx-auto">
             <div className="relative h-1 bg-white/5 rounded-full overflow-hidden backdrop-blur-sm border border-white/10">
               <motion.div
-                className="h-full bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500 rounded-full relative"
+                className="h-full bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-full relative"
                 style={{ 
                   width: `${scrollProgress}%`,
-                  boxShadow: '0 0 10px rgba(139,92,246,0.5)'
+                  boxShadow: '0 0 10px rgba(255,255,255,0.3)'
                 }}
                 transition={{ duration: 0.3 }}
               >
@@ -370,7 +328,7 @@ const Projects = () => {
             {/* Progress Info */}
             <div className="flex justify-between items-center mt-2 px-2 text-xs text-gray-500">
               <span>Start</span>
-              <span className="text-cyan-400 font-medium tabular-nums">
+              <span className="text-white/70 font-medium tabular-nums">
                 {Math.round(scrollProgress)}%
               </span>
               <span>End</span>
@@ -382,13 +340,13 @@ const Projects = () => {
             <motion.div
               animate={{ x: [-5, 5, -5] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-white/10 backdrop-blur-sm rounded-full text-sm text-white/80"
+              className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/20 backdrop-blur-sm rounded-full text-sm text-white/70"
             >
-              <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
               </svg>
               <span className="font-medium">Swipe atau Drag</span>
-              <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </motion.div>
