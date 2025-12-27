@@ -4,8 +4,14 @@ import "./ProfileCard.css";
 const DEFAULT_BEHIND_GRADIENT =
   "radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y),rgba(255,255,255,var(--card-opacity)) 6%,rgba(255,245,232,calc(var(--card-opacity)*0.75)) 14%,rgba(255,237,214,calc(var(--card-opacity)*0.45)) 46%,rgba(0,0,0,0) 100%),radial-gradient(35% 52% at 55% 20%,rgba(255,255,255,0.2) 0%,rgba(7,58,255,0) 100%),radial-gradient(100% 100% at 50% 50%,rgba(255,234,209,0.18) 1%,rgba(7,58,255,0) 76%),conic-gradient(from 124deg at 50% 50%,rgba(255,255,255,0.4) 0%,rgba(248,236,214,0.22) 40%,rgba(248,236,214,0.22) 60%,rgba(255,255,255,0.4) 100%)";
 
+const LIGHT_BEHIND_GRADIENT =
+  "radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y),rgba(217,179,140,var(--card-opacity)) 6%,rgba(236,207,178,calc(var(--card-opacity)*0.7)) 14%,rgba(245,224,196,calc(var(--card-opacity)*0.4)) 46%,rgba(0,0,0,0) 100%),radial-gradient(35% 52% at 55% 20%,rgba(255,245,232,0.15) 0%,rgba(7,58,255,0) 100%),radial-gradient(100% 100% at 50% 50%,rgba(228,199,167,0.18) 1%,rgba(7,58,255,0) 76%),conic-gradient(from 124deg at 50% 50%,rgba(217,179,140,0.4) 0%,rgba(245,224,196,0.28) 40%,rgba(245,224,196,0.28) 60%,rgba(217,179,140,0.4) 100%)";
+
 const DEFAULT_INNER_GRADIENT =
   "linear-gradient(145deg,rgba(255,255,255,0.14) 0%,rgba(243,233,213,0.26) 100%)";
+
+const LIGHT_INNER_GRADIENT =
+  "linear-gradient(145deg,rgba(245,237,227,0.22) 0%,rgba(236,207,178,0.32) 100%)";
 
 const ANIMATION_CONFIG = {
   SMOOTH_DURATION: 600,
@@ -52,9 +58,11 @@ const ProfileCardComponent = ({
   contactText = "Contact",
   showUserInfo = true,
   onContactClick,
+  themeMode = 'dark',
 }) => {
   const wrapRef = useRef(null);
   const cardRef = useRef(null);
+  const isLight = themeMode === 'light';
 
   const animationHandlers = useMemo(() => {
     if (!enableTilt) return null;
@@ -273,11 +281,11 @@ const ProfileCardComponent = ({
       "--icon": iconUrl ? `url(${iconUrl})` : "none",
       "--grain": grainUrl ? `url(${grainUrl})` : "none",
       "--behind-gradient": showBehindGradient
-        ? (behindGradient ?? DEFAULT_BEHIND_GRADIENT)
+        ? (behindGradient ?? (isLight ? LIGHT_BEHIND_GRADIENT : DEFAULT_BEHIND_GRADIENT))
         : "none",
-      "--inner-gradient": innerGradient ?? DEFAULT_INNER_GRADIENT,
+      "--inner-gradient": innerGradient ?? (isLight ? LIGHT_INNER_GRADIENT : DEFAULT_INNER_GRADIENT),
     }),
-    [iconUrl, grainUrl, showBehindGradient, behindGradient, innerGradient]
+    [iconUrl, grainUrl, showBehindGradient, behindGradient, innerGradient, isLight]
   );
 
   const handleContactClick = useCallback(() => {
@@ -296,10 +304,12 @@ const ProfileCardComponent = ({
     setExpanded(false);
   }, []);
 
+  const wrapperClass = `pc-card-wrapper profile-glass-luxury ${isLight ? 'pc-card-light' : 'pc-card-dark'} ${className}`.trim();
+
   return (
     <div
       ref={wrapRef}
-      className={`pc-card-wrapper profile-glass-luxury ${className}`.trim()}
+      className={wrapperClass}
       style={cardStyle}
     >
       <section ref={cardRef} className="pc-card profile-glass-luxury-inner">
@@ -374,8 +384,8 @@ const ProfileCardComponent = ({
                     />
                   </div>
                   <div className="pc-user-text">
-                    <div className="pc-handle font-semibold text-lg text-white/90">@{handle}</div>
-                    <div className="pc-status text-xs text-cyan-300 font-medium">{status}</div>
+                    <div className={`pc-handle font-semibold text-lg ${isLight ? 'text-gray-500' : 'text-white/90'}`}>@{handle}</div>
+                    <div className={`pc-status text-xs font-medium ${isLight ? 'text-black' : 'text-cyan-300'}`}>{status}</div>
                   </div>
                 </div>
                 <a href="https://www.instagram.com/rafaa_ndl?igsh=MXVuenhyaHgzeGhjMw==" target="_blank" rel="noopener noreferrer">
@@ -392,10 +402,10 @@ const ProfileCardComponent = ({
               </div>
             )}
           </div>
-          <div className="pc-content">
+          <div className={`pc-content ${isLight ? 'pc-content-light' : ''}`}>
             <div className="pc-details">
-              <h3 className="font-bold text-2xl text-white/95 mb-1 tracking-wide profile-name-luxury">{name}</h3>
-              <p className="text-cyan-200 text-base font-medium mb-2 profile-title-luxury">{title}</p>
+              <h3 className={`font-bold text-2xl mb-1 tracking-wide profile-name-luxury ${isLight ? 'text-[#f5ede3]' : 'text-white/95'}`}>{name}</h3>
+              <p className={`text-base font-medium mb-2 profile-title-luxury ${isLight ? 'text-[#ecdcc8]' : 'text-cyan-200'}`}>{title}</p>
             </div>
           </div>
         </div>

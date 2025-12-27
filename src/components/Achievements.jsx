@@ -1,28 +1,28 @@
-    // React and Hooks
-    import React, { useEffect, useRef, useState } from 'react';
+  // React and Hooks
+  import React, { useEffect, useRef, useState } from 'react';
 
-    // GSAP Animation
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
+  // GSAP Animation
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-    // Swiper
-    import { Swiper, SwiperSlide } from 'swiper/react';
-    import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
-    import 'swiper/css';
-    import 'swiper/css/navigation';
-    import 'swiper/css/pagination';
-    import 'swiper/css/effect-coverflow';
+  // Swiper
+  import { Swiper, SwiperSlide } from 'swiper/react';
+  import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/pagination';
+  import 'swiper/css/effect-coverflow';
 
-    // Components
-    import CertificationCard from './assets/CertificationCard';
-    import CompetitionCard from './assets/CompetitionCard';
+  // Components
+  import CertificationCard from './assets/CertificationCard';
+  import CompetitionCard from './assets/CompetitionCard';
 
-    // Data
-    import { dataCerti } from '../../constant';
+  // Data
+  import { dataCerti } from '../../constant';
 
-    gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-    const Achievements = () => {
+  const Achievements = () => {
       // Refs
       const sectionRef = useRef(null);
       const mainTitleRef = useRef(null);
@@ -34,6 +34,17 @@
       // States
       const [activeIndex, setActiveIndex] = useState(0);
       const [hoveredCardId, setHoveredCardId] = useState(null);
+      const [themeMode, setThemeMode] = useState(() => {
+        try {
+          const root = document.documentElement;
+          return (
+            root.getAttribute('data-theme') || localStorage.getItem('theme') || 'dark'
+          );
+        } catch {
+          return 'dark';
+        }
+      });
+      const isLight = themeMode === 'light';
 
       // GSAP Animations
       useEffect(() => {
@@ -119,34 +130,46 @@
         };
       }, []);
 
+      useEffect(() => {
+        try {
+          const root = document.documentElement;
+          const initial =
+            root.getAttribute('data-theme') || localStorage.getItem('theme') || 'dark';
+          setThemeMode(initial);
+          const observer = new MutationObserver((mutations) => {
+            for (const m of mutations) {
+              if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+                const current = root.getAttribute('data-theme') || 'dark';
+                setThemeMode(current);
+              }
+            }
+          });
+          observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+          return () => observer.disconnect();
+        } catch {
+          // ignore
+        }
+      }, []);
+
       return (
         <section 
           id='achievements'
           ref={sectionRef}
           style={{ fontFamily: "Sora Variable" }}
-          className="relative py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-28 overflow-hidden bg-gradient-to-br from-[#040507] via-[#0a0d12] to-[#050608]"
+          className="relative py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-28 overflow-hidden"
         >
-          {/* Elegant Static Background */}
-          <div className="absolute inset-0 z-0">
-            {/* Central light bloom with soft amber halo */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.26)_0%,rgba(255,255,255,0.12)_16%,rgba(255,255,255,0)_42%),radial-gradient(circle_at_68%_66%,rgba(255,214,170,0.12)_0%,rgba(255,214,170,0)_55%)]" />
-
-            {/* Luxe vignette to deepen blacks */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
-          </div>
-
           <div className="max-w-7xl mx-auto relative z-20">
-            {/* Enhanced Main Title with Glitch Effect */}
+            {/* Main Title */}
             <div className="relative mb-12 sm:mb-16 md:mb-20">
               <h1 
                 ref={mainTitleRef}
-                className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-white via-slate-200 to-amber-100 bg-clip-text text-transparent font-semibold text-center relative z-30'
+                className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center'
                 style={{
+                  backgroundImage: isLight
+                    ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
+                    : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  textShadow: '0 0 24px rgba(255,255,255,0.25)',
-                  letterSpacing: '0.05em'
                 }}
               >
                 Achievements
@@ -157,18 +180,18 @@
             <div className="mb-16 sm:mb-20 md:mb-24">
               <h2 
                 ref={competitionTitleRef}
-                className='text-white text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3 whitespace-nowrap'
+                className={`${isLight ? 'text-slate-800' : 'text-white'} text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3 whitespace-nowrap`}
               >
-                <span className="w-2 h-8 bg-white/30 rounded-full animate-pulse flex-shrink-0" />
+                <span className={`w-2 h-8 rounded-full animate-pulse flex-shrink-0 ${isLight ? 'bg-black/20' : 'bg-white/30'}`} />
                 Competition
-                <div className="flex-1 h-px bg-gradient-to-r from-white/30 to-transparent flex-shrink-0" />
+                <div className={`flex-1 h-px bg-gradient-to-r flex-shrink-0 ${isLight ? 'from-black/20 to-transparent' : 'from-white/30 to-transparent'}`} />
               </h2>
               
               <div 
                 ref={competitionCardRef}
                 className='flex justify-center items-center'
               >
-                <CompetitionCard />
+                <CompetitionCard isLight={isLight} />
               </div>
             </div>
             
@@ -176,11 +199,11 @@
             <div>
               <h2 
                 ref={certificationTitleRef}
-                className='text-white text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3 whitespace-nowrap'
+                className={`${isLight ? 'text-slate-800' : 'text-white'} text-xl sm:text-2xl md:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 flex items-center gap-3 whitespace-nowrap`}
               >
-                <span className="w-2 h-8 bg-white/30 rounded-full animate-pulse flex-shrink-0" />
+                <span className={`w-2 h-8 rounded-full animate-pulse flex-shrink-0 ${isLight ? 'bg-black/20' : 'bg-white/30'}`} />
                 Certification
-                <div className="flex-1 h-px bg-gradient-to-r from-white/30 to-transparent flex-shrink-0" />
+                <div className={`flex-1 h-px bg-gradient-to-r flex-shrink-0 ${isLight ? 'from-black/20 to-transparent' : 'from-white/30 to-transparent'}`} />
               </h2>
               
               <div 
@@ -198,7 +221,7 @@
                     stretch: 0,
                     depth: 200,
                     modifier: 1.5,
-                    slideShadows: true,
+                    slideShadows: !isLight, // remove dark shadows in light mode
                   }}
                   spaceBetween={30}
                   navigation={{
@@ -229,32 +252,36 @@
                   }}
                   className='my-6 sm:my-8 md:my-10 w-full max-w-6xl relative z-20'
                   style={{
-                    '--swiper-navigation-color': '#ffffff',
-                    '--swiper-pagination-color': '#ffffff',
+                    '--swiper-navigation-color': isLight ? '#000000' : '#ffffff',
+                    '--swiper-pagination-color': isLight ? '#000000' : '#ffffff',
                   }}
                 >
                   {dataCerti.map((d, index) => (
                     <SwiperSlide key={index} className="flex justify-center items-center pb-16">
                       <div className="flex justify-center items-center w-full h-full">
                         <div 
-                          className={`relative group w-full transition-all duration-500 ${
+                          className={`relative group w-full transition-all duration-500 rounded-2xl ${
+                            isLight ? 'bg-[#fff7e6] shadow-[0_12px_45px_rgba(0,0,0,0.08)]' : ''
+                          } ${
                             index === activeIndex ? 'scale-100' : 'scale-90 opacity-70'
                           }`}
                           onMouseEnter={() => setHoveredCardId(index)}
                           onMouseLeave={() => setHoveredCardId(null)}
                         >
                           {/* Animated Border */}
-                          <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">
+                          <div className={`absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden ${isLight ? 'bg-[#ffedd5]/60' : ''}`}>
                             <div 
                               className="absolute -inset-px rounded-xl"
                               style={{
-                                background: 'linear-gradient(135deg, rgba(255,255,255,0.3), rgba(248,236,214,0.3), rgba(255,255,255,0.3))',
+                                background: isLight
+                                  ? 'linear-gradient(135deg, rgba(255,236,204,0.8), rgba(255,222,168,0.8), rgba(255,236,204,0.8))'
+                                  : 'linear-gradient(135deg, rgba(255,255,255,0.3), rgba(248,236,214,0.3), rgba(255,255,255,0.3))',
                                 backgroundSize: '300% 300%',
                                 animation: 'gradientShift 2s ease infinite',
-                                opacity: 0.6
+                                opacity: isLight ? 0.9 : 0.6
                               }}
                             />
-                            <div className="absolute inset-px bg-black rounded-xl" />
+                            <div className={`absolute inset-px rounded-xl ${isLight ? 'bg-[#fff7e6]' : 'bg-black'}`} />
                           </div>
 
                           <div className="relative transform transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2">
@@ -262,6 +289,7 @@
                               gambar={d.gambar} 
                               judul={d.judul} 
                               link={d.link} 
+                              isLight={isLight}
                             />
                           </div>
                         </div>

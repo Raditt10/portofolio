@@ -12,6 +12,42 @@ const Hero = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState('0:00');
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  const themeStyles = {
+    dark: {
+      bg: 'linear-gradient(135deg, #040507 0%, #0a0d12 50%, #050608 100%)',
+      halo: 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.12) 16%, rgba(255,255,255,0) 42%), radial-gradient(circle at 68% 66%, rgba(255,214,170,0.12) 0%, rgba(255,214,170,0) 55%)',
+      vignette: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(0,0,0,0.6) 100%)',
+      heading: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
+      secondary: 'rgba(255,255,255,0.7)',
+      accent: '#ffffff',
+    },
+    light: {
+      bg: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #e0e7ff 100%)',
+      halo: 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.45) 16%, rgba(255,255,255,0) 42%), radial-gradient(circle at 68% 66%, rgba(255,206,160,0.25) 0%, rgba(255,206,160,0) 55%)',
+      vignette: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(0,0,0,0.15) 100%)',
+      heading: 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)',
+      secondary: 'rgba(51,65,85,0.75)',
+      accent: '#1f2937',
+    }
+  };
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.dataset.theme = theme;
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('theme', theme);
+    }
+  }, [theme]);
+
+  const toggleThemeMode = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -23,6 +59,23 @@ const Hero = () => {
       setIsPlaying(!isPlaying);
     }
   };
+
+  // Sync theme with global html[data-theme] so light mode text doesn't stay white
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const saved = localStorage.getItem('theme');
+    if (saved) setTheme(saved);
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          const current = document.documentElement.dataset.theme;
+          setTheme(current || 'dark');
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
 
   // Load audio metadata to get duration
   useEffect(() => {
@@ -44,9 +97,10 @@ const Hero = () => {
 
   useGSAP(() => {
     gsap.set("#nama", { overflow: "hidden" });
+    // Keep hero text visible by default; animations will still run when gsap timelines play
     gsap.set([".hero-subtitle", ".hero-description", ".scroll-text", ".scroll-arrow", ".github-container"], {
-      opacity: 0,
-      y: 36
+      opacity: 1,
+      y: 0
     });
 
     let mm = gsap.matchMedia();
@@ -54,55 +108,43 @@ const Hero = () => {
     const createTypewriterLoop = (chars, speed) => {
       const tl = gsap.timeline({ repeat: -1, repeatDelay: 2.5 });
       
-      const cursor = document.createElement('span');
-      cursor.className = 'typing-cursor';
-      cursor.style.cssText = `
-        display: inline-block;
-        width: 4px;
-        height: 1.2em;
-        background: linear-gradient(180deg, #f7f9ff 0%, #dfe6f3 60%, #b6c7ff 100%);
-        margin-left: 4px;
-        vertical-align: middle;
-        animation: blink 0.9s infinite;
-        box-shadow: 0 0 8px rgba(214, 225, 255, 0.25);
-        border-radius: 999px;
-      `;
-      
       gsap.set(chars, { 
         opacity: 0, 
         y: 12, 
-        scale: 0.95, 
-        transformOrigin: "50% 50%"
+        scale: 0.3, 
+        rotateX: -90,
+        rotateY: -45,
+        rotateZ: -30,
+        transformOrigin: "50% 50%",
+        filter: "blur(8px)"
       });
       
-      // Enter animation
+      // Enter animation - Minecraft Explosion Effect
       tl.to(chars, {
         opacity: 1,
         y: 0,
-        scale: 1,
-        rotateX: 0,
-        duration: speed,
-        ease: "power2.out",
+        scale: 1.3,
+        rotateX: 15,
+        rotateY: 0,
+        rotateZ: 0,
+        filter: "blur(0px)",
+        duration: speed * 0.6,
+        ease: "back.out(1.8)",
         stagger: {
           each: speed,
           from: "start"
-        },
-        onStart: function() {
-          const namaEl = document.getElementById('nama');
-          if (namaEl && !namaEl.querySelector('.typing-cursor')) {
-            namaEl.appendChild(cursor);
-          }
-        },
-        onUpdate: function() {
-          const visibleChars = Array.from(chars).filter(char => 
-            parseFloat(window.getComputedStyle(char).opacity) > 0.5
-          );
-          if (visibleChars.length > 0) {
-            const lastChar = visibleChars[visibleChars.length - 1];
-            lastChar.parentNode.insertBefore(cursor, lastChar.nextSibling);
-          }
         }
       })
+      .to(chars, {
+        scale: 1,
+        rotateX: 0,
+        duration: speed * 0.3,
+        ease: "power2.inOut",
+        stagger: {
+          each: speed,
+          from: "start"
+        }
+      }, 0)
       // Bounce effect (soft)
       .to(chars, {
         y: -6,
@@ -128,20 +170,6 @@ const Hero = () => {
           each: speed * 0.4,
           from: "end"
         },
-        onUpdate: function() {
-          const visibleChars = Array.from(chars).filter(char => 
-            parseFloat(window.getComputedStyle(char).opacity) > 0.5
-          );
-          if (visibleChars.length > 0) {
-            const lastChar = visibleChars[visibleChars.length - 1];
-            lastChar.parentNode.insertBefore(cursor, lastChar.nextSibling);
-          }
-        },
-        onComplete: function() {
-          if (cursor.parentNode) {
-            cursor.parentNode.removeChild(cursor);
-          }
-        }
       });
       
       return tl;
@@ -226,16 +254,15 @@ const Hero = () => {
     <section
       ref={sectionRef}
       id="home"
-      style={{ fontFamily: "Sora Variable" }}
-      className="font-sora flex flex-col items-center justify-center relative min-h-screen overflow-hidden bg-gradient-to-br from-[#040507] via-[#0a0d12] to-[#050608] pt-20"
+      style={{ 
+        fontFamily: "Sora Variable",
+        color: themeStyles[theme].accent
+      }}
+      className={`font-sora flex flex-col items-center justify-center relative min-h-screen overflow-hidden pt-20 theme-${theme}`}
     >
-      {/* Elegant Static Background */}
+      {/* Elegant Background - keep halo, drop vignette to avoid section edge darkening */}
       <div className="absolute inset-0 z-0">
-        {/* Central light bloom with soft amber halo */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.26)_0%,rgba(255,255,255,0.12)_16%,rgba(255,255,255,0)_42%),radial-gradient(circle_at_68%_66%,rgba(255,214,170,0.12)_0%,rgba(255,214,170,0)_55%)]" />
-
-        {/* Luxe vignette to deepen blacks */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
+        <div className="absolute inset-0" style={{ background: themeStyles[theme].halo }} />
       </div>
 
       {/* Music Player Button - Desktop Only */}
@@ -287,10 +314,10 @@ const Hero = () => {
           </div>
           
           {/* Enhanced Tooltip with Song Info */}
-          <div className="absolute top-full right-0 mt-3 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none transform group-hover:translate-y-0 translate-y-2">
+          <div className="absolute top-full left-0 mt-3 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none transform group-hover:translate-y-0 translate-y-2">
             <div className="relative">
               {/* Arrow */}
-              <div className="absolute -top-2 right-6 w-4 h-4 bg-white/95 backdrop-blur-sm border-l border-t border-amber-200/30 transform rotate-45" />
+              <div className="absolute -top-2 left-6 w-4 h-4 bg-white/95 backdrop-blur-sm border-l border-t border-amber-200/30 transform rotate-45" />
               
               {/* Card */}
               <div className="relative bg-gradient-to-br from-white/95 to-amber-50/95 backdrop-blur-xl rounded-xl border border-white/40 overflow-hidden shadow-2xl w-64">
@@ -395,14 +422,27 @@ const Hero = () => {
       <div ref={containerRef} className="relative z-20 w-full max-w-6xl mx-auto px-6 mt-10"> {/* Added mt-10 */}
         {/* Konten */}
         <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl hero-subtitle bg-gradient-to-r from-white via-slate-200 to-amber-100 bg-clip-text text-transparent font-semibold tracking-[0.08em] uppercase mb-4">
-            Hi, I'm
+          <h1
+            className="text-2xl sm:text-3xl lg:text-4xl hero-subtitle font-semibold tracking-[0.08em] uppercase mb-4"
+          >
+            <span
+              className="inline-block bg-clip-text text-transparent"
+              style={{
+                backgroundImage: themeStyles[theme].heading,
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent'
+              }}
+            >
+              Hi, I'm
+            </span>
           </h1>
           <h2
             id="nama"
-            className="text-2xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] text-white font-bold leading-tight mb-6 tracking-tight px-4"
+            className="text-2xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] font-bold leading-tight mb-6 tracking-tight px-4"
             style={{
-              textShadow: '0 0 30px rgba(255,255,255,0.3)'
+              color: themeStyles[theme].accent,
+              textShadow: theme === 'dark' ? '0 0 30px rgba(255,255,255,0.3)' : '0 0 18px rgba(15,23,42,0.12)'
             }}
           >
             {renderNameWithSpans()}
@@ -410,19 +450,42 @@ const Hero = () => {
           
           {/* Role */}
           <div className="relative mt-6">
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-gradient-to-r from-white via-slate-200 to-amber-100 bg-clip-text text-transparent leading-relaxed font-semibold tracking-[0.12em] uppercase">
-              Front-end Developer • UI/UX Designer • Artist
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-semibold tracking-[0.12em] uppercase">
+              <span
+                className="inline-block bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: themeStyles[theme].heading,
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent'
+                }}
+              >
+               Full Stack Developer • UI/UX Designer • Artist
+              </span>
             </p>
           </div>
           
           {/* Hobby */}
           <div className="relative mt-2">
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-gradient-to-r from-white via-slate-300 to-amber-100 bg-clip-text text-transparent leading-relaxed font-medium tracking-[0.08em]">
-              Photography Enthusiast
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-medium tracking-[0.08em]">
+              <span
+                className="inline-block bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: themeStyles[theme].heading,
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent'
+                }}
+              >
+                Photography Enthusiast
+              </span>
             </p>
           </div>
           
-           <p className="text-base sm:text-lg text-white/70 mt-6 max-w-2xl mx-auto italic">
+           <p
+             className="text-base sm:text-lg mt-6 max-w-2xl mx-auto italic"
+             style={{ color: themeStyles[theme].secondary }}
+           >
              “Bǎoshí bù jīng móliàn jiù bù huì fāguāng, rén bù jīngguò tiǎozhàn jiù bù huì chénggōng.”
           </p>
         </div>
@@ -479,14 +542,27 @@ const Hero = () => {
 
       {/* Enhanced Scroll Indicator - Moved down */}
       <div className="mt-8 lg:mt-12 flex flex-col items-center gap-4 lg:gap-6 relative z-20">
-        <h1 className="scroll-text text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent font-light tracking-wide">
+        <h1
+          className="scroll-text text-lg sm:text-xl lg:text-2xl font-light tracking-wide"
+          style={{ color: themeStyles[theme].accent }}
+        >
           Explore My Work
         </h1>
         <div className="scroll-arrow group cursor-pointer">
-          <div className="w-7 h-12 border-2 border-white/30 rounded-full flex justify-center pt-2 transition-all duration-300 group-hover:border-cyan-400/60 group-hover:shadow-lg group-hover:shadow-cyan-500/25">
-            <div className="w-1.5 h-3 bg-gradient-to-b from-white to-cyan-200 rounded-full animate-bounce" />
+          <div className={`w-7 h-12 border-2 rounded-full flex justify-center pt-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-500/20 ${
+            theme === 'light'
+              ? 'border-slate-300/80 bg-white/50 group-hover:border-cyan-300/70'
+              : 'border-white/30 bg-white/5 group-hover:border-cyan-400/60'
+          }`}>
+            <div className={`w-1.5 h-3 rounded-full animate-bounce ${
+              theme === 'light'
+                ? 'bg-gradient-to-b from-cyan-300 to-cyan-500'
+                : 'bg-gradient-to-b from-white to-cyan-200'
+            }`} />
           </div>
-          <div className="absolute -inset-4 rounded-full bg-cyan-500/10 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className={`absolute -inset-4 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+            theme === 'light' ? 'bg-cyan-400/15' : 'bg-cyan-500/10'
+          }`} />
         </div>
       </div>
 

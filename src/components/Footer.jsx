@@ -22,6 +22,15 @@ const Footer = () => {
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
+  const [themeMode, setThemeMode] = useState(() => {
+    try {
+      const root = document.documentElement;
+      return root.getAttribute('data-theme') || localStorage.getItem('theme') || 'dark';
+    } catch {
+      return 'dark';
+    }
+  });
+  const isLight = themeMode === 'light';
 
   const EMAILJS_SERVICE_ID = "service_kkmzp89";
   const EMAILJS_TEMPLATE_ID = "template_gl1shr7"; 
@@ -34,6 +43,27 @@ const Footer = () => {
     setTypedText(fullText);
     setIsTyping(false);
   }, []); 
+
+  // Sync theme from html[data-theme]
+  useEffect(() => {
+    try {
+      const root = document.documentElement;
+      const initial = root.getAttribute('data-theme') || localStorage.getItem('theme') || 'dark';
+      setThemeMode(initial);
+      const observer = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+            const current = root.getAttribute('data-theme') || 'dark';
+            setThemeMode(current);
+          }
+        }
+      });
+      observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+      return () => observer.disconnect();
+    } catch {
+      // ignore
+    }
+  }, []);
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -267,22 +297,13 @@ const Footer = () => {
       <footer
         id="contact"
         ref={footerRef}
-        className="relative min-h-screen overflow-hidden py-20 px-4 sm:px-6 md:px-8 lg:px-12 bg-gradient-to-br from-[#040507] via-[#0a0d12] to-[#050608]"
+        className="relative min-h-screen overflow-hidden py-20 px-4 sm:px-6 md:px-8 lg:px-12"
         style={{ fontFamily: "Sora Variable" }}
       >
-        {/* Elegant Static Background */}
-        <div className="absolute inset-0 z-0">
-          {/* Central light bloom with soft amber halo */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.26)_0%,rgba(255,255,255,0.12)_16%,rgba(255,255,255,0)_42%),radial-gradient(circle_at_68%_66%,rgba(255,214,170,0.12)_0%,rgba(255,214,170,0)_55%)]" />
-
-          {/* Luxe vignette to deepen blacks */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
-        </div>
-
         {/* Simple top line */}
         <div 
           ref={lineRef}
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+          className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 bg-gradient-to-r ${isLight ? 'from-transparent via-black/20 to-transparent' : 'from-transparent via-white/30 to-transparent'}`}
         />
 
       {/* Footer content */}
@@ -293,7 +314,7 @@ const Footer = () => {
           ref={logoSectionRef}
           className="flex flex-col items-center lg:items-start order-1 lg:order-1 group relative"
         >
-         <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-300">
+         <div className={`relative p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 ${isLight ? 'bg-white/80 border-amber-100 group-hover:border-amber-200 shadow-[0_12px_35px_rgba(0,0,0,0.08)]' : 'bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-white/10 group-hover:border-white/30'}`}>
   {/* Simple Image Frame */}
   <div className="relative inline-block group/img">
     {/* Main Image Container */}
@@ -312,11 +333,19 @@ const Footer = () => {
     </div>
         </div>
 
-        <h3 className="font-bold text-2xl sm:text-3xl md:text-4xl mt-4 sm:mt-5 bg-gradient-to-r from-white to-amber-100/80 bg-clip-text text-transparent transition-all duration-300">
+        <h3 className={`font-bold text-2xl sm:text-3xl md:text-4xl mt-4 sm:mt-5 bg-clip-text text-transparent transition-all duration-300 ${isLight ? '' : ''}`}
+            style={{
+              backgroundImage: isLight
+                ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
+                : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text'
+            }}
+        >
           R'e 
         </h3>
         <div className="relative mt-2 sm:mt-3 min-h-[2rem] sm:min-h-[2.5rem] md:min-h-[3rem]">
-          <h4 className="text-white/80 font-medium text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 flex items-center justify-center gap-2 relative">
+          <h4 className={`${isLight ? 'text-slate-800' : 'text-white/80'} font-medium text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 flex items-center justify-center gap-2 relative`}>
             {/* Main Text with Typing Effect */}
             <span className="relative inline-block">
               {typedText}
@@ -325,8 +354,8 @@ const Footer = () => {
         </div>
 
         {/* Additional simple elements */}
-        <div className="absolute -top-2 -right-2 w-4 h-4 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className={`absolute -top-2 -right-2 w-4 h-4 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isLight ? 'bg-amber-200' : 'bg-white/30'}`}></div>
+        <div className={`absolute -bottom-2 -left-2 w-3 h-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isLight ? 'bg-amber-100' : 'bg-white/20'}`}></div>
       </div>
         </div>
 
@@ -337,16 +366,24 @@ const Footer = () => {
         >
           {/* Contact Info */}
           <div className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 sm:mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 sm:mb-4 bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: isLight
+                    ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
+                    : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text'
+                }}
+            >
               Contact
             </h2>
-            <div className="flex gap-3 items-center justify-center p-3 rounded-lg bg-white/5 border border-white/10">
+            <div className={`flex gap-3 items-center justify-center p-3 rounded-lg border ${isLight ? 'bg-white/80 border-amber-100 shadow-[0_10px_25px_rgba(0,0,0,0.06)]' : 'bg-white/5 border-white/10'}`}>
               <img
                 src="/img/email.png"
                 alt="Email icon"
                 className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 filter brightness-0 invert"
               />
-              <h3 className="text-white text-sm sm:text-base md:text-lg font-mono">
+              <h3 className={`${isLight ? 'text-slate-900' : 'text-white'} text-sm sm:text-base md:text-lg font-mono`}>
                 iniakuraditt@gmail.com
               </h3>
             </div>
@@ -354,7 +391,15 @@ const Footer = () => {
 
           {/* Collaboration Form */}
           <div className="flex flex-col items-center text-center w-full">
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-4 sm:mb-6 lg:mb-7 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-4 sm:mb-6 lg:mb-7 bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: isLight
+                    ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
+                    : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text'
+                }}
+            >
               Get in Touch
             </h2>
             
@@ -377,7 +422,7 @@ const Footer = () => {
               {/* Email Input */}
               <div className="relative w-full">
                 <input
-                  className="bg-gray-900/80 backdrop-blur-sm w-full sm:w-80 md:w-96 h-12 sm:h-14 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30 text-white text-sm md:text-base border border-white/10 focus:border-white/30 transition-all duration-300 placeholder-gray-400"
+                  className={`backdrop-blur-sm w-full sm:w-80 md:w-96 h-12 sm:h-14 px-4 rounded-lg focus:outline-none focus:ring-2 text-sm md:text-base border transition-all duration-300 placeholder-gray-400 ${isLight ? 'bg-white/90 text-slate-900 border-amber-100 focus:ring-amber-200 focus:border-amber-300' : 'bg-gray-900/80 text-white border-white/10 focus:ring-white/30 focus:border-white/30'}`}
                   type="email"
                   name="email"
                   placeholder="Your email address"
@@ -391,7 +436,7 @@ const Footer = () => {
               {/* Message Textarea */}
               <div className="relative w-full">
                 <textarea
-                  className="bg-gray-900/80 backdrop-blur-sm w-full sm:w-80 md:w-96 h-24 sm:h-28 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30 text-white text-sm md:text-base border border-white/10 focus:border-white/30 transition-all duration-300 resize-none placeholder-gray-400"
+                  className={`backdrop-blur-sm w-full sm:w-80 md:w-96 h-24 sm:h-28 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 text-sm md:text-base border transition-all duration-300 resize-none placeholder-gray-400 ${isLight ? 'bg-white/90 text-slate-900 border-amber-100 focus:ring-amber-200 focus:border-amber-300' : 'bg-gray-900/80 text-white border-white/10 focus:ring-white/30 focus:border-white/30'}`}
                   name="message"
                   placeholder="Tell me about your project or collaboration idea..."
                   value={formData.message}
@@ -402,14 +447,14 @@ const Footer = () => {
                 />
               </div>
               
-              <div className="text-gray-400 text-xs text-right w-full sm:w-80 md:w-96">
+              <div className={`${isLight ? 'text-gray-600' : 'text-gray-400'} text-xs text-right w-full sm:w-80 md:w-96`}>
                 {formData.message.length}/500 characters
               </div>
 
               <button
                 type="submit"
                 disabled={formData.isSubmitting}
-                className="relative overflow-hidden bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm md:text-base whitespace-nowrap px-8 sm:px-10 py-3 sm:py-4 rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                className={`relative overflow-hidden font-bold text-sm md:text-base whitespace-nowrap px-8 sm:px-10 py-3 sm:py-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-2 border ${isLight ? 'bg-[#ffeccc] text-slate-900 border-amber-200 hover:bg-[#ffdfa8] hover:shadow-[0_12px_30px_rgba(0,0,0,0.1)]' : 'bg-white/10 hover:bg-white/20 border-white/20 text-white hover:shadow-lg'}`}
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {formData.isSubmitting ? (
@@ -436,8 +481,16 @@ const Footer = () => {
   className="flex flex-col items-center lg:items-end order-3 lg:order-3 relative"
 >
   {/* Main Content */}
-  <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-white/10 hover:border-white/30 transition-all duration-300">
-    <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 sm:mb-6 text-center lg:text-right bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+  <div className={`relative p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 ${isLight ? 'bg-white/80 border-amber-100 hover:border-amber-200 shadow-[0_12px_35px_rgba(0,0,0,0.08)]' : 'bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-white/10 hover:border-white/30'}`}>
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 sm:mb-6 text-center lg:text-right bg-clip-text text-transparent"
+        style={{
+          backgroundImage: isLight
+            ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
+            : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text'
+        }}
+    >
       Social
     </h2>
     <div className="flex justify-center gap-5 sm:gap-6 md:gap-8 items-center flex-wrap">
@@ -478,7 +531,7 @@ const Footer = () => {
           {/* Main Icon Container - Simplified */}
           <div className="relative transform transition-all duration-300 group-hover/social:scale-105">
             {/* Background Circle */}
-            <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-16 md:h-16 rounded-full overflow-hidden shadow-xl bg-white/90 hover:bg-white transition-colors duration-300 flex items-center justify-center">
+            <div className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-16 md:h-16 rounded-full overflow-hidden shadow-xl transition-colors duration-300 flex items-center justify-center ${isLight ? 'bg-white hover:bg-amber-50 border border-amber-100' : 'bg-white/90 hover:bg-white'}`}>
               {/* Icon Image */}
               <img
                 src={social.src}
@@ -494,10 +547,10 @@ const Footer = () => {
 
           {/* Tooltip - Desktop */}
           <div className="hidden sm:block absolute -bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/social:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap z-30">
-            <div className="px-3 py-1.5 bg-white/90 rounded-lg backdrop-blur-sm shadow-lg">
+            <div className={`px-3 py-1.5 rounded-lg backdrop-blur-sm shadow-lg ${isLight ? 'bg-white' : 'bg-white/90'}`}>
               <p className="text-black text-xs font-semibold">{social.alt}</p>
             </div>
-            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white/90 rotate-45" />
+            <div className={`absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rotate-45 ${isLight ? 'bg-white' : 'bg-white/90'}`} />
           </div>
           
           {/* Mobile Label */}
@@ -513,14 +566,19 @@ const Footer = () => {
 
       {/* Bottom section dengan copyright */}
       <div className="flex relative justify-center items-center mt-20 pb-8 z-20">
-        <div className="absolute -top-10 left-1/2 w-10/12 -translate-x-1/2 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-        <h1 className="font-bold text-sm md:text-base tracking-wide bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text text-transparent">
+        <div className={`absolute -top-10 left-1/2 w-10/12 -translate-x-1/2 h-0.5 bg-gradient-to-r ${isLight ? 'from-transparent via-black/15 to-transparent' : 'from-transparent via-white/30 to-transparent'}`} />
+        <h1 className="font-bold text-sm md:text-base tracking-wide bg-clip-text text-transparent"
+            style={{
+              backgroundImage: isLight
+                ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
+                : 'linear-gradient(135deg, #9ca3af 0%, #6b7280 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text'
+            }}
+        >
           R'e • 2025
         </h1>
       </div>
-
-      {/* Bottom Gradient - Simplified */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#040507] via-[#040507]/50 to-transparent pointer-events-none z-0"></div>
 
       <style jsx>{`
         @keyframes gridMove {

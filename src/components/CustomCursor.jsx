@@ -7,12 +7,33 @@ const CustomCursor = () => {
   const [isPointer, setIsPointer] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isGalleryModal, setIsGalleryModal] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof document === 'undefined') return 'dark';
+    return document.documentElement.dataset.theme || 'dark';
+  });
+
+  const isLight = theme === 'light';
   useEffect(() => {
     const handleGalleryModal = (e) => {
       setIsGalleryModal(!!(e.detail && e.detail.open));
     };
     window.addEventListener('gallery-modal', handleGalleryModal);
     return () => window.removeEventListener('gallery-modal', handleGalleryModal);
+  }, []);
+
+  // Observe global theme changes
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          const current = document.documentElement.dataset.theme;
+          setTheme(current || 'dark');
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -114,14 +135,22 @@ const CustomCursor = () => {
           marginLeft: isPointer ? '-24px' : '-18px',
           marginTop: isPointer ? '-24px' : '-18px',
           borderRadius: '50%',
-          border: '1.5px solid rgba(255, 255, 255, 0.4)',
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 100%)',
+          border: isLight ? '1.5px solid rgba(15, 23, 42, 0.35)' : '1.5px solid rgba(255, 255, 255, 0.4)',
+          background: isLight
+            ? 'radial-gradient(circle, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.04) 50%, transparent 100%)'
+            : 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 100%)',
           backdropFilter: 'blur(4px)',
-          boxShadow: isPointer 
-            ? '0 0 20px rgba(255, 255, 255, 0.15), inset 0 0 10px rgba(255, 255, 255, 0.1)'
-            : '0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 8px rgba(255, 255, 255, 0.08)',
+          boxShadow: isPointer
+            ? (isLight
+                ? '0 0 20px rgba(15, 23, 42, 0.15), inset 0 0 10px rgba(15, 23, 42, 0.12)'
+                : '0 0 20px rgba(255, 255, 255, 0.15), inset 0 0 10px rgba(255, 255, 255, 0.1)')
+            : (isLight
+                ? '0 0 15px rgba(15, 23, 42, 0.12), inset 0 0 8px rgba(15, 23, 42, 0.08)'
+                : '0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 8px rgba(255, 255, 255, 0.08)'),
           transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease',
-          borderColor: isPointer ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.4)',
+          borderColor: isPointer
+            ? (isLight ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.6)')
+            : (isLight ? 'rgba(15, 23, 42, 0.35)' : 'rgba(255, 255, 255, 0.4)'),
         }}
       />
 
@@ -138,11 +167,19 @@ const CustomCursor = () => {
           marginTop: isPointer ? '-3px' : '-2px',
           borderRadius: '50%',
           background: isPointer 
-            ? 'radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 100%)'
-            : 'radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%)',
+            ? (isLight
+                ? 'radial-gradient(circle, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 100%)'
+                : 'radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 100%)')
+            : (isLight
+                ? 'radial-gradient(circle, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.6) 100%)'
+                : 'radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%)'),
           boxShadow: isPointer 
-            ? '0 0 12px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.3)'
-            : '0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.2)',
+            ? (isLight
+                ? '0 0 12px rgba(15, 23, 42, 0.45), 0 0 20px rgba(15, 23, 42, 0.25)'
+                : '0 0 12px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.3)')
+            : (isLight
+                ? '0 0 8px rgba(15, 23, 42, 0.4), 0 0 15px rgba(15, 23, 42, 0.2)'
+                : '0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.2)'),
           transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease',
         }}
       />

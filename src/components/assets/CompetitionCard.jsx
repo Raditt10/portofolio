@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 
-function CompetitionCard() {
+function CompetitionCard({ isLight = false }) {
   const [flipped, setFlipped] = useState(false);
 
   return (
@@ -15,14 +15,16 @@ function CompetitionCard() {
       >
         {/* Front Side */}
         <div 
-          className='absolute inset-0 flex flex-col justify-center items-center rounded-xl p-6 border border-white/20 shadow-2xl'
+          className={`absolute inset-0 flex flex-col justify-center items-center rounded-xl p-6 border shadow-2xl ${isLight ? 'border-amber-200/80' : 'border-white/20'}`}
           style={{ 
             backfaceVisibility: 'hidden',
-            background: 'linear-gradient(135deg, rgba(30,30,35,0.98) 0%, rgba(15,15,20,0.98) 100%)'
+            background: isLight
+              ? 'linear-gradient(135deg, #fff7e6 0%, #fffaf0 100%)'
+              : 'linear-gradient(135deg, rgba(30,30,35,0.98) 0%, rgba(15,15,20,0.98) 100%)'
           }}
         >
           {/* Certificate Image */}
-          <div className='w-full max-w-xs bg-white rounded-lg p-3 shadow-lg mb-4'>
+          <div className={`w-full max-w-xs rounded-lg p-3 shadow-lg mb-4 ${isLight ? 'bg-white border border-amber-100' : 'bg-white'}`}>
             <img 
               src="/img/indo.png" 
               alt="ISSC Competition Certificate" 
@@ -33,11 +35,11 @@ function CompetitionCard() {
 
           {/* Content */}
           <div className='text-center space-y-3'>
-            <h1 className='text-white font-bold text-xl'>
+            <h1 className={`${isLight ? 'text-slate-900' : 'text-white'} font-bold text-xl`}>
               ISSC Competition
             </h1>
-            <h2 className='bg-gradient-to-r from-amber-200 to-amber-100 bg-clip-text text-transparent font-semibold text-lg'>
-               1ST PLACE
+            <h2 className={`${isLight ? 'text-amber-700 font-semibold text-lg' : 'bg-gradient-to-r from-amber-200 to-amber-100 bg-clip-text text-transparent font-semibold text-lg'}`}>
+              1ST PLACE
             </h2>
             
             <a 
@@ -46,7 +48,7 @@ function CompetitionCard() {
               rel='noopener noreferrer'
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="bg-white/10 text-white font-semibold px-4 py-2 rounded-lg hover:bg-white/20 border border-white/20 transition-all duration-200">
+              <button className={`${isLight ? 'bg-amber-100 text-slate-900 border border-amber-200 hover:bg-amber-200' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'} font-semibold px-4 py-2 rounded-lg transition-all duration-200`}>
                 View Certificate
               </button>
             </a>
@@ -55,14 +57,16 @@ function CompetitionCard() {
 
         {/* Back Side */}
         <div 
-          className='absolute inset-0 flex flex-col justify-center items-center rounded-xl p-6 border border-white/20 shadow-2xl'
+          className={`absolute inset-0 flex flex-col justify-center items-center rounded-xl p-6 border shadow-2xl ${isLight ? 'border-amber-200/80' : 'border-white/20'}`}
           style={{ 
             transform: 'rotateY(180deg)', 
             backfaceVisibility: 'hidden',
-            background: 'linear-gradient(135deg, rgba(15,15,20,0.98) 0%, rgba(30,30,35,0.98) 100%)'
+            background: isLight
+              ? 'linear-gradient(135deg, #fffaf0 0%, #fff7e6 100%)'
+              : 'linear-gradient(135deg, rgba(15,15,20,0.98) 0%, rgba(30,30,35,0.98) 100%)'
           }}
         >
-          <div className='bg-white rounded-lg p-4 w-full max-w-xs text-center'>
+          <div className={`rounded-lg p-4 w-full max-w-xs text-center ${isLight ? 'bg-white border border-amber-100' : 'bg-white'}`}>
             <h2 className='text-gray-800 font-bold text-lg mb-3'>
               🏅 Achievement Details
             </h2>
@@ -81,7 +85,7 @@ function CompetitionCard() {
                 rel='noopener noreferrer'
                 onClick={(e) => e.stopPropagation()}
               >
-                <button className='bg-white/10 text-white font-semibold px-4 py-2 rounded-lg hover:bg-white/20 border border-white/20 transition-all duration-200 text-sm'>
+                <button className={`${isLight ? 'bg-amber-100 text-slate-900 border border-amber-200 hover:bg-amber-200' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'} font-semibold px-4 py-2 rounded-lg transition-all duration-200 text-sm`}>
                   View Documents
                 </button>
               </a>

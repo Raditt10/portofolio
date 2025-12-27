@@ -26,6 +26,7 @@
   --sunpillar-clr-5: var(--sunpillar-5);
   --sunpillar-clr-6: var(--sunpillar-6);
   --card-radius: 30px;
+  --inside-bg: rgba(0, 0, 0, 0.9);
 }
 
 .pc-card-wrapper {
@@ -98,7 +99,7 @@
   inset: 1px;
   position: absolute;
   background-image: var(--inner-gradient);
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--inside-bg);
   transform: translate3d(0, 0, 0.01px);
 }
 
@@ -379,6 +380,10 @@
   mix-blend-mode: luminosity;
 }
 
+.pc-content-light {
+  mix-blend-mode: normal;
+}
+
 .pc-details {
   width: 100%;
   position: absolute;
@@ -530,6 +535,54 @@
 .profile-avatar-wrapper:hover {
   box-shadow: 0 0 64px 16px rgba(255,255,255,0.5), 0 0 0 8px rgba(248,236,214,0.3), 0 0 0 24px rgba(255,255,255,0.1);
   filter: brightness(1.08) saturate(1.2);
+}
+
+.pc-card-wrapper.pc-card-light {
+  --inside-bg: rgba(248, 250, 252, 0.9);
+}
+
+.pc-card-wrapper.pc-card-light::before {
+  filter: contrast(0.8) saturate(1) blur(28px) opacity(0.3);
+}
+
+.pc-card-wrapper.pc-card-light:hover::before,
+.pc-card-wrapper.pc-card-light.active::before {
+  filter: contrast(0.9) saturate(1.2) blur(32px) opacity(0.5);
+}
+
+.pc-card-wrapper.pc-card-light .pc-card {
+  box-shadow: rgba(139, 92, 46, 0.08) calc((var(--pointer-from-left) * 6px) - 2px) calc((var(--pointer-from-top) * 12px) - 4px) 20px -4px,
+              0 0 20px rgba(217, 179, 140, 0.18),
+              0 0 35px rgba(236, 207, 178, 0.22);
+  background-blend-mode: screen, normal, normal, normal;
+  background-image: conic-gradient(from 124deg at 50% 50%, rgba(217, 179, 140, 0.45) 0%, rgba(236, 207, 178, 0.28) 40%, rgba(236, 207, 178, 0.28) 60%, rgba(217, 179, 140, 0.45) 100%);
+}
+
+.pc-card-wrapper.pc-card-light .pc-user-info {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(241, 245, 249, 0.85));
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.pc-card-wrapper.pc-card-light .pc-contact-btn {
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  color: #0f172a;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(226, 232, 240, 0.9));
+  box-shadow: 0 6px 16px rgba(148, 163, 184, 0.3);
+}
+
+.pc-card-wrapper.pc-card-light .pc-contact-btn::before {
+  background: linear-gradient(135deg, rgba(226, 232, 240, 0.7), rgba(209, 213, 219, 0.7));
+}
+
+.pc-card-wrapper.pc-card-light .pc-details h3 {
+  background-image: linear-gradient(to bottom, #faf5ed 30%, #e8dcc8 70%, #d4bfa0 100%);
+  text-shadow: 0 4px 20px rgba(217, 179, 140, 0.4);
+}
+
+.pc-card-wrapper.pc-card-light .pc-details p {
+  background-image: linear-gradient(to bottom, #f5ede3 0%, #e8dcc8 60%, #d4bfa0 100%);
+  text-shadow: 0 2px 12px rgba(217, 179, 140, 0.35);
 }
 
 @media (max-width: 768px) {

@@ -10,6 +10,13 @@ const Gallery = () => {
   const itemsRef = useRef([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageInfo, setImageInfo] = useState(null);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'dark';
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    return document.documentElement.dataset.theme || 'dark';
+  });
+  const isLight = theme === 'light';
 
   const images = [
     { src: "/img/geler-1.png", title: "Interior View", description: "Masjid Interior" },
@@ -75,6 +82,23 @@ const Gallery = () => {
     }
   }, [selectedImage]);
 
+  // Sync theme from attribute/localStorage
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const saved = localStorage.getItem('theme');
+    if (saved) setTheme(saved);
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          const current = document.documentElement.dataset.theme;
+          setTheme(current || 'dark');
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+
   // Keyboard shortcuts for lightbox: Esc to close, arrows to navigate
   useEffect(() => {
     const handleKey = (e) => {
@@ -128,13 +152,13 @@ const Gallery = () => {
     <div
       ref={addToRefs}
       onClick={() => openLightbox(index)}
-      className={`${aspectClass} bg-gray-800 rounded-lg overflow-hidden relative group cursor-pointer transform transition-all duration-300 md:hover:scale-[1.02] ${className}`}
+      className={`${aspectClass} ${isLight ? 'bg-white/70' : 'bg-gray-800'} rounded-lg overflow-hidden relative group cursor-pointer transform transition-all duration-300 md:hover:scale-[1.02] ${className}`}
     >
-      <div className="relative flex items-center justify-center h-full bg-gradient-to-br from-gray-900/80 to-gray-800/50 rounded-xl border border-gray-700/50 md:group-hover:border-white/30 transition-all duration-200 overflow-hidden">
+      <div className={`relative flex items-center justify-center h-full rounded-xl border transition-all duration-200 overflow-hidden ${isLight ? 'bg-gradient-to-br from-white/80 to-white/60 border-amber-200/50 md:group-hover:border-amber-300/60' : 'bg-gradient-to-br from-gray-900/80 to-gray-800/50 border-gray-700/50 md:group-hover:border-white/30'}`}>
 
         {/* Subtle glow on hover - Desktop Only */}
         <div className="hidden md:block absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5" />
+          <div className={`absolute inset-0 ${isLight ? 'bg-gradient-to-br from-amber-200/40 via-transparent to-amber-200/40' : 'bg-gradient-to-br from-white/5 via-transparent to-white/5'}`} />
         </div>
 
         <img
@@ -146,14 +170,14 @@ const Gallery = () => {
           }}
         />
 
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
+        <div className={`hidden md:block absolute inset-0 bg-gradient-to-t ${isLight ? 'from-white/80' : 'from-black/80'} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}>
           <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-200">
-            <h3 className="text-white font-bold text-lg mb-1">{image.title}</h3>
-            <p className="text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <h3 className={`text-white drop-shadow-md font-bold text-lg mb-1`}>{image.title}</h3>
+            <p className={`text-white/90 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 drop-shadow-sm`}>
               {image.description}
             </p>
 
-            <div className="mt-2 flex items-center gap-2 text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-200">
+            <div className={`mt-2 flex items-center gap-2 ${isLight ? 'text-slate-900' : 'text-white'} text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-200`}>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -173,19 +197,13 @@ const Gallery = () => {
     className="relative min-h-screen mt-16 md:mt-24 px-4 md:px-8 pt-16 md:pt-20 pb-24 md:pb-28 scroll-mt-28"
       style={{ fontFamily: "Sora Variable" }} 
     >
-      {/* Static luxe vignette background */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          background: `radial-gradient(circle at 50% 28%, rgba(255,255,255,0.08) 0%, rgba(248,236,214,0.06) 22%, rgba(5,6,7,0) 55%),
-            radial-gradient(circle at 50% 80%, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0) 60%)`
-        }}
-      />
-
       <h1
         ref={titleRef}
-        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-white via-slate-200 to-amber-100 bg-clip-text text-transparent font-semibold text-center relative z-30 overflow-hidden mt-4 mb-8 md:mb-20"
+        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center relative z-30 overflow-hidden mt-4 mb-8 md:mb-20"
         style={{
+          backgroundImage: isLight
+            ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
+            : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
@@ -219,16 +237,20 @@ const Gallery = () => {
               >
                 <div
                   ref={addToRefs}
-                  className="h-full rounded-xl border border-gray-700/60 bg-gray-900/75 backdrop-blur-sm transition-all duration-300 overflow-hidden relative flex flex-col justify-between p-3 shadow-[0_0_0_rgba(255,255,255,0)] hover:shadow-[0_0_28px_rgba(255,255,255,0.16)] active:scale-95"
+                  className={`h-full rounded-xl border backdrop-blur-sm transition-all duration-300 overflow-hidden relative flex flex-col justify-between p-3 shadow-[0_0_0_rgba(255,255,255,0)] active:scale-95 ${
+                    isLight
+                      ? 'bg-[#fff7e6] border-amber-200/60 hover:border-amber-300/80 hover:shadow-[0_0_24px_rgba(255,199,120,0.35)]'
+                      : 'bg-gray-900/75 border-gray-700/60 hover:shadow-[0_0_28px_rgba(255,255,255,0.16)]'
+                  }`}
                 >
                   <div className="text-start relative z-10">
-                    <h2 className="text-xl font-bold text-amber-200 mb-1 tracking-tight">MORE</h2>
-                    <div className="text-xl font-bold text-white mb-2 tracking-tight flex items-center">
+                    <h2 className={`text-xl font-bold mb-1 tracking-tight ${isLight ? 'text-amber-600' : 'text-amber-200'}`}>MORE</h2>
+                    <div className={`text-xl font-bold mb-2 tracking-tight flex items-center ${isLight ? 'text-slate-900' : 'text-white'}`}>
                       ON
                       <img src="/img/instagram.png" className="w-5 h-5 ml-1" alt="Instagram" />
                     </div>
                   </div>
-                  <div className="text-xs text-gray-300 relative z-10">@radittt_xxyu</div>
+                  <div className={`text-xs relative z-10 ${isLight ? 'text-slate-700' : 'text-gray-300'}`}>@radittt_xxyu</div>
                 </div>
               </a>
             </div>
@@ -252,24 +274,26 @@ const Gallery = () => {
             >
               <div
                 ref={addToRefs}
-                className="h-full rounded-xl border border-gray-700/60 bg-gray-900/75 backdrop-blur-sm transition-all duration-300 overflow-hidden relative flex flex-col justify-between p-4 shadow-[0_0_0_rgba(255,255,255,0)] hover:shadow-[0_0_36px_rgba(255,255,255,0.2)] hover:border-white/30 hover:bg-white/5"
+                className={`h-full rounded-xl border backdrop-blur-sm transition-all duration-300 overflow-hidden relative flex flex-col justify-between p-4 shadow-[0_0_0_rgba(255,255,255,0)] ${
+                  isLight
+                    ? 'bg-[#fff7e6] border-amber-200/60 hover:border-amber-300/80 hover:shadow-[0_0_32px_rgba(255,199,120,0.4)]'
+                    : 'bg-gray-900/75 border-gray-700/60 hover:shadow-[0_0_36px_rgba(255,255,255,0.2)] hover:border-white/30 hover:bg-white/5'
+                }`}
               >
                 <div className="text-start relative z-10">
-                  <h2 className="text-3xl xl:text-4xl font-bold text-amber-200 mb-1 tracking-tight">MORE</h2>
-                  <div className="text-3xl xl:text-4xl font-bold text-white mb-2 tracking-tight flex items-center">
+                  <h2 className={`text-3xl xl:text-4xl font-bold mb-1 tracking-tight ${isLight ? 'text-amber-600' : 'text-amber-200'}`}>MORE</h2>
+                  <div className={`text-3xl xl:text-4xl font-bold mb-2 tracking-tight flex items-center ${isLight ? 'text-slate-900' : 'text-white'}`}>
                     ON
                     <img src="/img/instagram.png" className="w-7 h-7 xl:w-8 xl:h-8 ml-2" alt="Instagram" loading="lazy" />
                   </div>
                 </div>
-                <div className="text-sm text-gray-300 relative z-10">@radittt_xxyu</div>
+                <div className={`text-sm relative z-10 ${isLight ? 'text-slate-700' : 'text-gray-300'}`}>@radittt_xxyu</div>
               </div>
             </a>
           </div>
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none z-10"></div>
-
+      
       {selectedImage !== null && imageInfo && (
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md px-3"

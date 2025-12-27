@@ -4,6 +4,18 @@ import { motion, useScroll, useSpring } from "framer-motion";
 const Journey = () => {
   const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [themeMode, setThemeMode] = useState(() => {
+    // Initial theme from html[data-theme] or localStorage; default to 'dark'
+    try {
+      const root = document.documentElement;
+      return (
+        root.getAttribute("data-theme") || localStorage.getItem("theme") || "dark"
+      );
+    } catch {
+      return "dark";
+    }
+  });
+  const isLight = themeMode === "light";
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -73,21 +85,36 @@ const Journey = () => {
     return () => unsubscribe();
   }, [scrollYProgress, timelineData.length]);
 
+  // Sync theme from html[data-theme]
+  useEffect(() => {
+    try {
+      const root = document.documentElement;
+      const initial =
+        root.getAttribute("data-theme") || localStorage.getItem("theme") || "dark";
+      setThemeMode(initial);
+      const observer = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          if (m.type === "attributes" && m.attributeName === "data-theme") {
+            const current = root.getAttribute("data-theme") || "dark";
+            setThemeMode(current);
+          }
+        }
+      });
+      observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+      return () => observer.disconnect();
+    } catch {
+      // ignore
+    }
+  }, []);
+
   return (
     <section
       id="journey"
       ref={sectionRef}
-      className="relative min-h-screen pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-20 sm:pb-24 md:pb-28 px-4 sm:px-6 md:px-8 overflow-hidden bg-[#050607] scroll-mt-28"
+      className="relative min-h-screen pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-20 sm:pb-24 md:pb-28 px-4 sm:px-6 md:px-8 overflow-hidden scroll-mt-28"
       style={{ fontFamily: "Sora Variable, system-ui, sans-serif" }}
     >
-      {/* Elegant Static Background - sama dengan Hero */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Central light bloom with soft amber halo */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.26)_0%,rgba(255,255,255,0.12)_16%,rgba(255,255,255,0)_42%),radial-gradient(circle_at_68%_66%,rgba(255,214,170,0.12)_0%,rgba(255,214,170,0)_55%)]" />
-
-        {/* Luxe vignette to deepen blacks */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
-      </div>
+      {/* Section uses app-level background; remove per-section vignette to avoid dividers */}
 
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Title - lebih ringan */}
@@ -96,12 +123,13 @@ const Journey = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 md:mb-16"
+          className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center mb-8 sm:mb-12 md:mb-16"
           style={{
-            background: "linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            backgroundImage: isLight
+              ? "linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)"
+              : "linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)",
             backgroundClip: "text",
+            WebkitBackgroundClip: "text",
           }}
         >
           My Journey
@@ -114,12 +142,14 @@ const Journey = () => {
           {/* Finish Label at bottom */}
 
           {/* Progress Line - simplified */}
-          <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 bg-white/10 overflow-hidden">
+          <div className={`absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 ${isLight ? "bg-black/10" : "bg-white/10"} overflow-hidden`}>
             <motion.div
-              className="absolute left-0 top-0 w-full bg-gradient-to-b from-white/30 via-white/25 to-white/20"
+              className={`absolute left-0 top-0 w-full bg-gradient-to-b ${isLight ? "from-black/30 via-black/25 to-black/20" : "from-white/30 via-white/25 to-white/20"}`}
               style={{
                 height: `${(activeIndex + 1) / timelineData.length * 100}%`,
-                boxShadow: "0 0 12px rgba(139, 92, 246, 0.5)",
+                boxShadow: isLight
+                  ? "0 0 10px rgba(0,0,0,0.15)"
+                  : "0 0 12px rgba(255,255,255,0.25)",
               }}
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
@@ -127,14 +157,14 @@ const Journey = () => {
 
           {/* Finish Label - Mobile */}
           <div className="absolute left-0 md:hidden bottom-0 z-20 -translate-y-8">
-            <span className="bg-white/10 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block whitespace-nowrap">
+            <span className={`${isLight ? "bg-black/10 text-black border-black/20" : "bg-white/10 text-white border-white/20"} backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold shadow-lg border block whitespace-nowrap`}>
               Finish
             </span>
           </div>
 
           {/* Finish Label - Desktop */}
           <div className="hidden md:block absolute left-1/2 bottom-0 z-20 -translate-y-8 -translate-x-1/2">
-            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block whitespace-nowrap">
+            <span className={`${isLight ? "bg-black/10 text-black border-black/20" : "bg-white/10 text-white border-white/20"} backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold shadow-lg border block whitespace-nowrap`}>
               Finish
             </span>
           </div>
@@ -167,12 +197,12 @@ const Journey = () => {
                         )}
 
                         {/* Card - optimized */}
-                        <div className={`relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-md border rounded-xl p-4 sm:p-5 md:p-6 transition-all duration-300 ${isActive ? 'border-white/20 shadow-lg shadow-white/10' : 'border-white/10'} hover:border-white/30 hover:shadow-xl hover:shadow-white/15`}>
+                        <div className={`relative bg-gradient-to-br ${isLight ? 'from-amber-50/80 to-white/80' : 'from-white/5 to-white/[0.02]'} backdrop-blur-md border rounded-xl p-4 sm:p-5 md:p-6 transition-all duration-300 ${isActive ? (isLight ? 'border-amber-300 shadow-lg shadow-amber-100/40' : 'border-white/20 shadow-lg shadow-white/10') : (isLight ? 'border-amber-200' : 'border-white/10')} ${isLight ? 'hover:border-amber-400/70 hover:shadow-xl hover:shadow-amber-200/50' : 'hover:border-white/30 hover:shadow-xl hover:shadow-white/15'}`}>
                           {/* Year Badge */}
-                          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-sm text-white font-semibold text-xs sm:text-sm mb-3 border border-white/20">
+                          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${isLight ? 'from-black/10 to-black/5' : 'from-white/20 to-white/10'} backdrop-blur-sm ${isLight ? 'text-black' : 'text-white'} font-semibold text-xs sm:text-sm mb-3 border ${isLight ? 'border-black/15' : 'border-white/20'}`}>
                             {item.year}
                             {item.current && (
-                              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-white/80 animate-pulse" />
+                              <span className={`inline-flex h-1.5 w-1.5 rounded-full ${isLight ? 'bg-black/70' : 'bg-white/80'} animate-pulse`} />
                             )}
                           </div>
 
@@ -184,8 +214,8 @@ const Journey = () => {
                               </div>
                             )}
                             <div className="flex-1 min-w-0">
-                              <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1.5 break-words">{item.title}</h3>
-                              <p className="text-gray-300/90 text-xs sm:text-sm leading-relaxed">{item.description}</p>
+                              <h3 className={`text-base sm:text-lg md:text-xl font-bold ${isLight ? 'text-black' : 'text-white'} mb-1.5 break-words`}>{item.title}</h3>
+                              <p className={`${isLight ? 'text-gray-700' : 'text-gray-300/90'} text-xs sm:text-sm leading-relaxed`}>{item.description}</p>
                               
                               {/* Childhood Photos - lebih kecil dan efisien */}
                               {item.childhoodPhotos && (
@@ -201,7 +231,7 @@ const Journey = () => {
                                         zIndex: 10 + i,
                                       }}
                                     >
-                                      <div className="rounded-lg overflow-hidden shadow-xl border-2 border-white/30 bg-gradient-to-br from-white/10 to-white/5">
+                                      <div className={`rounded-lg overflow-hidden shadow-xl border-2 ${isLight ? 'border-amber-200 bg-gradient-to-br from-amber-50/60 to-white/70' : 'border-white/30 bg-gradient-to-br from-white/10 to-white/5'}`}>
                                         <img
                                           src={photo}
                                           alt={`Bocil ${i + 1}`}
@@ -218,12 +248,12 @@ const Journey = () => {
                           {/* Organizations */}
                           {item.organizations && (
                             <div className="mt-4 pt-4 border-t border-white/10">
-                              <h4 className="text-xs font-semibold text-white/70 mb-2">Organisasi & Ekstrakurikuler:</h4>
+                              <h4 className={`text-xs font-semibold ${isLight ? 'text-black/70' : 'text-white/70'} mb-2`}>Organisasi & Ekstrakurikuler:</h4>
                               <div className="flex flex-wrap gap-1.5 sm:gap-2">
                                 {item.organizations.map((org, orgIndex) => (
                                   <div key={orgIndex} className="relative">
-                                    <div className="px-2.5 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-md hover:bg-white/15 hover:border-white/40 transition-all duration-200">
-                                      <span className="text-xs font-medium text-white">{org.name}</span>
+                                    <div className={`px-2.5 py-1.5 ${isLight ? 'bg-black/5 border-black/15 hover:bg-black/10 hover:border-black/25' : 'bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/40'} backdrop-blur-sm border rounded-md transition-all duration-200`}>
+                                      <span className={`text-xs font-medium ${isLight ? 'text-black' : 'text-white'}`}>{org.name}</span>
                                     </div>
                                   </div>
                                 ))}
@@ -232,8 +262,8 @@ const Journey = () => {
                           )}
 
                           {/* Simplified corner decorations */}
-                          <div className="absolute top-1.5 left-1.5 w-3 h-3 border-l-2 border-t-2 border-white/40 group-hover:border-white/70 transition-colors" />
-                          <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-r-2 border-b-2 border-white/40 group-hover:border-white/70 transition-colors" />
+                          <div className={`absolute top-1.5 left-1.5 w-3 h-3 border-l-2 border-t-2 ${isLight ? 'border-black/30 group-hover:border-black/50' : 'border-white/40 group-hover:border-white/70'} transition-colors`} />
+                          <div className={`absolute bottom-1.5 right-1.5 w-3 h-3 border-r-2 border-b-2 ${isLight ? 'border-black/30 group-hover:border-black/50' : 'border-white/40 group-hover:border-white/70'} transition-colors`} />
                         </div>
                       </div>
                     </motion.div>

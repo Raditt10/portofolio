@@ -1,9 +1,39 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import ProfileCard from "./assets/ProfileCard";
 
 const About = () => {
   const sectionRef = useRef(null);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'dark';
+    // Check localStorage first (primary source), then data-theme attribute
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) return savedTheme;
+    return document.documentElement.dataset.theme || 'dark';
+  });
+  const isLight = theme === 'light';
+
+  // Sync with global theme
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    
+    // Set initial theme from localStorage on mount
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+    
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          const current = document.documentElement.dataset.theme;
+          setTheme(current || 'dark');
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
 
   const techStack = useMemo(() => [
     { name: "", logo: "https://cdn.simpleicons.org/react/61DAFB" },
@@ -43,16 +73,16 @@ const About = () => {
     <section 
       ref={sectionRef} 
       id="about" 
-      className="min-h-screen relative overflow-hidden bg-[#050607]"
+      className={`min-h-screen relative overflow-hidden ${isLight ? 'bg-slate-50' : 'bg-[#050607]'}`}
     >
       {/* Top Gradient - simplified */}
-      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-black/90 via-black/40 to-transparent z-10"></div>
+      <div className={`absolute top-0 inset-x-0 h-32 bg-gradient-to-b ${isLight ? 'from-white/80 via-white/40 to-transparent' : 'from-black/90 via-black/40 to-transparent'} z-10`}></div>
       
       {/* Profile Card */}
       <div className="flex justify-center items-center pt-32 pb-20 relative z-20">
         <ProfileCard
           name="Rafaditya Syahputra"
-          title="Front End Developer"
+          title="Full Stack Developer"
           handle="rafaa_ndl"
           status="Online"
           contactText="Contact Me"
@@ -61,6 +91,7 @@ const About = () => {
           showUserInfo={true}
           enableTilt={false}
           enableMobileTilt={false}
+          themeMode={theme}
           onContactClick={() => console.log("Contact clicked")}
         />
       </div>
@@ -94,7 +125,7 @@ const About = () => {
                       }}
                     />
                   </div>
-                  <span className="text-white font-medium text-sm mt-2 tracking-wide">
+                  <span className={`${isLight ? 'text-slate-800' : 'text-white'} font-medium text-sm mt-2 tracking-wide`}>
                     {tech.name}
                   </span>
                 </div>
@@ -105,7 +136,7 @@ const About = () => {
       </div>
 
       {/* Bottom Gradient - simplified */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+      <div className={`absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t ${isLight ? 'from-white/80 via-white/40 to-transparent' : 'from-black/90 via-black/40 to-transparent'} z-10`}></div>
     </section>
   );
 };
