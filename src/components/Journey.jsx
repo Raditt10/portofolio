@@ -116,31 +116,35 @@ const Journey = () => {
         {/* Timeline Container */}
         <div className="relative">
           {/* Progress Percentage - responsive positioning */}
-          <motion.div
-            className="absolute z-20 transition-all duration-500 ease-out md:hidden"
-            style={{
-              left: 'calc(1.25rem - 2px)',
-              top: `${(activeIndex + 1) / timelineData.length * 100}%`,
-            }}
-          >
-            <span className="bg-black/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block">
-              {Math.round(((activeIndex + 1) / timelineData.length) * 100)}%
-            </span>
-          </motion.div>
+          {Math.round(((activeIndex + 1) / timelineData.length) * 100) < 100 && (
+            <motion.div
+              className="absolute z-20 transition-all duration-500 ease-out md:hidden"
+              style={{
+                left: 'calc(1.25rem - 2px)',
+                top: `${(activeIndex + 1) / timelineData.length * 100}%`,
+              }}
+            >
+              <span className="bg-black/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block">
+                {Math.round(((activeIndex + 1) / timelineData.length) * 100)}%
+              </span>
+            </motion.div>
+          )}
 
           {/* Progress Percentage Desktop */}
-          <motion.div
-            className="hidden md:block absolute z-20 transition-all duration-500 ease-out"
-            style={{
-              left: 'calc(50% + 12px)',
-              top: `${(activeIndex + 1) / timelineData.length * 100}%`,
-              transform: 'translateY(-50%)'
-            }}
-          >
-            <span className="bg-black/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block whitespace-nowrap">
-              {Math.round(((activeIndex + 1) / timelineData.length) * 100)}%
-            </span>
-          </motion.div>
+          {Math.round(((activeIndex + 1) / timelineData.length) * 100) < 100 && (
+            <motion.div
+              className="hidden md:block absolute z-20 transition-all duration-500 ease-out"
+              style={{
+                left: 'calc(50% + 12px)',
+                top: `${(activeIndex + 1) / timelineData.length * 100}%`,
+                transform: 'translateY(-50%)'
+              }}
+            >
+              <span className="bg-black/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white shadow-lg border border-white/20 block whitespace-nowrap">
+                {Math.round(((activeIndex + 1) / timelineData.length) * 100)}%
+              </span>
+            </motion.div>
+          )}
 
           {/* Finish Label - Mobile */}
           <motion.div
@@ -305,7 +309,7 @@ const Journey = () => {
                     }`}
                     animate={isActive ? { scale: [1, 1.3, 0.9, 1.2, 1], opacity: [1, 0.8, 1, 0.9, 1] } : {}}
                     transition={{ duration: 0.6, repeat: isActive ? 2 : 0 }}
-                  />\
+                  />
 
 
                   {/* Spacer untuk desktop agar layout seimbang */}
