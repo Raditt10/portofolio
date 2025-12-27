@@ -238,10 +238,10 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
       </div>
 
-      {/* Music Player Button */}
+      {/* Music Player Button - Desktop Only */}
       <button
         onClick={toggleMusic}
-        className="fixed bottom-6 left-6 md:top-6 md:left-auto md:right-6 md:bottom-auto z-50 group"
+        className="hidden md:block fixed top-6 right-6 z-50 group"
         aria-label="Toggle music"
       >
         <div className="relative">
@@ -290,12 +290,12 @@ const Hero = () => {
           <div className="absolute top-full right-0 mt-3 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none transform group-hover:translate-y-0 translate-y-2">
             <div className="relative">
               {/* Arrow */}
-              <div className="absolute -top-2 right-6 w-4 h-4 bg-gray-900/95 backdrop-blur-sm border-l border-t border-purple-500/30 transform rotate-45" />
+              <div className="absolute -top-2 right-6 w-4 h-4 bg-white/95 backdrop-blur-sm border-l border-t border-amber-200/30 transform rotate-45" />
               
               {/* Card */}
-              <div className="relative bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-xl rounded-xl border border-purple-500/30 overflow-hidden shadow-2xl w-64">
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-cyan-600/10 opacity-50" />
+              <div className="relative bg-gradient-to-br from-white/95 to-amber-50/95 backdrop-blur-xl rounded-xl border border-white/40 overflow-hidden shadow-2xl w-64">
+                {/* Elegant Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-100/20 to-white/20 opacity-50" />
                 
                 {/* Album Art */}
                 <div className="relative h-40 overflow-hidden">
@@ -309,26 +309,26 @@ const Hero = () => {
                     }}
                   />
                   {/* Fallback gradient if image not found */}
-                  <div className="hidden w-full h-full bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 items-center justify-center">
-                    <svg className="w-16 h-16 text-white/50" fill="currentColor" viewBox="0 0 24 24">
+                  <div className="hidden w-full h-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 items-center justify-center">
+                    <svg className="w-16 h-16 text-white/80" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
                     </svg>
                   </div>
                   
                   {/* Overlay Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   
                   {/* Play/Pause Status */}
-                  <div className="absolute top-2 right-2 px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-cyan-400/30">
-                    <p className="text-[10px] text-cyan-400 font-semibold flex items-center gap-1">
+                  <div className="absolute top-2 right-2 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-amber-300/40">
+                    <p className="text-[10px] text-gray-800 font-semibold flex items-center gap-1.5">
                       {isPlaying ? (
                         <>
-                          <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
+                          <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
                           Now Playing
                         </>
                       ) : (
                         <>
-                          <span className="w-1.5 h-1.5 bg-purple-400 rounded-full" />
+                          <span className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
                           Paused
                         </>
                       )}
@@ -340,26 +340,26 @@ const Hero = () => {
                 <div className="relative p-4 space-y-2">
                   {/* Title */}
                   <div>
-                    <h4 className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-200 leading-tight">
+                    <h4 className="text-sm font-bold text-gray-900 leading-tight">
                       Where Have You Been
                     </h4>
-                    <p className="text-xs text-purple-300 mt-0.5">
+                    <p className="text-xs text-gray-600 mt-0.5">
                       Rihanna
                     </p>
                   </div>
                   
                   {/* Divider */}
-                  <div className="h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
+                  <div className="h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
                   
                   {/* Duration & Album */}
                   <div className="flex items-center justify-between text-[10px]">
-                    <div className="flex items-center gap-1.5 text-gray-400">
+                    <div className="flex items-center gap-1.5 text-gray-600">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>{duration}</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-gray-400">
+                    <div className="flex items-center gap-1.5 text-gray-600">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                       </svg>
@@ -368,7 +368,7 @@ const Hero = () => {
                   </div>
                   
                   {/* Action Hint */}
-                  <div className="pt-1 flex items-center justify-center gap-1.5 text-[10px] text-cyan-400/70">
+                  <div className="pt-1 flex items-center justify-center gap-1.5 text-[10px] text-amber-600 font-medium">
                     <span>Click to {isPlaying ? 'pause' : 'play'}</span>
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
@@ -378,7 +378,7 @@ const Hero = () => {
                 
                 {/* Animated Border */}
                 <div className="absolute inset-0 rounded-xl opacity-50">
-                  <div className="absolute inset-0 rounded-xl border border-transparent bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-purple-500/20 bg-clip-border animate-pulse" style={{animationDuration: '3s'}} />
+                  <div className="absolute inset-0 rounded-xl border border-transparent bg-gradient-to-r from-amber-300/30 via-white/30 to-amber-300/30 bg-clip-border animate-pulse" style={{animationDuration: '3s'}} />
                 </div>
               </div>
             </div>
