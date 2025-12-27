@@ -19,6 +19,9 @@ const TechStack = () => {
     const grid = gridRef.current;
     const items = itemsRef.current;
 
+    // Detect mobile
+    const isMobile = window.innerWidth < 768;
+
     // Set initial states
     gsap.set(title, { 
       opacity: 0, 
@@ -35,7 +38,7 @@ const TechStack = () => {
       x: (i) => (i % 2 === 0 ? 12 : -12)
     });
 
-    // Create timeline
+    // Create timeline with lighter animations for mobile
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -49,24 +52,24 @@ const TechStack = () => {
     tl.to(title, {
       opacity: 1,
       y: 0,
-      duration: 0.6,
+      duration: isMobile ? 0.4 : 0.6,
       ease: "power2.out"
     })
     // Grid animation
     .to(grid, {
       opacity: 1,
-      duration: 0.4,
+      duration: isMobile ? 0.2 : 0.4,
       ease: "power1.out"
-    }, "-=0.2")
-    // Items animation
+    }, "-=0.1")
+    // Items animation - lighter stagger on mobile
     .to(items, {
       opacity: 1,
       y: 0,
       x: 0,
-      duration: 0.8,
-      stagger: 0.04,
+      duration: isMobile ? 0.4 : 0.8,
+      stagger: isMobile ? 0.01 : 0.04,
       ease: "power1.out"
-    }, "-=0.2");
+    }, "-=0.1");
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
