@@ -576,7 +576,7 @@ const Footer = () => {
               WebkitBackgroundClip: 'text'
             }}
         >
-          R'e • 2025
+          Ra'e • 2025
         </h1>
       </div>
 

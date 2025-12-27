@@ -171,7 +171,7 @@ const Navbar = () => {
     >
       <div className="relative z-10">
         <h1 className={`text-xl font-semibold logo-minecraft ${isLight ? 'text-slate-700 drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]' : 'text-white drop-shadow-[0_0_8px_rgba(248,236,222,0.4)]'}`}>
-          R'e
+          Ra'e
         </h1>
       </div>
 
