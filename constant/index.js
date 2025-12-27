@@ -223,7 +223,7 @@ const navlinks = [
 
   {
     id: 2,
-    "text" : "About",
+    "text" : "My Card",
     "link" : "#about"
   },
 
@@ -234,24 +234,24 @@ const navlinks = [
   },
   {
     id: 4,
-    text: "Journey",
+    text: " My Journey",
     link: "#journey"
   },
   {
     id: 5,
-    text: "Projects",
+    text: "My Projects",
     link: "#projects"
   },
 
   {
     id: 5,
-    "text" : "Achievements",
+    "text" : "My Achievements",
     "link" : "#achievements"
   },
 
   {
     id: 6,
-    "text" : "Contact",
+    "text" : "Contact me",
     "link" : "#contact"
   },
 ]
