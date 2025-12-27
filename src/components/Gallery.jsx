@@ -275,18 +275,18 @@ const Gallery = () => {
 
       {selectedImage !== null && imageInfo && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md px-3"
           onClick={closeLightbox}
         >
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
-            className="absolute top-4 right-4 z-50 text-white hover:text-amber-100 transition-all duration-250 group hover:scale-105"
+            className="absolute top-3 right-3 md:top-4 md:right-4 z-50 text-white hover:text-amber-100 transition-all duration-250 group hover:scale-105"
             aria-label="Close"
           >
             <div className="relative">
               <div className="absolute inset-0 bg-white/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
-              <svg className="w-10 h-10 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 md:w-10 md:h-10 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
@@ -295,12 +295,12 @@ const Gallery = () => {
           <button
             onClick={(e) => { e.stopPropagation(); prevImage(); }}
             type="button"
-            className="absolute left-4 z-50 text-white hover:text-amber-100 transition-all duration-250 group hover:scale-105"
+            className="absolute left-3 md:left-4 z-50 text-white hover:text-amber-100 transition-all duration-250 group hover:scale-105"
             aria-label="Previous"
           >
             <div className="relative">
               <div className="absolute inset-0 bg-white/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
-              <svg className="w-12 h-12 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-9 h-9 md:w-12 md:h-12 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </div>
@@ -309,19 +309,19 @@ const Gallery = () => {
           <button
             onClick={(e) => { e.stopPropagation(); nextImage(); }}
             type="button"
-            className="absolute right-4 z-50 text-white hover:text-amber-100 transition-all duration-250 group hover:scale-105"
+            className="absolute right-3 md:right-4 z-50 text-white hover:text-amber-100 transition-all duration-250 group hover:scale-105"
             aria-label="Next"
           >
             <div className="relative">
               <div className="absolute inset-0 bg-white/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
-              <svg className="w-12 h-12 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-9 h-9 md:w-12 md:h-12 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
           </button>
 
           <div
-            className="relative max-w-6xl max-h-[90vh] mx-4"
+            className="relative max-w-[92vw] md:max-w-6xl max-h-[82vh] md:max-h-[90vh] mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <img
@@ -333,10 +333,10 @@ const Gallery = () => {
               }}
             />
 
-            <div className="absolute bottom-0 left-0 right-0 bg-black/65 backdrop-blur-sm p-6 rounded-b-lg border-t border-white/10">
-              <h3 className="text-white text-2xl font-semibold mb-2 drop-shadow-sm">{imageInfo.title}</h3>
-              <p className="text-gray-200 text-base drop-shadow-sm">{imageInfo.description}</p>
-              <div className="mt-3 text-gray-200 text-sm font-medium flex items-center gap-2">
+            <div className="absolute bottom-0 left-0 right-0 bg-black/65 backdrop-blur-sm p-4 sm:p-6 rounded-b-lg border-t border-white/10">
+              <h3 className="text-white text-xl sm:text-2xl font-semibold mb-2 drop-shadow-sm">{imageInfo.title}</h3>
+              <p className="text-gray-200 text-sm sm:text-base drop-shadow-sm">{imageInfo.description}</p>
+              <div className="mt-3 text-gray-200 text-xs sm:text-sm font-medium flex items-center gap-2">
                 <div className="w-2 h-2 bg-amber-300 rounded-full" />
                 {selectedImage + 1} / {images.length}
               </div>
