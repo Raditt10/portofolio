@@ -29,57 +29,10 @@ const Footer = () => {
   
   const fullText = "Front-End Developer & UI/UX Designer";
 
-  // Typing effect with glitch (desktop only)
+  // Show full text immediately - no animations
   useEffect(() => {
-    // Check if mobile (screen width < 768px)
-    const isMobile = window.innerWidth < 768;
-    
-    // If mobile, show full text immediately without animation
-    if (isMobile) {
-      setTypedText(fullText);
-      setIsTyping(false);
-      return;
-    }
-
-    // Desktop typing animation
-    let currentIndex = 0;
-    let typingInterval;
-    let glitchInterval;
-
-    const typeText = () => {
-      if (currentIndex <= fullText.length) {
-        setTypedText(fullText.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        setIsTyping(false);
-        clearInterval(typingInterval);
-        
-        // Random glitch effect after typing
-        glitchInterval = setInterval(() => {
-          const shouldGlitch = Math.random() > 0.7;
-          if (shouldGlitch) {
-            const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`';
-            const randomPos = Math.floor(Math.random() * fullText.length);
-            const glitchedText = 
-              fullText.substring(0, randomPos) + 
-              glitchChars[Math.floor(Math.random() * glitchChars.length)] + 
-              fullText.substring(randomPos + 1);
-            setTypedText(glitchedText);
-            
-            setTimeout(() => {
-              setTypedText(fullText);
-            }, 50);
-          }
-        }, 3000);
-      }
-    };
-
-    typingInterval = setInterval(typeText, 100);
-
-    return () => {
-      clearInterval(typingInterval);
-      if (glitchInterval) clearInterval(glitchInterval);
-    };
+    setTypedText(fullText);
+    setIsTyping(false);
   }, []); 
 
   useEffect(() => {
@@ -288,48 +241,23 @@ const Footer = () => {
       <footer
         id="contact"
         ref={footerRef}
-        className="relative min-h-screen overflow-hidden py-20 px-4 sm:px-6 md:px-8 lg:px-12 bg-black"
+        className="relative min-h-screen overflow-hidden py-20 px-4 sm:px-6 md:px-8 lg:px-12 bg-gradient-to-br from-[#040507] via-[#0a0d12] to-[#050608]"
         style={{ fontFamily: "Sora Variable" }}
       >
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 opacity-[0.015]">
+        {/* Elegant Static Background */}
+        <div className="absolute inset-0 z-0">
+          {/* Central light bloom with soft amber halo */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.26)_0%,rgba(255,255,255,0.12)_16%,rgba(255,255,255,0)_42%),radial-gradient(circle_at_68%_66%,rgba(255,214,170,0.12)_0%,rgba(255,214,170,0)_55%)]" />
+
+          {/* Luxe vignette to deepen blacks */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
+        </div>
+
+        {/* Simple top line */}
         <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(139, 92, 246, 0.08) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-            animation: 'gridMove 20s linear infinite'
-          }}
+          ref={lineRef}
+          className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"
         />
-      </div>
-
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(2)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-400 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${5 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Top line dengan efek cyberpunk */}
-      <div 
-        ref={lineRef}
-        className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-60"
-        style={{
-          boxShadow: '0 0 20px rgba(139, 92, 246, 0.5)'
-        }}
-      />
 
       {/* Footer content */}
       <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-between gap-12 lg:gap-8 pt-12 sm:pt-16 md:pt-20 max-w-7xl mx-auto relative z-20">
@@ -339,133 +267,42 @@ const Footer = () => {
           ref={logoSectionRef}
           className="flex flex-col items-center lg:items-start order-1 lg:order-1 group relative"
         >
-          {/* Cyberpunk border effect */}
-          <div className="absolute -inset-4 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">
-            <div 
-              className="absolute inset-[-2px] rounded-2xl opacity-70"
-              style={{
-                backgroundImage: `
-                  linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
-                  linear-gradient(180deg, transparent 95%, #06b6d4 100%)
-                `,
-                backgroundSize: '20px 20px',
-                animation: 'gridMove 2s linear infinite'
-              }}
-            />
-          </div>
-
-         <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 group-hover:border-purple-500/50 transition-all duration-300">
-  {/* Cyberpunk Frame untuk Gambar */}
+         <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-300">
+  {/* Simple Image Frame */}
   <div className="relative inline-block group/img">
-    {/* Outer Glow Effect */}
-    <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-purple-600/30 to-cyan-500/30 blur-xl opacity-0 group-hover/img:opacity-100 transition-opacity duration-500"></div>
-    
-    {/* Animated Border Frame */}
-    <div className="absolute -inset-2 rounded-xl overflow-hidden opacity-0 group-hover/img:opacity-100 transition-all duration-700">
-      <div 
-        className="absolute inset-0 rounded-xl opacity-80"
-        style={{
-          backgroundImage: `
-            linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
-            linear-gradient(180deg, transparent 95%, #06b6d4 100%)
-          `,
-          backgroundSize: '15px 15px',
-          animation: 'gridMove 1.5s linear infinite'
-        }}
-      />
-      
-      {/* Rotating Corner Brackets */}
-      <div className="absolute top-1 left-1 w-4 h-4 border-l-2 border-t-2 border-cyan-400 animate-spin" style={{animationDuration: '3s'}} />
-      <div className="absolute top-1 right-1 w-4 h-4 border-r-2 border-t-2 border-purple-400 animate-spin" style={{animationDuration: '3s', animationDelay: '0.5s'}} />
-      <div className="absolute bottom-1 left-1 w-4 h-4 border-l-2 border-b-2 border-purple-400 animate-spin" style={{animationDuration: '3s', animationDelay: '1s'}} />
-      <div className="absolute bottom-1 right-1 w-4 h-4 border-r-2 border-b-2 border-cyan-400 animate-spin" style={{animationDuration: '3s', animationDelay: '1.5s'}} />
-      
-      {/* Scanning Lines */}
-      <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan rounded-full" style={{animationDuration: '2s'}} />
-      <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-scan rounded-full" style={{animationDuration: '2s', animationDelay: '1s', top: '30%'}} />
-    </div>
-
     {/* Main Image Container */}
-    <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-purple-900/50 to-cyan-900/50 backdrop-blur-sm">
-      {/* Inner Glow */}
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-500/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-500"></div>
-      
-      {/* Holographic Effect Overlay */}
-      <div className="absolute inset-0 rounded-lg opacity-0 group-hover/img:opacity-30 transition-opacity duration-500 mix-blend-overlay bg-gradient-to-br from-purple-400 via-transparent to-cyan-400"></div>
-      
-      {/* The Image - NO PADDING, FULL COVERAGE */}
+    <div className="relative overflow-hidden rounded-lg bg-black/20">
+      {/* The Image */}
       <img
         src="/img/meow.jpg"
         loading="lazy"
-        className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-lg transition-all duration-500 group-hover/img:scale-110 group-hover/img:rotate-1 filter group-hover/img:brightness-110 group-hover/img:contrast-110 drop-shadow-2xl z-10 object-cover block"
+        className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-lg transition-all duration-300 group-hover/img:scale-105 filter group-hover/img:brightness-110 z-10 object-cover block"
         alt="LOGO RS"
         style={{
-          transformStyle: 'preserve-3d',
-          boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)',
           margin: 0,
           padding: 0
         }}
       />
-      
-      {/* Floating Particles around image */}
-      <div className="absolute -inset-2 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-float opacity-0 group-hover/img:opacity-100"
-            style={{
-              left: `${20 + (i * 15)}%`,
-              top: `${10 + (i * 15)}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${3 + i}s`
-            }}
-          />
-        ))}
-      </div>
     </div>
-
-    {/* Pulse Ring Effect */}
-    <div className="absolute inset-0 rounded-lg border-2 border-transparent opacity-0 group-hover/img:opacity-100 group-hover/img:border-cyan-400/50 transition-all duration-1000 animate-pulse"></div>
         </div>
 
-        <h3 className="font-bold text-2xl sm:text-3xl md:text-4xl mt-4 sm:mt-5 bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent group-hover:animate-pulse transition-all duration-300">
+        <h3 className="font-bold text-2xl sm:text-3xl md:text-4xl mt-4 sm:mt-5 bg-gradient-to-r from-white to-amber-100/80 bg-clip-text text-transparent transition-all duration-300">
           R'e 
         </h3>
         <div className="relative mt-2 sm:mt-3 min-h-[2rem] sm:min-h-[2.5rem] md:min-h-[3rem]">
-          <h4 className="text-cyan-300 font-medium text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 flex items-center justify-center gap-2 relative">
+          <h4 className="text-white/80 font-medium text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 flex items-center justify-center gap-2 relative">
             {/* Main Text with Typing Effect */}
             <span className="relative inline-block">
               {typedText}
-              {/* Cursor */}
-              {isTyping && (
-                <span className="inline-block w-0.5 h-4 sm:h-5 md:h-6 bg-cyan-400 ml-1 animate-pulse" />
-              )}
-              
-              {/* Glitch Layers */}
-              <span 
-                className="absolute top-0 left-0 text-purple-500 opacity-0 pointer-events-none animate-glitch-1"
-                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)' }}
-              >
-                {typedText}
-              </span>
-              <span 
-                className="absolute top-0 left-0 text-cyan-500 opacity-0 pointer-events-none animate-glitch-2"
-                style={{ clipPath: 'polygon(0 55%, 100% 55%, 100% 100%, 0 100%)' }}
-              >
-                {typedText}
-              </span>
-              
-              {/* Scanline Effect */}
-              <span className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent animate-scanline pointer-events-none" />
             </span>
           </h4>
         </div>
 
-        {/* Additional floating elements */}
-        <div className="absolute -top-2 -right-2 w-4 h-4 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-300"></div>
-        <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-500" style={{animationDelay: '0.3s'}}></div>
+        {/* Additional simple elements */}
+        <div className="absolute -top-2 -right-2 w-4 h-4 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
-              </div>
+        </div>
 
         {/* Contact Section */}
         <div 
@@ -477,13 +314,13 @@ const Footer = () => {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 sm:mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
               Contact
             </h2>
-            <div className="flex gap-3 items-center justify-center p-3 rounded-lg bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-500/30">
+            <div className="flex gap-3 items-center justify-center p-3 rounded-lg bg-white/5 border border-white/10">
               <img
                 src="/img/email.png"
                 alt="Email icon"
                 className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 filter brightness-0 invert"
               />
-              <h3 className="text-cyan-300 text-sm sm:text-base md:text-lg font-mono">
+              <h3 className="text-white text-sm sm:text-base md:text-lg font-mono">
                 iniakuraditt@gmail.com
               </h3>
             </div>
@@ -491,7 +328,7 @@ const Footer = () => {
 
           {/* Collaboration Form */}
           <div className="flex flex-col items-center text-center w-full">
-            <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-4 sm:mb-6 lg:mb-7 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-4 sm:mb-6 lg:mb-7 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
               Get in Touch
             </h2>
             
@@ -509,27 +346,12 @@ const Footer = () => {
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              className="flex flex-col w-full lg:w-auto items-center gap-4 relative group"
+              className="flex flex-col w-full lg:w-auto items-center gap-4 relative"
             >
-              {/* Form cyberpunk border */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden pointer-events-none">
-                <div 
-                  className="absolute inset-[-2px] rounded-2xl opacity-70"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
-                      linear-gradient(180deg, transparent 95%, #06b6d4 100%)
-                    `,
-                    backgroundSize: '20px 20px',
-                    animation: 'gridMove 2s linear infinite'
-                  }}
-                />
-              </div>
-
               {/* Email Input */}
               <div className="relative w-full">
                 <input
-                  className="bg-gray-900/80 backdrop-blur-sm w-full sm:w-80 md:w-96 h-12 sm:h-14 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white text-sm md:text-base border border-gray-600/50 focus:border-purple-500 transition-all duration-300 placeholder-gray-400"
+                  className="bg-gray-900/80 backdrop-blur-sm w-full sm:w-80 md:w-96 h-12 sm:h-14 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30 text-white text-sm md:text-base border border-white/10 focus:border-white/30 transition-all duration-300 placeholder-gray-400"
                   type="email"
                   name="email"
                   placeholder="Your email address"
@@ -538,15 +360,12 @@ const Footer = () => {
                   required
                   disabled={formData.isSubmitting}
                 />
-                <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-purple-500/10 to-transparent animate-pulse" />
-                </div>
               </div>
               
               {/* Message Textarea */}
               <div className="relative w-full">
                 <textarea
-                  className="bg-gray-900/80 backdrop-blur-sm w-full sm:w-80 md:w-96 h-24 sm:h-28 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white text-sm md:text-base border border-gray-600/50 focus:border-purple-500 transition-all duration-300 resize-none placeholder-gray-400"
+                  className="bg-gray-900/80 backdrop-blur-sm w-full sm:w-80 md:w-96 h-24 sm:h-28 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/30 text-white text-sm md:text-base border border-white/10 focus:border-white/30 transition-all duration-300 resize-none placeholder-gray-400"
                   name="message"
                   placeholder="Tell me about your project or collaboration idea..."
                   value={formData.message}
@@ -555,9 +374,6 @@ const Footer = () => {
                   disabled={formData.isSubmitting}
                   maxLength={500}
                 />
-                <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent animate-pulse" />
-                </div>
               </div>
               
               <div className="text-gray-400 text-xs text-right w-full sm:w-80 md:w-96">
@@ -567,14 +383,8 @@ const Footer = () => {
               <button
                 type="submit"
                 disabled={formData.isSubmitting}
-                className="relative overflow-hidden bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold text-sm md:text-base whitespace-nowrap px-8 sm:px-10 py-3 sm:py-4 rounded-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed mt-2 group/btn"
-                style={{
-                  boxShadow: '0 0 30px rgba(139, 92, 246, 0.3)'
-                }}
+                className="relative overflow-hidden bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm md:text-base whitespace-nowrap px-8 sm:px-10 py-3 sm:py-4 rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
               >
-                {/* Animated gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000" />
-                
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {formData.isSubmitting ? (
                     <>
@@ -597,34 +407,10 @@ const Footer = () => {
       {/* Social Section */}
 <div 
   ref={socialSectionRef}
-  className="flex flex-col items-center lg:items-end order-3 lg:order-3 group relative"
+  className="flex flex-col items-center lg:items-end order-3 lg:order-3 relative"
 >
-  {/* Cyberpunk border effect */}
-  <div className="absolute -inset-4 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-600 overflow-hidden">
-    <div 
-      className="absolute inset-[-2px] rounded-2xl opacity-70"
-      style={{
-        backgroundImage: `
-          linear-gradient(90deg, transparent 95%, #8b5cf6 100%),
-          linear-gradient(180deg, transparent 95%, #06b6d4 100%)
-        `,
-        backgroundSize: '20px 20px',
-        animation: 'gridMove 2s linear infinite'
-      }}
-    />
-    {/* Scanning Lines */}
-    <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan rounded-full" />
-    <div className="absolute top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-purple-400 to-transparent animate-scan-horizontal rounded-full" style={{animationDuration: '3s'}} />
-    
-    {/* Pulsing Corner Brackets */}
-    <div className="absolute top-3 left-3 w-3 h-3 border-l-2 border-t-2 border-cyan-400 animate-pulse" />
-    <div className="absolute top-3 right-3 w-3 h-3 border-r-2 border-t-2 border-purple-400 animate-pulse" style={{animationDelay: '0.3s'}} />
-    <div className="absolute bottom-3 left-3 w-3 h-3 border-l-2 border-b-2 border-purple-400 animate-pulse" style={{animationDelay: '0.6s'}} />
-    <div className="absolute bottom-3 right-3 w-3 h-3 border-r-2 border-b-2 border-cyan-400 animate-pulse" style={{animationDelay: '0.9s'}} />
-  </div>
-
   {/* Main Content */}
-  <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 group-hover:border-purple-500/50 transition-all duration-300">
+  <div className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-white/10 hover:border-white/30 transition-all duration-300">
     <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 sm:mb-6 text-center lg:text-right bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
       Social
     </h2>
@@ -661,115 +447,54 @@ const Footer = () => {
           aria-label={social.alt}
         >
           {/* Subtle Glow on Hover */}
-          <div className={`absolute -inset-2 rounded-full opacity-0 group-hover/social:opacity-60 group-active/social:opacity-60 transition-all duration-300 blur-lg bg-gradient-to-r ${social.gradient}`} />
+          <div className={`absolute -inset-2 rounded-full opacity-0 group-hover/social:opacity-40 transition-opacity duration-300 blur-lg bg-white/30`} />
 
-          {/* Main Icon Container */}
-          <div className="relative transform transition-all duration-300 group-hover/social:scale-110 group-active/social:scale-105" style={{transformStyle: 'preserve-3d'}}>
-            {/* Outer Decorative Ring - Always Visible */}
-            <div className={`absolute -inset-1 rounded-full bg-gradient-to-r ${social.gradient} opacity-30 animate-spin-slow blur-sm`} style={{animationDuration: '10s'}} />
-            
-            {/* Pulsing Outer Glow - Always Visible */}
-            <div className={`absolute -inset-2 rounded-full bg-gradient-to-r ${social.gradient} opacity-15 animate-pulse blur-md`} />
-            
-            {/* Background Circle with Gradient - NO BORDER */}
-            <div className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden shadow-xl transition-all duration-300`}>
-              {/* Animated Gradient Background - Always Visible */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-25 group-hover/social:opacity-40 transition-opacity duration-300 animate-pulse`} style={{animationDuration: '3s'}} />
-              
-              {/* Glass Effect with Gradient Tint */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/85 backdrop-blur-sm`} />
-              
-              {/* Rotating Border Accent - Always Visible */}
-              <div className="absolute inset-0 rounded-full overflow-hidden">
-                <div className={`absolute -inset-[100%] bg-gradient-to-r ${social.gradient} opacity-25 animate-spin`} style={{animationDuration: '4s'}} />
-              </div>
-              
-              {/* Icon Image with Enhanced Styling - NO GRID, NO CORNER ACCENTS, NO INNER RING */}
-              <div className="absolute inset-0 p-2.5 sm:p-3 flex items-center justify-center z-10">
-                <div className="relative w-full h-full">
-                  {/* Icon Glow Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-15 rounded-lg blur-sm`} />
-                  
-                  <img
-                    src={social.src}
-                    alt={social.alt}
-                    className="relative w-full h-full object-contain transition-all duration-300 group-hover/social:brightness-105 group-hover/social:scale-105"
-                    loading="lazy"
-                    style={{
-                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
-                      transform: 'translateZ(5px)'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            
-            {/* Floating Particles - Reduced */}
-            <div className="absolute -inset-2 pointer-events-none opacity-0 group-hover/social:opacity-100 transition-opacity duration-300">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className={`absolute w-1 h-1 rounded-full animate-float bg-gradient-to-r ${social.gradient}`}
-                  style={{
-                    left: `${25 + (i * 25)}%`,
-                    top: `${20 + (i * 20)}%`,
-                    animationDelay: `${i * 0.3}s`,
-                    animationDuration: `${2.5 + i * 0.5}s`
-                  }}
-                />
-              ))}
-            </div>
-            
-            {/* Starfield Effect - Reduced */}
-            <div className="absolute inset-0 opacity-0 group-hover/social:opacity-60 transition-opacity duration-300 overflow-hidden rounded-full pointer-events-none">
-              <div className="absolute top-2 left-3 w-0.5 h-0.5 bg-white rounded-full animate-pulse" />
-              <div className="absolute bottom-2 right-3 w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{animationDelay: '0.5s'}} />
+          {/* Main Icon Container - Simplified */}
+          <div className="relative transform transition-all duration-300 group-hover/social:scale-105">
+            {/* Background Circle */}
+            <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-16 md:h-16 rounded-full overflow-hidden shadow-xl bg-white/90 hover:bg-white transition-colors duration-300 flex items-center justify-center">
+              {/* Icon Image */}
+              <img
+                src={social.src}
+                alt={social.alt}
+                className="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 object-contain transition-transform duration-300 group-hover/social:scale-105"
+                loading="lazy"
+                style={{
+                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+                }}
+              />
             </div>
           </div>
 
           {/* Tooltip - Desktop */}
           <div className="hidden sm:block absolute -bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/social:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap z-30">
-            <div className={`px-3 py-1.5 bg-gradient-to-r ${social.gradient} rounded-lg backdrop-blur-sm shadow-lg`}>
-              <p className="text-white text-xs font-semibold drop-shadow-lg">{social.alt}</p>
+            <div className="px-3 py-1.5 bg-white/90 rounded-lg backdrop-blur-sm shadow-lg">
+              <p className="text-black text-xs font-semibold">{social.alt}</p>
             </div>
-            <div className={`absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gradient-to-r ${social.gradient} rotate-45`} />
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white/90 rotate-45" />
           </div>
           
           {/* Mobile Label */}
           <div className="sm:hidden absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-active/social:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
-            <p className={`text-white text-[10px] font-semibold whitespace-nowrap bg-gradient-to-r ${social.gradient} px-2 py-1 rounded shadow-lg`}>{social.alt}</p>
+            <p className="text-black text-[10px] font-semibold whitespace-nowrap bg-white/90 px-2 py-1 rounded shadow-lg">{social.alt}</p>
           </div>
         </a>
       ))}
     </div>
   </div>
-
-      {/* Floating elements */}
-      <div className="absolute -top-2 -right-2 w-3 h-3 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-200"></div>
-      <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce transition-opacity duration-500 delay-400" style={{animationDelay: '0.2s'}}></div>
     </div>
-
-    <style jsx>{`
-      @keyframes scan-horizontal {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(400%); }
-      }
-      .animate-scan-horizontal {
-        animation: scan-horizontal 4s linear infinite;
-      }
-    `}</style>
-      </div>
 
       {/* Bottom section dengan copyright */}
       <div className="flex relative justify-center items-center mt-20">
-        <div className="absolute -top-10 left-1/2 w-10/12 -translate-x-1/2 h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-40" />
+        <div className="absolute -top-10 left-1/2 w-10/12 -translate-x-1/2 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
         <h1 className="font-bold text-sm md:text-base tracking-wide bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text text-transparent">
           R'e • 2025
         </h1>
       </div>
+      </div>
 
-      {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none z-10"></div>
+      {/* Bottom Gradient - Simplified */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#040507] via-[#040507]/50 to-transparent pointer-events-none z-10"></div>
 
       <style jsx>{`
         @keyframes gridMove {
