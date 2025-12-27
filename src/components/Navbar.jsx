@@ -157,7 +157,7 @@ const Navbar = () => {
   // Mobile Header - dengan animasi slide down
   const MobileHeader = () => (
     <header 
-      className={`md:hidden flex justify-between items-center transition-all duration-500 fixed top-4 left-4 right-4 z-50 px-4 py-3 rounded-2xl ${
+      className={`md:hidden flex items-center justify-between gap-3 transition-all duration-500 fixed top-4 left-4 right-4 z-50 px-4 py-3 rounded-2xl ${
         scrolled 
           ? (isLight ? 'bg-white/90 backdrop-blur-lg border border-slate-200 shadow-lg shadow-slate-200/50' : 'bg-black/80 backdrop-blur-lg border border-white/10 shadow-lg')
           : (isLight ? 'bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-sm shadow-slate-200/40' : 'bg-black/70 backdrop-blur-md')
@@ -170,54 +170,56 @@ const Navbar = () => {
       }}
     >
       <div className="relative z-10">
-        <h1 className={`text-xl font-semibold logo-minecraft ${isLight ? 'text-slate-900 drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]' : 'text-white drop-shadow-[0_0_8px_rgba(248,236,222,0.4)]'}`}>
+        <h1 className={`text-xl font-semibold logo-minecraft ${isLight ? 'text-slate-700 drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]' : 'text-white drop-shadow-[0_0_8px_rgba(248,236,222,0.4)]'}`}>
           R'e
         </h1>
       </div>
-      
-      <button
-        type="button"
-        onClick={toggleThemeMode}
-        className="relative z-10 p-2 rounded-xl transition-all duration-300 backdrop-blur-md active:scale-95 mr-3"
-        style={{
-          backgroundColor: isLight ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.08)',
-          borderColor: isLight ? 'rgb(226, 232, 240)' : 'rgba(255, 255, 255, 0.2)',
-          border: '1px solid'
-        }}
-        aria-label="Toggle theme"
-      >
-        {theme === 'dark' ? (
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" fill="white">
-            <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.45-9.45 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05 1 1 0 0 0 21.64 13Z" />
-          </svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 text-amber-500" fill="currentColor">
-            <path d="M12 18a6 6 0 1 0-6-6 6 6 0 0 0 6 6Zm0-14a1 1 0 0 0 1-1V2a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm0 16a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Zm10-7h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2ZM3 12H2a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm14.95-6.95a1 1 0 0 0-1.41 0l-.71.71a1 1 0 1 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41ZM7.17 16.83a1 1 0 0 0-1.41 0l-.71.71a1 1 0 0 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41Zm12.02 1.41a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 0 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0ZM7.17 7.17a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 1 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0Z" />
-          </svg>
-        )}
-      </button>
-      
-      <button
-        onClick={toggleSidebar}
-        className={`relative z-10 p-2 rounded-xl transition-all duration-300 backdrop-blur-md active:scale-95 ml-1 ${
-          isLight
-            ? 'text-slate-800 bg-white/90 border border-slate-200 hover:border-amber-300/70 hover:shadow-lg hover:shadow-amber-200/30'
-            : 'text-white bg-gradient-to-r from-white/10 via-white/5 to-white/10 border border-white/20 hover:border-amber-200/40 hover:from-white/15 hover:via-amber-50/10 hover:to-white/15 hover:shadow-lg hover:shadow-amber-200/20'
-        }`}
-        aria-label='Toggle menu'
-      >
-        <div className="relative w-6 h-6 flex flex-col items-center justify-center">
-          <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
-            isSidebarOpen ? 'rotate-45 top-3' : 'top-1.5'
-          }`} />
-          <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
-            isSidebarOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100 top-3'
-          }`} />
-          <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
-            isSidebarOpen ? '-rotate-45 top-3' : 'top-4.5'
-          }`} />
-        </div>
-      </button>
+
+      <div className="flex items-center gap-2 ml-auto mr-2">
+        <button
+          type="button"
+          onClick={toggleThemeMode}
+          className="relative z-10 p-2 rounded-xl transition-all duration-300 backdrop-blur-md active:scale-95"
+          style={{
+            backgroundColor: isLight ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.08)',
+            borderColor: isLight ? 'rgb(226, 232, 240)' : 'rgba(255, 255, 255, 0.2)',
+            border: '1px solid'
+          }}
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" fill="white">
+              <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.45-9.45 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05 1 1 0 0 0 21.64 13Z" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 text-amber-500" fill="currentColor">
+              <path d="M12 18a6 6 0 1 0-6-6 6 6 0 0 0 6 6Zm0-14a1 1 0 0 0 1-1V2a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm0 16a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Zm10-7h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2ZM3 12H2a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm14.95-6.95a1 1 0 0 0-1.41 0l-.71.71a1 1 0 1 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41ZM7.17 16.83a1 1 0 0 0-1.41 0l-.71.71a1 1 0 0 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41Zm12.02 1.41a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 0 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0ZM7.17 7.17a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 1 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0Z" />
+            </svg>
+          )}
+        </button>
+        
+        <button
+          onClick={toggleSidebar}
+          className={`relative z-10 p-2 rounded-xl transition-all duration-300 backdrop-blur-md active:scale-95 ${
+            isLight
+              ? 'text-slate-800 bg-white/90 border border-slate-200 hover:border-amber-300/70 hover:shadow-lg hover:shadow-amber-200/30'
+              : 'text-white bg-gradient-to-r from-white/10 via-white/5 to-white/10 border border-white/20 hover:border-amber-200/40 hover:from-white/15 hover:via-amber-50/10 hover:to-white/15 hover:shadow-lg hover:shadow-amber-200/20'
+          }`}
+          aria-label='Toggle menu'
+        >
+          <div className="relative w-6 h-6 flex flex-col items-center justify-center">
+            <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
+              isSidebarOpen ? 'rotate-45 top-3' : 'top-1.5'
+            }`} />
+            <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
+              isSidebarOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100 top-3'
+            }`} />
+            <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
+              isSidebarOpen ? '-rotate-45 top-3' : 'top-4.5'
+            }`} />
+          </div>
+        </button>
+      </div>
     </header>
   )
 
