@@ -5,20 +5,19 @@ import ProfileCard from "./assets/ProfileCard";
 const About = () => {
   const sectionRef = useRef(null);
 
-  // Tech stack dengan CDN - SVG ringan dari simpleicons
   const techStack = useMemo(() => [
-    { name: "React", logo: "https://cdn.simpleicons.org/react/61DAFB" },
-    { name: "JavaScript", logo: "https://cdn.simpleicons.org/javascript/F7DF1E" },
-    { name: "TypeScript", logo: "https://cdn.simpleicons.org/typescript/3178C6" },
-    { name: "Next.js", logo: "https://cdn.simpleicons.org/nextdotjs/000000" },
-    { name: "Tailwind", logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4" },
-    { name: "Python", logo: "https://cdn.simpleicons.org/python?viewbox=auto&size=20" },
-    { name: "Dart", logo: "https://cdn.simpleicons.org/dart?viewbox=auto&size=20" },
-    { name: "Git", logo: "https://cdn.simpleicons.org/git/F05032" },
-    { name: "GitHub", logo: "https://cdn.simpleicons.org/github/181717" },
-    { name: "Clojure", logo: "https://cdn.simpleicons.org/clojure?viewbox=auto&size=20" },
-    { name: "Figma", logo: "https://cdn.simpleicons.org/figma/F24E1E" },
-    { name: "Node.js", logo: "https://cdn.simpleicons.org/nodedotjs/339933" },
+    { name: "", logo: "https://cdn.simpleicons.org/react/61DAFB" },
+    { name: "", logo: "https://cdn.simpleicons.org/javascript/F7DF1E" },
+    { name: "", logo: "https://cdn.simpleicons.org/typescript/3178C6" },
+    { name: "", logo: "https://cdn.simpleicons.org/nextdotjs/000000" },
+    { name: "", logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4" },
+    { name: "", logo: "https://cdn.simpleicons.org/python?viewbox=auto&size=20" },
+    { name: "", logo: "https://cdn.simpleicons.org/dart?viewbox=auto&size=20" },
+    { name: "", logo: "https://cdn.simpleicons.org/git/F05032" },
+    { name: "", logo: "https://cdn.simpleicons.org/github/181717" },
+    { name: "", logo: "https://cdn.simpleicons.org/clojure?viewbox=auto&size=20" },
+    { name: "", logo: "https://cdn.simpleicons.org/figma/F24E1E" },
+    { name: "", logo: "https://cdn.simpleicons.org/nodedotjs/339933" },
   ], []);
 
   // Konfigurasi marquee row di-memoize
