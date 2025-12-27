@@ -98,7 +98,7 @@ const Navbar = () => {
                 }`}
                 style={isLight ? { textShadow: 'none', WebkitTextStroke: '0px transparent' } : undefined}
               >
-                R'e
+                Ra'e
               </h1>
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-8 bg-gradient-to-b from-transparent via-white/30 to-transparent" />
             </div>

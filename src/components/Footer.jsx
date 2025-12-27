@@ -342,7 +342,7 @@ const Footer = () => {
               WebkitBackgroundClip: 'text'
             }}
         >
-          R'e 
+          Ra'e 
         </h3>
         <div className="relative mt-2 sm:mt-3 min-h-[2rem] sm:min-h-[2.5rem] md:min-h-[3rem]">
           <h4 className={`${isLight ? 'text-slate-800' : 'text-white/80'} font-medium text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 flex items-center justify-center gap-2 relative`}>
