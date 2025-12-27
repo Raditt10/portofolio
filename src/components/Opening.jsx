@@ -62,6 +62,53 @@ const Opening = ({ onComplete }) => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
       </div>
 
+      {/* Linux Window Background di tengah */}
+      <motion.div 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="relative w-[90%] max-w-2xl h-[80vh] max-h-[600px]">
+          {/* Linux Window Container - Ubuntu GNOME Style */}
+          <div className="absolute inset-0 rounded-xl shadow-[0_25px_70px_rgba(0,0,0,0.5),0_10px_30px_rgba(0,0,0,0.3)] border border-gray-800/30 overflow-hidden backdrop-blur-sm">
+            {/* Title Bar (Ubuntu GNOME style) */}
+            <div className="absolute top-0 left-0 right-0 h-11 bg-gradient-to-b from-[#2d2d2d] via-[#2a2a2a] to-[#262626] border-b border-black/40 flex items-center px-3 shadow-sm">
+              {/* Window Control Buttons - Left side like Ubuntu */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-3.5 h-3.5 rounded-full bg-gradient-to-br from-[#ee6a5f] to-[#d85f54] hover:brightness-110 cursor-pointer shadow-md border border-red-900/20" />
+                <div className="w-3.5 h-3.5 rounded-full bg-gradient-to-br from-[#f5bd4f] to-[#e0a93a] hover:brightness-110 cursor-pointer shadow-md border border-yellow-900/20" />
+                <div className="w-3.5 h-3.5 rounded-full bg-gradient-to-br from-[#61c454] to-[#52a845] hover:brightness-110 cursor-pointer shadow-md border border-green-900/20" />
+              </div>
+              
+              {/* Window Title */}
+              <div className="flex-1 flex items-center justify-center">
+                <span className="text-gray-300 text-sm font-semibold tracking-wide" style={{ fontFamily: 'Ubuntu, system-ui, sans-serif' }}>
+                  portfolio.app
+                </span>
+              </div>
+              
+              {/* Right side placeholder for symmetry */}
+              <div className="w-24" />
+            </div>
+            
+            {/* Window Body - Warm Amber tone */}
+            <div className="absolute top-11 left-0 right-0 bottom-0 bg-gradient-to-br from-[#fef3e2] via-[#fdf5e6] to-[#fdefd4]">
+              {/* Subtle texture overlay */}
+              <div className="absolute inset-0 opacity-[0.03]" style={{
+                backgroundImage: 'linear-gradient(rgba(139,69,19,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(139,69,19,0.08) 1px, transparent 1px)',
+                backgroundSize: '24px 24px'
+              }} />
+              
+              {/* Noise texture for depth */}
+              <div className="absolute inset-0 opacity-[0.015]" style={{
+                backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'3\' numOctaves=\'4\' /%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.5\'/%3E%3C/svg%3E")',
+              }} />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center gap-12">
         {/* Planet Logo */}
@@ -97,13 +144,13 @@ const Opening = ({ onComplete }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <h1 className="text-3xl md:text-4xl font-light text-white mb-2 tracking-wide">
+          <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-900 via-orange-800 to-amber-900 mb-3 tracking-tight drop-shadow-sm" style={{ fontFamily: '"Space Grotesk", "Inter", system-ui, sans-serif', fontWeight: 800 }}>
             Hao!
           </h1>
-          <div className="text-white/80 text-lg md:text-xl font-semibold tracking-[0.35em] uppercase h-8 flex items-center justify-center bg-gradient-to-r from-white via-slate-100 to-white/70 bg-clip-text text-transparent drop-shadow-[0_4px_24px_rgba(255,255,255,0.35)]">
-            <span>{typedText}</span>
+          <div className="text-amber-800/90 text-xl md:text-2xl font-bold tracking-[0.25em] uppercase h-10 flex items-center justify-center" style={{ fontFamily: '"JetBrains Mono", "Fira Code", monospace' }}>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-700 via-amber-800 to-orange-700">{typedText}</span>
             <motion.span
-              className="inline-block w-0.5 h-5 bg-white ml-1"
+              className="inline-block w-1 h-6 bg-amber-800 ml-1.5 rounded-sm"
               animate={{ opacity: [1, 0, 1] }}
               transition={{ duration: 0.8, repeat: Infinity }}
             />
@@ -118,19 +165,26 @@ const Opening = ({ onComplete }) => {
           transition={{ delay: 0.8 }}
         >
           {/* Progress Label */}
-          <div className="flex justify-between items-center mb-3 text-sm">
-            <span className="text-white/60">Tunggu bentar yaa..</span>
-            <span className="text-white font-mono font-bold">
+          <div className="flex justify-between items-center mb-4 text-base">
+            <span className="text-amber-800/80 font-semibold tracking-wide" style={{ fontFamily: '"Ubuntu", system-ui, sans-serif' }}>
+              Tunggu bentar yaa..
+            </span>
+            <span className="text-amber-900 font-black text-3xl tracking-tighter tabular-nums" style={{ fontFamily: '"Space Grotesk", "Inter", system-ui, sans-serif', fontWeight: 900, letterSpacing: '-0.05em' }}>
               {progress}%
             </span>
           </div>
 
-          <div className="relative h-2 bg-white/8 rounded-full overflow-hidden backdrop-blur border border-white/15 shadow-lg">
+          <div className="relative h-6 bg-gradient-to-r from-amber-100/80 via-amber-50/70 to-amber-100/80 rounded-full overflow-hidden backdrop-blur border-2 border-amber-300/40 shadow-lg">
             <motion.div
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-white/50 via-white/35 to-white/20 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500 rounded-full shadow-[0_0_25px_rgba(251,146,60,0.6),inset_0_2px_4px_rgba(255,255,255,0.4)]"
               style={{ width: `${progress}%` }}
               transition={{ duration: 0.35, ease: "easeInOut" }}
-            />
+            >
+              {/* Inner shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-black/10 rounded-full" />
+              {/* Glossy highlight */}
+              <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-b from-white/60 to-transparent rounded-full" />
+            </motion.div>
           </div>
 
         </motion.div>
