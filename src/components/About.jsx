@@ -12,8 +12,8 @@ const About = () => {
     { name: "TypeScript", logo: "https://cdn.simpleicons.org/typescript/3178C6" },
     { name: "Next.js", logo: "https://cdn.simpleicons.org/nextdotjs/000000" },
     { name: "Tailwind", logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4" },
-    { name: "HTML", logo: "https://cdn.simpleicons.org/html5/E34F26" },
-    { name: "CSS", logo: "https://cdn.simpleicons.org/css3/1572B6" },
+    { name: "Python", logo: "https://cdn.simpleicons.org/python?viewbox=auto&size=20" },
+    { name: "Dart", logo: "https://cdn.simpleicons.org/dart?viewbox=auto&size=20" },
     { name: "Git", logo: "https://cdn.simpleicons.org/git/F05032" },
     { name: "GitHub", logo: "https://cdn.simpleicons.org/github/181717" },
     { name: "VS Code", logo: "https://cdn.simpleicons.org/visualstudiocode/007ACC" },
@@ -28,6 +28,7 @@ const About = () => {
     { speed: 30, direction: "left" },
     { speed: 34, direction: "right" },
     { speed: 26, direction: "left" },
+    { speed: 29, direction: "right" },
   ], []);
 
   // Warna gradient di-memoize
