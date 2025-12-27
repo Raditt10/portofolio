@@ -1,357 +1,400 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
-import ProjectCard from "./assets/ProjectCard";
-import { projectsData } from "../../constant";
+
+// Sample project data - ganti dengan data Anda
+const projectsData = [
+  {
+    gambar: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
+    judul: "Project Alpha",
+    parag: "Aplikasi web modern dengan React dan Tailwind CSS",
+    tech: ["React", "Tailwind", "Node.js"],
+    linkDemo: "#",
+    linkCode: "#",
+  },
+  {
+    gambar: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
+    judul: "Project Beta",
+    parag: "Platform e-commerce dengan fitur lengkap",
+    tech: ["Next.js", "MongoDB", "Stripe"],
+    linkDemo: "#",
+    linkCode: "#",
+  },
+  {
+    gambar: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800",
+    judul: "Project Gamma",
+    parag: "Dashboard analytics real-time",
+    tech: ["Vue.js", "Firebase", "Chart.js"],
+    linkDemo: "#",
+    linkCode: "#",
+    isComingSoon: true,
+  },
+  {
+    gambar: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800",
+    judul: "Project Delta",
+    parag: "Mobile app dengan React Native",
+    tech: ["React Native", "Redux", "API"],
+    linkDemo: "#",
+    linkCode: "#",
+  },
+];
+
+// Project Card Component - Optimized untuk mobile
+const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingSoon }) => {
+  return (
+    <div className="relative h-full bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-md border border-white/10 rounded-xl overflow-hidden group">
+      {/* Image */}
+      <div className="relative h-40 sm:h-48 md:h-52 overflow-hidden">
+        <img 
+          src={gambar} 
+          alt={judul}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        
+        {/* Coming Soon Badge */}
+        {isComingSoon && (
+          <div className="absolute top-3 right-3 px-3 py-1 bg-yellow-500/90 backdrop-blur-sm rounded-full text-xs font-semibold text-black">
+            Coming Soon
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
+        <h3 className="text-lg sm:text-xl font-bold text-white line-clamp-1">{judul}</h3>
+        <p className="text-sm text-gray-300/80 line-clamp-2">{parag}</p>
+
+        {/* Tech Stack */}
+        <div className="flex flex-wrap gap-2">
+          {tech.map((t, i) => (
+            <span 
+              key={i}
+              className="px-2.5 py-1 text-xs font-medium bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-white/10 rounded-full text-white/90"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {/* Links */}
+        <div className="flex gap-3 pt-2">
+          <a
+            href={linkDemo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 rounded-lg text-white text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ExternalLink size={16} />
+            <span>Demo</span>
+          </a>
+          <a
+            href={linkCode}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-white text-sm font-medium transition-all duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Github size={16} />
+            <span className="hidden sm:inline">Code</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Hover Glow */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-cyan-500/10" />
+      </div>
+    </div>
+  );
+};
 
 const Projects = () => {
   const sectionRef = useRef(null);
-  const titleRef = useRef(null);
   const scrollContainerRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [velocity, setVelocity] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Update scroll progress
-  const updateScrollProgress = () => {
+  // Touch/drag state
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartX = useRef(0);
+  const scrollStartLeft = useRef(0);
+
+  // Update scroll state
+  const updateScrollState = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      const progress = (scrollLeft / (scrollWidth - clientWidth)) * 100;
-      setScrollProgress(progress || 0);
+      const maxScroll = scrollWidth - clientWidth;
+      const progress = maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0;
+      
+      setScrollProgress(progress);
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft < maxScroll - 10);
     }
   };
 
-  // Mouse drag handlers with momentum
-  const handleMouseDown = (e) => {
+  // Mouse/Touch handlers
+  const handleDragStart = (clientX) => {
     setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-    setVelocity(0);
-    scrollContainerRef.current.style.cursor = 'grabbing';
-    scrollContainerRef.current.style.scrollBehavior = 'auto';
+    dragStartX.current = clientX;
+    scrollStartLeft.current = scrollContainerRef.current.scrollLeft;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.scrollSnapType = 'none';
+    }
   };
 
-  const handleMouseUp = () => {
+  const handleDragMove = (clientX) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    
+    const delta = dragStartX.current - clientX;
+    scrollContainerRef.current.scrollLeft = scrollStartLeft.current + delta;
+  };
+
+  const handleDragEnd = () => {
     setIsDragging(false);
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = 'grab';
-      scrollContainerRef.current.style.scrollBehavior = 'smooth';
-      
-      // Apply momentum
-      if (Math.abs(velocity) > 5) {
-        const momentumScroll = velocity * 15;
-        scrollContainerRef.current.scrollLeft -= momentumScroll;
-      }
+      // Re-enable snap after drag
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.style.scrollSnapType = 'x mandatory';
+        }
+      }, 50);
     }
+  };
+
+  // Mouse events
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    handleDragStart(e.clientX);
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2.5; // Increased speed multiplier
-    const newVelocity = walk - (scrollLeft - scrollContainerRef.current.scrollLeft);
-    setVelocity(newVelocity);
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+    handleDragMove(e.clientX);
   };
 
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      handleMouseUp();
-    }
+  const handleMouseUp = () => {
+    handleDragEnd();
   };
 
-  // Touch handlers for mobile
+  // Touch events
   const handleTouchStart = (e) => {
-    setStartX(e.touches[0].pageX);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    handleDragStart(e.touches[0].clientX);
   };
 
   const handleTouchMove = (e) => {
-    const x = e.touches[0].pageX;
-    const walk = (startX - x) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft + walk;
+    handleDragMove(e.touches[0].clientX);
   };
 
-  // Scroll event listener
+  const handleTouchEnd = () => {
+    handleDragEnd();
+  };
+
+  // Navigation
+  const scrollTo = (direction) => {
+    if (!scrollContainerRef.current) return;
+    
+    const container = scrollContainerRef.current;
+    const cardWidth = container.querySelector('.project-card')?.offsetWidth || 0;
+    const gap = 24; // 6 * 4px (gap-6)
+    const scrollAmount = cardWidth + gap;
+    
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth'
+    });
+  };
+
+  // Scroll listener
   useEffect(() => {
     const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener('scroll', updateScrollProgress);
-      return () => container.removeEventListener('scroll', updateScrollProgress);
-    }
+    if (!container) return;
+
+    container.addEventListener('scroll', updateScrollState);
+    updateScrollState(); // Initial check
+
+    return () => container.removeEventListener('scroll', updateScrollState);
   }, []);
 
-  // Navigation buttons
-  const scrollTo = (direction) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = scrollContainerRef.current.clientWidth * 0.8;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
+  // Cleanup drag on unmount
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      if (isDragging) handleDragEnd();
+    };
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.05,
-      },
-    },
-  };
-
-  const titleVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 30,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1],
-      },
-    },
-  };
-
-  const gridVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 40,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1],
-      },
-    },
-  };
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
+  }, [isDragging]);
 
   return (
     <section 
       id="projects" 
       ref={sectionRef} 
-      className="relative min-h-screen py-14 sm:py-18 md:py-22 px-4 sm:px-6 md:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-[#040507] via-[#0a0d12] to-[#050608] touch-manipulation"
-      style={{ fontFamily: "Sora Variable" }}
+      className="relative min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 overflow-hidden bg-[#050607]"
+      style={{ fontFamily: "Sora Variable, system-ui, sans-serif" }}
     >
-      {/* Elegant Static Background */}
-      <div className="absolute inset-0 z-0">
-        {/* Central light bloom with soft amber halo */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.26)_0%,rgba(255,255,255,0.12)_16%,rgba(255,255,255,0)_42%),radial-gradient(circle_at_68%_66%,rgba(255,214,170,0.12)_0%,rgba(255,214,170,0)_55%)]" />
-
-        {/* Luxe vignette to deepen blacks */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_35%,rgba(0,0,0,0.6)_100%)]" />
+      {/* Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(circle at 30% 20%, rgba(139,92,246,0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(6,182,212,0.12) 0%, transparent 50%)`
+          }}
+        />
       </div>
 
-      <motion.div 
-        className="max-w-7xl mx-auto relative z-20"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Title */}
         <motion.h1 
-          ref={titleRef}
-          variants={titleVariants}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl bg-gradient-to-r from-white via-slate-200 to-amber-100 bg-clip-text text-transparent font-semibold text-center relative z-30 overflow-hidden mb-8 sm:mb-12 md:mb-16 lg:mb-20 px-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 md:mb-16"
           style={{
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 0 24px rgba(255,255,255,0.25)',
-            letterSpacing: '0.02em'
+            background: "linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
           }}
         >
           My Projects
         </motion.h1>
-        
-        {/* Navigation Buttons */}
+
+        {/* Projects Container */}
         <div className="relative">
+          {/* Navigation Buttons - Desktop Only */}
           <button
             onClick={() => scrollTo('left')}
-            disabled={scrollProgress === 0}
-            className={`hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-30 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 backdrop-blur-xl border border-white/10 items-center justify-center transition-all duration-500 hover:scale-110 hover:border-white/30 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] ${
-              scrollProgress === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            disabled={!canScrollLeft}
+            className={`hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 z-30 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 backdrop-blur-xl border border-white/20 items-center justify-center transition-all duration-300 hover:scale-110 hover:border-white/40 ${
+              !canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
           >
-            <svg className="w-7 h-7 text-white drop-shadow-[0_0_10px_rgba(139,92,246,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           <button
             onClick={() => scrollTo('right')}
-            disabled={scrollProgress >= 99}
-            className={`hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-30 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 backdrop-blur-xl border border-white/10 items-center justify-center transition-all duration-500 hover:scale-110 hover:border-white/30 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] ${
-              scrollProgress >= 99 ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            disabled={!canScrollRight}
+            className={`hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 z-30 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 backdrop-blur-xl border border-white/20 items-center justify-center transition-all duration-300 hover:scale-110 hover:border-white/40 ${
+              !canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
           >
-            <svg className="w-7 h-7 text-white drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-        
-          {/* Scroll Container with Drag */}
+
+          {/* Scroll Container - Optimized untuk Mobile */}
           <div 
             ref={scrollContainerRef}
             onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
-            className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-4 relative"
+            onTouchEnd={handleTouchEnd}
+            className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-4"
             style={{
               cursor: isDragging ? 'grabbing' : 'grab',
-              scrollBehavior: isDragging ? 'auto' : 'smooth',
+              scrollSnapType: 'x mandatory',
               WebkitOverflowScrolling: 'touch',
+              scrollPaddingLeft: '1rem',
+              scrollPaddingRight: '1rem',
             }}
           >
             <motion.div 
-              className="flex gap-6 sm:gap-8 md:gap-10 lg:gap-12 min-w-max px-4"
-              variants={gridVariants}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="flex gap-4 sm:gap-6 md:gap-8 px-1 sm:px-2"
               style={{
                 userSelect: 'none',
+                touchAction: 'pan-x',
               }}
             >
               {projectsData.map((data, index) => (
                 <motion.div
                   key={index}
-                  variants={cardVariants}
-                  whileHover={{ 
-                    y: -6,
-                    scale: 1.015,
-                    rotateY: 0,
-                    transition: { duration: 0.25, ease: [0.25, 0.1, 0.25, 1] } 
-                  }}
-                  className="relative group w-[320px] sm:w-[380px] md:w-[420px] lg:w-[450px] flex-shrink-0"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="project-card flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px]"
                   style={{
-                    transformStyle: 'preserve-3d',
-                    perspective: 1000,
+                    scrollSnapAlign: 'start',
                   }}
                 >
-              {/* Cyberpunk Glow Effect */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-80 transition-all duration-300 rounded-xl"
-                style={{
-                  background: 'radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, transparent 70%)',
-                  filter: 'blur(10px)',
-                  transform: 'scale(1.02)'
-                }}
-              />
-              
-              {/* Animated Border */}
-              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-90 transition-all duration-400 overflow-hidden hidden md:block">
-                <div 
-                  className="absolute inset-[-2px] rounded-xl opacity-50"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(90deg, transparent 94%, rgba(255,255,255,0.3) 100%),
-                      linear-gradient(180deg, transparent 94%, rgba(255,255,255,0.25) 100%)
-                    `,
-                    backgroundSize: '22px 22px',
-                    animation: 'gridMove 3s linear infinite'
-                  }}
-                />
-              </div>
-
-              {/* Original ProjectCard dengan wrapper untuk efek tambahan */}
-              <div className="relative transform transition-all duration-300 group-hover:border-purple-500/50 rounded-xl overflow-hidden">
-                <ProjectCard 
-                  gambar={data.gambar} 
-                  judul={data.judul} 
-                  parag={data.parag} 
-                  tech={data.tech} 
-                  linkDemo={data.linkDemo} 
-                  linkCode={data.linkCode}
-                  isComingSoon={data.isComingSoon || false}
-                />
-                
-                {/* Hover Shine Effect Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none rounded-xl" />
-              </div>
+                  <ProjectCard {...data} />
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
-        </div>
+          </div>
+
+          {/* Gradient Fade - Left & Right */}
+          <div className="absolute left-0 top-0 bottom-4 w-8 sm:w-12 bg-gradient-to-r from-[#050607] to-transparent pointer-events-none z-20" />
+          <div className="absolute right-0 top-0 bottom-4 w-8 sm:w-12 bg-gradient-to-l from-[#050607] to-transparent pointer-events-none z-20" />
         </div>
 
-        {/* Enhanced Progress Bar & Scroll Indicators */}
-        <div className="flex flex-col items-center gap-6 mt-12">
+        {/* Progress Indicator */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-8 sm:mt-12 space-y-4"
+        >
           {/* Progress Bar */}
-          <div className="w-full max-w-2xl">
-            <div className="relative h-1.5 bg-white/5 rounded-full overflow-hidden backdrop-blur-sm border border-white/10">
-              <div
-                className="h-full bg-gradient-to-r from-white/50 via-white/30 to-white/20 rounded-full transition-all duration-300 ease-out relative"
+          <div className="max-w-2xl mx-auto">
+            <div className="relative h-1 bg-white/5 rounded-full overflow-hidden backdrop-blur-sm border border-white/10">
+              <motion.div
+                className="h-full bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500 rounded-full relative"
                 style={{ 
                   width: `${scrollProgress}%`,
-                  boxShadow: '0 0 10px rgba(255,255,255,0.25)'
+                  boxShadow: '0 0 10px rgba(139,92,246,0.5)'
                 }}
+                transition={{ duration: 0.3 }}
               >
-                {/* Animated glow at the end of progress bar */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
-              </div>
+                {/* Glowing dot at end */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+              </motion.div>
             </div>
             
-            {/* Progress percentage indicator */}
-            <div className="flex justify-between items-center mt-2 px-2">
-              <span className="text-xs text-gray-500">Start</span>
-              <span className="text-xs font-medium text-cyan-400 tabular-nums">
+            {/* Progress Info */}
+            <div className="flex justify-between items-center mt-2 px-2 text-xs text-gray-500">
+              <span>Start</span>
+              <span className="text-cyan-400 font-medium tabular-nums">
                 {Math.round(scrollProgress)}%
               </span>
-              <span className="text-xs text-gray-500">End</span>
+              <span>End</span>
             </div>
           </div>
 
-          {/* Scroll Instruction */}
-          <div className="flex items-center gap-4 text-sm text-gray-400">
-            <div className="flex items-center gap-2 animate-pulse">
+          {/* Swipe Instruction - Mobile Only */}
+          <div className="flex justify-center">
+            <motion.div
+              animate={{ x: [-5, 5, -5] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-white/10 backdrop-blur-sm rounded-full text-sm text-white/80"
+            >
               <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
               </svg>
-              <span className="hidden sm:inline">Swipe</span>
-            </div>
-            
-            <div className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-white/10 backdrop-blur-sm">
-              <span className="text-white/80">Drag to explore</span>
-            </div>
-            
-            <div className="flex items-center gap-2 animate-pulse">
-              <span className="hidden sm:inline">or Click</span>
+              <span className="font-medium">Swipe atau Drag</span>
               <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      </motion.div>
-
-      {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none z-10"></div>
+        </motion.div>
+      </div>
 
       <style jsx>{`
         .scrollbar-hide::-webkit-scrollbar {
@@ -360,50 +403,6 @@ const Projects = () => {
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
-        }
-        
-        @keyframes gridMove {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(50px); }
-        }
-        
-        @keyframes float {
-          0%, 100% { 
-            transform: translateY(0) translateX(0) rotate(0deg); 
-            opacity: 0; 
-          }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { 
-            transform: translateY(-100vh) translateX(100px) rotate(180deg); 
-            opacity: 0; 
-          }
-        }
-
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 0.8; }
-        }
-
-        @keyframes scan {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(400%); }
-        }
-
-        .animate-float {
-          animation: float 15s infinite linear;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 4s ease-in-out infinite;
-        }
-
-        .animate-scan {
-          animation: scan 3s linear infinite;
-        }
-
-        .floating-particle {
-          animation: float 15s infinite linear;
         }
       `}</style>
     </section>
