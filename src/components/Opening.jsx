@@ -51,9 +51,23 @@ const Opening = ({ onComplete }) => {
       <div className="relative z-10 flex flex-col items-center gap-8 sm:gap-12 px-4">
         <motion.div
           className="relative"
-          initial={{ scale: 0.9 }}
-          animate={{ scale: stage === "entering" ? 1.05 : 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ scale: 0.5, opacity: 0, y: 40, rotate: 12, filter: "blur(10px)" }}
+          animate={
+            stage === "complete"
+              ? { scale: 0.92, opacity: 0, y: -20, rotate: -5, filter: "blur(3px)" }
+              : {
+                  scale: [0.5, 1.08, 0.98, 1],
+                  opacity: [0, 1, 1, 1],
+                  y: [40, -10, 5, 0],
+                  rotate: [12, -3, 2, 0],
+                  filter: ["blur(10px)", "blur(3px)", "blur(1px)", "blur(0px)"],
+                }
+          }
+          transition={{ 
+            duration: 1.4, 
+            ease: [0.34, 1.56, 0.64, 1], 
+            times: [0, 0.5, 0.75, 1]
+          }}
         >
           <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40">
             <div className="relative w-full h-full rounded-full shadow-xl overflow-hidden border-2 sm:border-4 border-white/20 bg-[#0f1116]">
