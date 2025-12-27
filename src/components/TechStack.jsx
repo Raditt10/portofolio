@@ -130,7 +130,7 @@ const TechStack = () => {
       {/* Tech Grid */}
       <div 
         ref={gridRef}
-        className="relative z-20 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8 mt-8 sm:mt-12 md:mt-16 lg:mt-20 items-center justify-items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-6"
+        className="relative z-20 grid grid-cols-2 min-[360px]:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8 mt-8 sm:mt-12 md:mt-16 lg:mt-20 items-center justify-items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-6"
       >
         {techstack.map((tech, index) => (
           <div
@@ -139,7 +139,7 @@ const TechStack = () => {
             className="relative group cursor-pointer w-full"
           >
             {/* Card Container - Mobile Optimized */}
-            <div className="relative flex items-center justify-center aspect-square p-2 sm:p-3 md:p-4 lg:p-5 bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-[2px] rounded-lg sm:rounded-xl border border-gray-700/40 transition-all duration-200 overflow-hidden touch-manipulation active:scale-95">
+            <div className="relative flex items-center justify-center aspect-square p-2 min-[360px]:p-2.5 sm:p-3 md:p-4 lg:p-5 bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-[2px] rounded-lg sm:rounded-xl border border-gray-700/40 transition-all duration-200 overflow-hidden touch-manipulation active:scale-95">
               
               {/* Tech Icon - Responsive sizing */}
               <div className="relative z-10 w-full h-full flex items-center justify-center">
