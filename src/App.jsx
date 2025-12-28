@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useState, useEffect } from 'react';
 
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TechStack from './components/TechStack';
 import Gallery from './components/Gallery';
@@ -15,6 +15,8 @@ import Footer from './components/Footer';
 import About from './components/About';
 import Opening from './components/Opening';
 import CustomCursor from './components/CustomCursor';
+import NotFound from './components/NotFound';
+import { Routes, Route } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -52,15 +54,23 @@ function App() {
     }}>
       <CustomCursor />
       {showOpening && <Opening onComplete={() => setShowOpening(false)} />}
-      <Navbar />
-      <Hero />
-      <About />
-      <TechStack />
-      <Gallery />
-      <Journey />
-      <Projetcs />
-      <Achievements />
-      <Footer />
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Navbar />
+            <Hero />
+            <About />
+            <TechStack />
+            <Gallery />
+            <Journey />
+            <Projetcs />
+            <Achievements />
+            <Footer />
+          </>
+        } />
+        <Route path="/next-demo" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </main>
   )
 }

@@ -365,7 +365,7 @@ const projectsData = [
     gambar: "kultilas.png",
     judul: "Kultilas",
     parag: "Kultilas is a web-based application designed to facilitate the management of student extracurricular activities in schools.",
-    tech: ["Laravel","Alpine.js", "MySQL", "Tailwind CSS"],
+    tech: ["Laravel 12","Alpine.js", "MySQL", "Tailwind CSS"],
     linkDemo : "https://kultilas.vercel.app/",
     linkCode : "https://github.com/Raditt10/Kultilas"
   },
@@ -375,8 +375,9 @@ const projectsData = [
     gambar: "kulkul.png",
     judul: "Kul-kul",
     parag: "Kul-kul is an application for managing finances in schools, especially for extracurricular activities.",
-    tech: ["Laravel", "MySQL", "Tailwind CSS"],
-    linkCode : "https://github.com/Raditt10/kulkul"
+    tech: ["Laravel 12", "MySQL", "Tailwind CSS"],
+    linkCode : "https://github.com/Raditt10/kulkul",
+    isComingSoon: true
   },
 
   {
@@ -384,9 +385,9 @@ const projectsData = [
     gambar: "irmaverse.png",
     judul: "IrmaVerse",
     parag: "Coming soon",
-    tech: ["Next.js", "Three.js", "Prisma", "Supabase"],
-    linkDemo: "https://rafaditya.vercel.app",
-    linkCode: "#",
+    tech: ["Next.js", "Tailwind", "Prisma", "Supabase", "OpenAI", "TypeScript"],
+    linkDemo: "#",
+    linkCode: "https://github.com/Raditt10/IRMA-Verse",
     isComingSoon: true
   },
 
@@ -402,15 +403,24 @@ const projectsData = [
 
   {
     id: 5,
-    gambar: "coming-soon.png",
-    judul: "Coming Soon",
-    parag: "Exciting new project in development! Stay tuned for more innovative web applications and creative solutions.",
-    tech: ["React", "Node.js", "MongoDB"],
+    gambar: "bendehara.png",
+    judul: "Class Funds",
+    parag: "Web-based application for managing student funds in schools. This application helps treasurers keep track of student financial transactions, including deposits, withdrawals, and balance checks.",
+    tech: ["PHP Native", "MySQL", "Bootstrap 5"],
     linkDemo: "#",
+    linkCode: "https://github.com/Raditt10/Class-Funds",
+  },
+  
+  {
+    id: 6,
+    gambar: "coming-soon.png",
+    judul: "Next Project",
+    parag: "Coming Soon",
+    tech: ["MongoDB", "Express.js", "React"],
+    linkDemo: "",
     linkCode: "#",
     isComingSoon: true
-  },
-
+  }
 ]
 
 const dataCerti = [
