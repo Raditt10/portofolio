@@ -190,89 +190,160 @@ const About = () => {
       </div>
 
       {/* Main Content Grid */}
+
       <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          
-          {/* Left Content - About Text */}
-          <div ref={contentRef} className="space-y-6">
-            
-            {/* Name & Title */}
-            <div className="space-y-3">
-              <h2 className={`text-2xl lg:text-3xl font-bold ${isLight ? 'text-slate-900' : 'text-white'} leading-tight`}>
-                Rafaditya Syahputra
-              </h2>
-              <p className={`text-lg ${isLight ? 'text-amber-600' : 'text-yellow-400'} font-medium`}>
-                Full Stack Developer
-              </p>
-              <div className={`w-16 h-1 ${isLight ? 'bg-amber-600' : 'bg-yellow-400'} rounded-full`}></div>
-            </div>
-
-            {/* Description */}
-            <div className={`space-y-4 text-base lg:text-lg ${isLight ? 'text-slate-700' : 'text-slate-300'} leading-relaxed`}>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-                culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
-                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
-                veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-              </p>
-            </div>
-
-            {/* Call to Action - dengan styling card seperti TechStack */}
-            <div className="pt-4">
-              <button className={`
-                relative flex items-center justify-center px-6 py-3 backdrop-blur-sm rounded-xl border transition-all duration-200 font-medium text-lg
-                ${isLight 
-                  ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60 text-slate-800' 
-                  : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30 text-white'
-                } transform hover:-translate-y-1 hover:scale-105
-              `}>
-                Get In Touch
-              </button>
-            </div>
-          </div>
-
-          {/* Right Content - Photo dengan styling card */}
-          <div ref={photoRef} className="flex justify-center lg:justify-end">
-            <div className="relative">
-              {/* Main Photo Card - menggunakan style card seperti TechStack */}
-              <div className={`
-                relative w-80 h-80 lg:w-96 lg:h-96 backdrop-blur-sm rounded-xl border transition-all duration-200 overflow-hidden
-                ${isLight 
-                  ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60' 
-                  : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30'
-                }
-              `}>
-                <img
-                  src="/img/avatar2.jpg"
-                  alt="Rafaditya Syahputra"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
+        {isMobile ? (
+          <div className="flex flex-col gap-8 items-center">
+            {/* Foto di atas */}
+            <div ref={photoRef} className="flex justify-center">
+              <div className="relative">
+                <div className={`
+                  relative w-80 h-80 backdrop-blur-sm rounded-xl border transition-all duration-200 overflow-hidden
+                  ${isLight 
+                    ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60' 
+                    : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30'
+                  }
+                `}>
+                  <img
+                    src="/img/avatar2.jpg"
+                    alt="Rafaditya Syahputra"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                {/* Decorative elements - subtle glow */}
+                <div className={`
+                  absolute -top-4 -right-4 w-20 h-20 rounded-full blur-xl
+                  ${isLight ? 'bg-amber-100' : 'bg-purple-500/20'}
+                `}></div>
+                <div className={`
+                  absolute -bottom-4 -left-4 w-16 h-16 rounded-full blur-xl
+                  ${isLight ? 'bg-orange-100' : 'bg-blue-500/20'}
+                `}></div>
               </div>
-              
-              {/* Decorative elements - subtle glow */}
-              <div className={`
-                absolute -top-4 -right-4 w-20 h-20 rounded-full blur-xl
-                ${isLight ? 'bg-amber-100' : 'bg-purple-500/20'}
-              `}></div>
-              <div className={`
-                absolute -bottom-4 -left-4 w-16 h-16 rounded-full blur-xl
-                ${isLight ? 'bg-orange-100' : 'bg-blue-500/20'}
-              `}></div>
+            </div>
+            {/* Text di bawah */}
+            <div ref={contentRef} className="space-y-6 w-full">
+              {/* Name & Title */}
+              <div className="space-y-3 text-center">
+                <h2 className={`text-2xl font-bold ${isLight ? 'text-slate-900' : 'text-white'} leading-tight`}>
+                  Rafaditya Syahputra
+                </h2>
+                <p className={`text-lg ${isLight ? 'text-amber-600' : 'text-yellow-400'} font-medium`}>
+                  Full Stack Developer
+                </p>
+                <div className={`mx-auto w-16 h-1 ${isLight ? 'bg-amber-600' : 'bg-yellow-400'} rounded-full`}></div>
+              </div>
+              {/* Description */}
+              <div className={`space-y-4 text-base ${isLight ? 'text-slate-700' : 'text-slate-300'} leading-relaxed`}>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
+                  fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+                  culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+                  doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+                  veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+              </div>
+              {/* Call to Action */}
+              <div className="pt-4 flex justify-center">
+                <button className={`
+                  relative flex items-center justify-center px-6 py-3 backdrop-blur-sm rounded-xl border transition-all duration-200 font-medium text-lg
+                  ${isLight 
+                    ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60 text-slate-800' 
+                    : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30 text-white'
+                  } transform hover:-translate-y-1 hover:scale-105
+                `}>
+                  Get In Touch
+                </button>
+              </div>
             </div>
           </div>
-
-        </div>
+        ) : (
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Content - About Text */}
+            <div ref={contentRef} className="space-y-6">
+              {/* Name & Title */}
+              <div className="space-y-3">
+                <h2 className={`text-2xl lg:text-3xl font-bold ${isLight ? 'text-slate-900' : 'text-white'} leading-tight`}>
+                  Rafaditya Syahputra
+                </h2>
+                <p className={`text-lg ${isLight ? 'text-amber-600' : 'text-yellow-400'} font-medium`}>
+                  Full Stack Developer
+                </p>
+                <div className={`w-16 h-1 ${isLight ? 'bg-amber-600' : 'bg-yellow-400'} rounded-full`}></div>
+              </div>
+              {/* Description */}
+              <div className={`space-y-4 text-base lg:text-lg ${isLight ? 'text-slate-700' : 'text-slate-300'} leading-relaxed`}>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
+                  fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+                  culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+                  doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+                  veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+              </div>
+              {/* Call to Action - dengan styling card seperti TechStack */}
+              <div className="pt-4">
+                <button className={`
+                  relative flex items-center justify-center px-6 py-3 backdrop-blur-sm rounded-xl border transition-all duration-200 font-medium text-lg
+                  ${isLight 
+                    ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60 text-slate-800' 
+                    : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30 text-white'
+                  } transform hover:-translate-y-1 hover:scale-105
+                `}>
+                  Get In Touch
+                </button>
+              </div>
+            </div>
+            {/* Right Content - Photo dengan styling card */}
+            <div ref={photoRef} className="flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Main Photo Card - menggunakan style card seperti TechStack */}
+                <div className={`
+                  relative w-80 h-80 lg:w-96 lg:h-96 backdrop-blur-sm rounded-xl border transition-all duration-200 overflow-hidden
+                  ${isLight 
+                    ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60' 
+                    : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30'
+                  }
+                `}>
+                  <img
+                    src="/img/avatar2.jpg"
+                    alt="Rafaditya Syahputra"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                {/* Decorative elements - subtle glow */}
+                <div className={`
+                  absolute -top-4 -right-4 w-20 h-20 rounded-full blur-xl
+                  ${isLight ? 'bg-amber-100' : 'bg-purple-500/20'}
+                `}></div>
+                <div className={`
+                  absolute -bottom-4 -left-4 w-16 h-16 rounded-full blur-xl
+                  ${isLight ? 'bg-orange-100' : 'bg-blue-500/20'}
+                `}></div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Inline CSS untuk reduced motion - sama seperti TechStack */}
