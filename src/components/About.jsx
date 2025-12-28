@@ -259,7 +259,7 @@ const About = () => {
                     : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30 text-white'
                   } transform hover:-translate-y-1 hover:scale-105
                 `}>
-                  Get In Touch
+                  Download CV
                 </button>
               </div>
             </div>
@@ -302,7 +302,7 @@ const About = () => {
                     : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30 text-white'
                   } transform hover:-translate-y-1 hover:scale-105
                 `}>
-                  Get In Touch
+                  Download CV
                 </button>
               </div>
             </div>
