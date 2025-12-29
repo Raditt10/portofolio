@@ -36,7 +36,7 @@ const Footer = () => {
   const EMAILJS_TEMPLATE_ID = "template_gl1shr7"; 
   const EMAILJS_PUBLIC_KEY = "EG9qC9jkGx6_xS4cu";
   
-  const fullText = "Full Stack Developer";
+  const fullText = "Full Stack Developer & Artist";
 
   // Show full text immediately - no animations
   useEffect(() => {
