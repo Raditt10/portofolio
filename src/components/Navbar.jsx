@@ -79,9 +79,9 @@ const Navbar = () => {
 
   // Desktop navbar - TIDAK DIUBAH sama sekali
   const DesktopNavbar = () => (
-    <nav className={`hidden md:flex justify-center font-sora font-semibold items-center h-20 transition-all duration-500 fixed z-50 w-full px-8 bg-transparent`} role="navigation" aria-label="Main Navigation">
+    <nav className={`hidden md:flex justify-center font-sora font-semibold items-center h-14 transition-all duration-500 fixed z-50 w-full px-8 bg-transparent mt-6`} role="navigation" aria-label="Main Navigation">
       <div className="relative group">
-        <div className={`relative px-8 py-3.5 rounded-full backdrop-blur-md transition-all duration-500 group-hover:shadow-lg ${
+        <div className={`relative px-6 py-2.5 rounded-full backdrop-blur-md transition-all duration-500 group-hover:shadow-lg ${
           isLight
             ? 'bg-white/60 border border-slate-200/50 group-hover:bg-white/70 group-hover:border-amber-300/60 group-hover:shadow-amber-200/30'
             : 'bg-white/10 border border-white/15 group-hover:bg-white/15 group-hover:border-amber-200/40 group-hover:shadow-amber-200/20'
@@ -94,10 +94,10 @@ const Navbar = () => {
               <span className="sr-only">Home</span>
               <a href="#home" aria-label="Home" tabIndex={0} className="flex items-center">
                 <img
-                  src="/img/logo.png"
+                  src="/img/logo2.png"
                   alt="Logo"
                   className="h-20 w-20 object-contain drop-shadow-lg transition-all duration-300 group-hover/logo:scale-110"
-                  style={{ maxHeight: '5rem', filter: 'drop-shadow(0 2px 16px rgba(0,0,0,0.22))' }}
+                  style={{ maxHeight: '5rem', filter: 'drop-shadow(0 2px 16px rgba(0,0,0,0.22))', marginTop: '-0.5rem', marginBottom: '-0.5rem' }}
                 />
               </a>
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-8 bg-gradient-to-b from-transparent via-white/30 to-transparent" />
@@ -174,10 +174,10 @@ const Navbar = () => {
       <div className="relative z-10 flex items-center">
         <a href="#home" aria-label="Home" tabIndex={0} className="flex items-center">
           <img
-            src="/img/logo.png"
+            src="/img/logo2.png"
             alt="Logo"
-            className="h-16 w-16 object-contain drop-shadow-lg"
-            style={{ maxHeight: '4rem', filter: 'drop-shadow(0 2px 14px rgba(0,0,0,0.20))' }}
+            className="h-24 w-24 object-contain drop-shadow-lg"
+            style={{ maxHeight: '6rem', filter: 'drop-shadow(0 2px 14px rgba(0,0,0,0.20))' }}
           />
         </a>
       </div>
