@@ -337,7 +337,12 @@ const Footer = () => {
               WebkitBackgroundClip: 'text'
             }}
         >
-          Ra'e 
+          <img 
+            src="/img/logo.png" 
+            alt="Logo" 
+            className="inline-block h-14 sm:h-16 md:h-20 w-auto object-contain align-middle" 
+            style={{ maxHeight: '5rem' }} 
+          />
         </h3>
         <div className="relative mt-2 sm:mt-3 min-h-[2rem] sm:min-h-[2.5rem] md:min-h-[3rem]">
           <h4 className={`${isLight ? 'text-slate-800' : 'text-white/80'} font-medium text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 flex items-center justify-center gap-2 relative`}>
@@ -571,7 +576,7 @@ const Footer = () => {
               WebkitBackgroundClip: 'text'
             }}
         >
-          © Ra'e. All rights reserved.
+          © Ra'e All rights reserved.
         </h1> 
       </div>
 
