@@ -170,49 +170,121 @@ const Journey = () => {
           </motion.div>
         ))}
 
-        {/* Mountains Silhouette */}
-        <div className="absolute bottom-0 left-0 right-0" style={{ opacity: 0.15 }}>
-          <svg
-            width="100%"
-            height="200"
-            viewBox="0 0 1200 200"
-            preserveAspectRatio="none"
-            fill="none"
-          >
-            <path
-              d="M0 200 L0 120 L150 60 L300 140 L450 40 L600 100 L750 80 L900 120 L1050 60 L1200 140 L1200 200 Z"
-              fill="#ffffff"
-              opacity="0.5"
-            />
-            <path
-              d="M0 200 L0 150 L200 90 L400 160 L600 70 L800 130 L1000 100 L1200 170 L1200 200 Z"
-              fill="#ffffff"
-              opacity="0.3"
-            />
-          </svg>
+        {/* Desert Dunes / Mountains */}
+        <div className="absolute bottom-0 left-0 right-0" style={{ opacity: 0.12 }}>
+          {isLight ? (
+            // Desert with Pyramids (Light Mode)
+            <svg
+              width="100%"
+              height="180"
+              viewBox="0 0 1200 180"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              {/* Sand Dunes */}
+              <path
+                d="M0 180 L0 100 Q150 60 300 100 T600 100 T900 100 T1200 100 L1200 180 Z"
+                fill="#d4a574"
+                opacity="0.4"
+              />
+              <path
+                d="M0 180 L0 120 Q200 80 400 120 T800 120 T1200 120 L1200 180 Z"
+                fill="#c9955c"
+                opacity="0.5"
+              />
+              <path
+                d="M0 180 L0 140 Q250 110 500 140 T1000 140 T1200 140 L1200 180 Z"
+                fill="#b8864a"
+                opacity="0.6"
+              />
+              
+              {/* Pyramids */}
+              <g opacity="0.5">
+                {/* Large Pyramid */}
+                <path d="M 250 180 L 250 70 L 380 180 Z" fill="#d4a574" />
+                <path d="M 250 70 L 380 180 L 400 180 Z" fill="#c9955c" />
+                
+                {/* Medium Pyramid */}
+                <path d="M 600 180 L 600 90 L 700 180 Z" fill="#d4a574" />
+                <path d="M 600 90 L 700 180 L 715 180 Z" fill="#c9955c" />
+                
+                {/* Small Pyramid */}
+                <path d="M 900 180 L 900 110 L 970 180 Z" fill="#d4a574" />
+                <path d="M 900 110 L 970 180 L 982 180 Z" fill="#c9955c" />
+              </g>
+            </svg>
+          ) : (
+            // Snowy Mountains (Dark Mode)
+            <svg
+              width="100%"
+              height="180"
+              viewBox="0 0 1200 180"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              {/* Mountain Ranges */}
+              <g opacity="0.6">
+                {/* Back mountains */}
+                <path d="M0 180 L200 80 L400 140 L600 60 L800 120 L1000 70 L1200 150 L1200 180 Z" fill="#e5e7eb" />
+                
+                {/* Front mountains */}
+                <path d="M0 180 L150 100 L350 160 L550 80 L750 140 L950 90 L1200 170 L1200 180 Z" fill="#f3f4f6" />
+                
+                {/* Snow caps */}
+                <path d="M200 80 L180 95 L220 95 Z" fill="#ffffff" />
+                <path d="M600 60 L580 80 L620 80 Z" fill="#ffffff" />
+                <path d="M1000 70 L980 90 L1020 90 Z" fill="#ffffff" />
+                <path d="M550 80 L530 100 L570 100 Z" fill="#ffffff" />
+                <path d="M950 90 L930 110 L970 110 Z" fill="#ffffff" />
+              </g>
+            </svg>
+          )}
+          
+          {isLight && (
+            <>
+              {/* Cacti (Light Mode Only) */}
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={`cactus-${i}`}
+                  className="absolute"
+                  style={{
+                    bottom: '30px',
+                    left: `${15 + i * 18}%`,
+                    opacity: 0.3,
+                  }}
+                >
+                  <svg width={20 + i * 3} height={30 + i * 5} viewBox="0 0 20 40" fill="none">
+                    {/* Main body */}
+                    <rect x="8" y="10" width="4" height="30" rx="2" fill="#4a7c59" />
+                    {/* Left arm */}
+                    <path d="M8 20 Q5 20 5 17 L5 15 Q5 12 7 12" stroke="#4a7c59" strokeWidth="3" fill="none" strokeLinecap="round" />
+                    {/* Right arm */}
+                    <path d="M12 25 Q15 25 15 22 L15 20 Q15 17 13 17" stroke="#4a7c59" strokeWidth="3" fill="none" strokeLinecap="round" />
+                  </svg>
+                </div>
+              ))}
+              
+              {/* Rocks (Light Mode Only) */}
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={`rock-${i}`}
+                  className="absolute"
+                  style={{
+                    bottom: '10px',
+                    left: `${10 + i * 15}%`,
+                    opacity: 0.25,
+                  }}
+                >
+                  <svg width={12 + i * 2} height={8 + i} viewBox="0 0 15 10" fill="none">
+                    <ellipse cx="7.5" cy="7" rx="7" ry="5" fill="#8b7355" />
+                  </svg>
+                </div>
+              ))}
+            </>
+          )}
         </div>
 
-        {/* Sparkle Stars */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={`star-${i}`}
-            className="absolute w-1 h-1 bg-white rounded-full"
-            style={{
-              top: `${Math.random() * 60}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-
-        {/* Moon */}
+        {/* Sun/Moon */}
         <motion.div
           className="absolute right-[10%]"
           style={{
@@ -220,10 +292,28 @@ const Journey = () => {
             opacity: 0.25,
           }}
         >
-          <div className="w-12 h-12 bg-white rounded-full shadow-[0_0_20px_rgba(255,255,255,0.15)] relative">
-            <div className="absolute top-2 right-1 w-2 h-2 bg-gray-100 rounded-full opacity-40" />
-            <div className="absolute bottom-2 left-1.5 w-1.5 h-1.5 bg-gray-100 rounded-full opacity-30" />
-          </div>
+          {isLight ? (
+            // Sun
+            <div className="relative w-12 h-12">
+              <div className="w-12 h-12 bg-yellow-400 rounded-full shadow-[0_0_25px_rgba(251,191,36,0.3)]" />
+              {[...Array(8)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute top-1/2 left-1/2 w-0.5 h-4 bg-yellow-400 opacity-40"
+                  style={{
+                    transformOrigin: 'center',
+                    transform: `translate(-50%, -50%) rotate(${i * 45}deg) translateY(-16px)`,
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            // Moon
+            <div className="w-12 h-12 bg-white rounded-full shadow-[0_0_20px_rgba(255,255,255,0.15)] relative">
+              <div className="absolute top-2 right-1 w-2 h-2 bg-gray-100 rounded-full opacity-40" />
+              <div className="absolute bottom-2 left-1.5 w-1.5 h-1.5 bg-gray-100 rounded-full opacity-30" />
+            </div>
+          )}
         </motion.div>
       </div>
 
