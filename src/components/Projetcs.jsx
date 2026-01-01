@@ -321,7 +321,7 @@ const Projects = () => {
             WebkitBackgroundClip: "text",
           }}
         >
-          My Projects
+          Featured Projects
         </motion.h1>
           
         {/* Projects Container */}
