@@ -93,7 +93,7 @@ const NotFound = () => {
           className="text-base sm:text-lg mb-8"
           style={{ color: themeStyles[theme].secondary }}
         >
-          Sepertinya kamu nyasar ke galaksi lain...
+          Oops.. Sepertinya fitur ini belum tersedia.
         </p>
 
         {/* Button */}
