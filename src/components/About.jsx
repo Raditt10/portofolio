@@ -205,7 +205,7 @@ const About = () => {
                   }
                 `}>
                   <img
-                    src="/img/avatar2.jpg"
+                    src="/img/avatar2.png"
                     alt="Rafaditya Syahputra"
                     className="w-full h-full object-cover"
                     loading="lazy"
