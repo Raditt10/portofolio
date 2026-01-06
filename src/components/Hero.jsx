@@ -98,7 +98,7 @@ const Hero = () => {
   useGSAP(() => {
     gsap.set("#nama", { overflow: "hidden" });
     // Keep hero text visible by default; animations will still run when gsap timelines play
-    gsap.set([".hero-subtitle", ".hero-description", ".scroll-text", ".scroll-arrow", ".github-container"], {
+    gsap.set([".hero-subtitle", ".hero-role", ".hero-description", ".scroll-text", ".scroll-arrow", ".github-container"], {
       opacity: 1,
       y: 0
     });
@@ -184,12 +184,19 @@ const Hero = () => {
         duration: 1.5,
         ease: "power3.out",
       })
+      .to(".hero-role", {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1.2,
+        ease: "back.out(1.5)",
+      }, "-=1.2")
       .to(".hero-description", {
         opacity: 1,
         y: 0,
         duration: 1.5,
         ease: "power3.out",
-      }, "-=1")
+      }, "-=0.8")
       .to(".github-container", {
         opacity: 1,
         y: 0,
@@ -223,6 +230,7 @@ const Hero = () => {
           const chars = gsap.utils.toArray("#nama .char");
           const typewriterTl = createTypewriterLoop(chars, 0.07);
         }, "-=0.4")
+        .to(".hero-role", { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "back.out(1.5)" }, "-=0.5")
         .to(".hero-description", { opacity: 1, y: 0, duration: 1 }, "-=0.6")
         .to(".github-container", { opacity: 1, y: 0, scale: 1, duration: 0.8 }, "-=0.4")
         .to(".scroll-text", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
@@ -450,7 +458,7 @@ const Hero = () => {
           </p>
           {/* Role */}
           <div className="relative mt-6">
-            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-semibold tracking-[0.12em] uppercase">
+            <h2 className="hero-role text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-semibold tracking-[0.12em] uppercase">
               <span
                 className="inline-block bg-clip-text text-transparent"
                 style={{
