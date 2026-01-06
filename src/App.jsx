@@ -1,24 +1,22 @@
-import { gsap } from "gsap";
-import '@fontsource-variable/sora';
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TechStack from './components/TechStack';
-import Gallery from './components/Gallery';
-import Educations from './components/Educations';
-import Projetcs from './components/Projetcs';
-import Achievements from './components/Achievements';
-import Footer from './components/Footer';
 import About from './components/About';
 import Opening from './components/Opening';
 import CustomCursor from './components/CustomCursor';
 import NotFound from './components/NotFound';
+import LazyMount from './components/LazyMount';
+const Gallery = lazy(() => import('./components/Gallery'));
+const Educations = lazy(() => import('./components/Educations'));
+const Projetcs = lazy(() => import('./components/Projetcs'));
+const Achievements = lazy(() => import('./components/Achievements'));
+const Footer = lazy(() => import('./components/Footer'));
 import { Routes, Route } from 'react-router-dom';
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+// Removed global GSAP plugin registration to avoid duplicate bytes;
+// components register only what they use locally.
 
 function App() {
   const [showOpening, setShowOpening] = useState(true);
@@ -61,11 +59,21 @@ function App() {
             <Hero />
             <About />
             <TechStack />
-            <Gallery />
-            <Educations />
-            <Projetcs />
-            <Achievements />
-            <Footer />
+            <LazyMount height={600}>
+              <Suspense fallback={<div style={{height:600}} />}> <Gallery /> </Suspense>
+            </LazyMount>
+            <LazyMount height={600}>
+              <Suspense fallback={<div style={{height:600}} />}> <Educations /> </Suspense>
+            </LazyMount>
+            <LazyMount height={600}>
+              <Suspense fallback={<div style={{height:600}} />}> <Projetcs /> </Suspense>
+            </LazyMount>
+            <LazyMount height={600}>
+              <Suspense fallback={<div style={{height:600}} />}> <Achievements /> </Suspense>
+            </LazyMount>
+            <LazyMount height={400}>
+              <Suspense fallback={<div style={{height:400}} />}> <Footer /> </Suspense>
+            </LazyMount>
           </>
         } />
         <Route path="/next-demo" element={<NotFound />} />

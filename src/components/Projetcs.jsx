@@ -77,6 +77,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
           {(!linkDemo || linkDemo === "#") ? (
             <a
               href="/next-demo"
+              aria-label={`Open demo for ${judul} (coming soon)`}
               className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                 isLight
                   ? "bg-black/5 hover:bg-black/10 text-black border border-black/10 hover:border-black/20 hover:shadow-lg hover:shadow-amber-100/40"
@@ -92,6 +93,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
               href={linkDemo}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Open live demo for ${judul}`}
               className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                 isLight
                   ? "bg-black/5 hover:bg-black/10 text-black border border-black/10 hover:border-black/20 hover:shadow-lg hover:shadow-amber-100/40"
@@ -107,6 +109,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
           {(!linkCode || linkCode === "#") ? (
             <a
               href="/next-demo"
+              aria-label={`Open source code for ${judul} (coming soon)`}
               className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                 isLight
                   ? "bg-black/5 hover:bg-black/10 border border-black/15 text-black hover:border-black/25"
@@ -122,6 +125,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
               href={linkCode}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Open source code for ${judul}`}
               className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                 isLight
                   ? "bg-black/5 hover:bg-black/10 border border-black/15 text-black hover:border-black/25"
