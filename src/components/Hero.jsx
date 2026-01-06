@@ -12,10 +12,19 @@ const Hero = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState('0:00');
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'dark';
     return localStorage.getItem('theme') || 'dark';
   });
+
+  const roleTexts = [
+    "Front End Developer",
+    "UI/UX Designer",
+    "Graphic Designer",
+    "Artist",
+    "Photography Enthusiast"
+  ];
 
   const themeStyles = {
     dark: {
@@ -184,13 +193,76 @@ const Hero = () => {
         duration: 1.5,
         ease: "power3.out",
       })
-      .to(".hero-role", {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 1.2,
-        ease: "back.out(1.5)",
-      }, "-=1.2")
+      .add(() => {
+        // Role text with Minecraft explosion animation
+        let currentIndex = 0;
+        
+        const cycleRole = () => {
+          const roleTl = gsap.timeline({
+            onComplete: () => {
+              currentIndex = (currentIndex + 1) % roleTexts.length;
+              cycleRole();
+            }
+          });
+          
+          // Update text
+          setCurrentRoleIndex(currentIndex);
+          
+          // Set initial explosion state
+          gsap.set(".hero-role", {
+            opacity: 0,
+            scale: 0.3,
+            rotateX: -90,
+            rotateY: -45,
+            rotateZ: -30,
+            y: 20,
+            filter: "blur(10px)"
+          });
+          
+          // Minecraft explosion entrance
+          roleTl.to(".hero-role", {
+            opacity: 1,
+            scale: 1.3,
+            rotateX: 15,
+            rotateY: 0,
+            rotateZ: 0,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.6,
+            ease: "back.out(2)",
+          })
+          // Settle down
+          .to(".hero-role", {
+            scale: 1,
+            rotateX: 0,
+            duration: 0.4,
+            ease: "power2.inOut",
+          })
+          // Bounce effect
+          .to(".hero-role", {
+            y: -8,
+            duration: 0.3,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: 1
+          })
+          // Hold
+          .to({}, { duration: 2 })
+          // Exit explosion
+          .to(".hero-role", {
+            opacity: 0,
+            scale: 0.7,
+            rotateX: 70,
+            rotateZ: 30,
+            y: -30,
+            filter: "blur(8px)",
+            duration: 0.5,
+            ease: "power2.in",
+          });
+        };
+        
+        cycleRole();
+      }, "-=1")
       .to(".hero-description", {
         opacity: 1,
         y: 0,
@@ -230,7 +302,76 @@ const Hero = () => {
           const chars = gsap.utils.toArray("#nama .char");
           const typewriterTl = createTypewriterLoop(chars, 0.07);
         }, "-=0.4")
-        .to(".hero-role", { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "back.out(1.5)" }, "-=0.5")
+        .add(() => {
+          // Role text with Minecraft explosion animation for mobile
+          let currentIndex = 0;
+          
+          const cycleRole = () => {
+            const roleTl = gsap.timeline({
+              onComplete: () => {
+                currentIndex = (currentIndex + 1) % roleTexts.length;
+                cycleRole();
+              }
+            });
+            
+            // Update text
+            setCurrentRoleIndex(currentIndex);
+            
+            // Set initial explosion state
+            gsap.set(".hero-role", {
+              opacity: 0,
+              scale: 0.3,
+              rotateX: -90,
+              rotateY: -45,
+              rotateZ: -30,
+              y: 15,
+              filter: "blur(8px)"
+            });
+            
+            // Minecraft explosion entrance
+            roleTl.to(".hero-role", {
+              opacity: 1,
+              scale: 1.3,
+              rotateX: 15,
+              rotateY: 0,
+              rotateZ: 0,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.5,
+              ease: "back.out(2)",
+            })
+            // Settle down
+            .to(".hero-role", {
+              scale: 1,
+              rotateX: 0,
+              duration: 0.3,
+              ease: "power2.inOut",
+            })
+            // Bounce effect
+            .to(".hero-role", {
+              y: -6,
+              duration: 0.25,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: 1
+            })
+            // Hold
+            .to({}, { duration: 1.8 })
+            // Exit explosion
+            .to(".hero-role", {
+              opacity: 0,
+              scale: 0.7,
+              rotateX: 70,
+              rotateZ: 30,
+              y: -25,
+              filter: "blur(6px)",
+              duration: 0.4,
+              ease: "power2.in",
+            });
+          };
+          
+          cycleRole();
+        }, "-=0.3")
         .to(".hero-description", { opacity: 1, y: 0, duration: 1 }, "-=0.6")
         .to(".github-container", { opacity: 1, y: 0, scale: 1, duration: 0.8 }, "-=0.4")
         .to(".scroll-text", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
@@ -456,9 +597,9 @@ const Hero = () => {
               Hi, I'm
             </span>
           </p>
-          {/* Role */}
-          <div className="relative mt-6">
-            <h2 className="hero-role text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-semibold tracking-[0.12em] uppercase">
+          {/* Role - Rotating Text */}
+          <div className="relative mt-6" style={{ perspective: "1000px" }}>
+            <h2 className="hero-role text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-semibold tracking-[0.12em] uppercase" style={{ transformStyle: "preserve-3d" }}>
               <span
                 className="inline-block bg-clip-text text-transparent"
                 style={{
@@ -468,26 +609,9 @@ const Hero = () => {
                   color: 'transparent'
                 }}
               >
-                Front End Developer - UI/UX & Graphic Designer - Artist  
+                {roleTexts[currentRoleIndex]}
               </span>
             </h2>
-          </div>
-          
-          {/* Hobby */}
-          <div className="relative mt-2">
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-medium tracking-[0.08em]">
-              <span
-                className="inline-block bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: themeStyles[theme].heading,
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  color: 'transparent'
-                }}
-              >
-                Photography Enthusiast
-              </span>
-            </p>
           </div>
           
            <p
