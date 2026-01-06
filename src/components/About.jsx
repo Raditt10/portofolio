@@ -50,12 +50,6 @@ const About = () => {
     { speed: 25, direction: "left" },
     { speed: 30, direction: "right" },
     { speed: 28, direction: "left" },
-    { speed: 26, direction: "right" },
-    { speed: 32, direction: "left" },
-    { speed: 24, direction: "right" },
-    { speed: 29, direction: "left" },
-    { speed: 27, direction: "right" },
-    { speed: 31, direction: "left" },
   ], []);
 
   const glowColors = useMemo(() => [
