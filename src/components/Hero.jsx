@@ -417,7 +417,7 @@ const Hero = () => {
       </button>
 
       {/* Audio Element */}
-      <audio ref={audioRef} loop>
+      <audio ref={audioRef} loop preload="none">
         <source src="/music/where have you been.mp3" type="audio/mp3" />
       </audio>
 

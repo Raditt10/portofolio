@@ -29,6 +29,8 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           width="400" height="256"
           loading="lazy"
+          decoding="async"
+          fetchpriority="low"
         />
         <div
           className={`absolute inset-0 bg-gradient-to-t ${
@@ -258,7 +260,7 @@ const Projects = () => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    container.addEventListener('scroll', updateScrollState);
+    container.addEventListener('scroll', updateScrollState, { passive: true });
     updateScrollState(); // Initial check
 
     return () => container.removeEventListener('scroll', updateScrollState);
@@ -330,6 +332,7 @@ const Projects = () => {
           <button
             onClick={() => scrollTo('left')}
             disabled={!canScrollLeft}
+            aria-label="Scroll projects left"
             className={`absolute left-0 top-1/2 -translate-y-1/2 sm:-translate-x-10 lg:-translate-x-16 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full backdrop-blur-xl border flex items-center justify-center transition-all duration-300 hover:scale-110 ${
               isLight
                 ? "bg-black/5 border-black/20 hover:border-black/30 hover:bg-black/10"
@@ -346,6 +349,7 @@ const Projects = () => {
           <button
             onClick={() => scrollTo('right')}
             disabled={!canScrollRight}
+            aria-label="Scroll projects right"
             className={`absolute right-0 top-1/2 -translate-y-1/2 sm:translate-x-10 lg:translate-x-16 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full backdrop-blur-xl border flex items-center justify-center transition-all duration-300 hover:scale-110 ${
               isLight
                 ? "bg-black/5 border-black/20 hover:border-black/30 hover:bg-black/10"
@@ -407,6 +411,7 @@ const Projects = () => {
             </motion.div>
           </div>
 
+                aria-label="Open live demo"
           {/* Gradient Fade - Left & Right */}
           <div className={`absolute left-0 top-0 bottom-4 w-8 sm:w-12 bg-gradient-to-r ${isLight ? "from-white" : "from-[#050607]"} to-transparent pointer-events-none z-20`} />
           <div className={`absolute right-0 top-0 bottom-4 w-8 sm:w-12 bg-gradient-to-l ${isLight ? "from-white" : "from-[#050607]"} to-transparent pointer-events-none z-20`} />
@@ -445,6 +450,7 @@ const Projects = () => {
                 />
               </motion.div>
             </div>
+                    aria-label="Open source code on GitHub"
             
             {/* Progress Info */}
             <div className={`flex justify-between items-center mt-2 px-2 text-xs ${isLight ? "text-gray-600" : "text-gray-400"}`}>

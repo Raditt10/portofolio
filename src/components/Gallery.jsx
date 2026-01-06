@@ -165,6 +165,10 @@ const Gallery = () => {
           className="h-full w-full object-cover transition-all duration-300 relative z-10"
           src={image.src}
           alt={image.title}
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
+          sizes="(max-width: 768px) 100vw, 25vw"
           style={{
             borderRadius: 'inherit',
           }}
@@ -234,6 +238,7 @@ const Gallery = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square"
+                aria-label="Open Instagram profile @radittt_xxyu"
               >
                 <div
                   ref={addToRefs}
@@ -271,6 +276,7 @@ const Gallery = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="col-span-1 row-span-1"
+              aria-label="Open Instagram profile @radittt_xxyu"
             >
               <div
                 ref={addToRefs}
@@ -349,6 +355,7 @@ const Gallery = () => {
               src={imageInfo.src}
               alt={imageInfo.title}
               className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+              decoding="async"
               style={{
                 boxShadow: '0 0 90px rgba(255, 255, 255, 0.45), 0 0 140px rgba(248, 236, 214, 0.35), inset 0 0 50px rgba(255, 255, 255, 0.2)'
               }}

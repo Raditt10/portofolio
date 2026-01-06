@@ -57,7 +57,7 @@ const Navbar = () => {
         setScrolled(isScrolled)
       }
 
-      window.addEventListener('scroll', handleScroll)
+      window.addEventListener('scroll', handleScroll, { passive: true })
       return () => window.removeEventListener('scroll', handleScroll)
     }
   }, [isMobile])
