@@ -31,7 +31,7 @@ const CertificationCard = ({ gambar, judul, link, isLight = false }) => {
             <div className="w-full flex flex-col items-center gap-4">
               <h1 className={`${isLight ? 'text-slate-900' : 'text-white'} font-semibold text-lg md:text-2xl text-center leading-snug`}>{judul}</h1>
               <div className="mt-2">
-                <button className={`${isLight ? 'bg-[#ffeccc] text-slate-900 border border-amber-200 hover:bg-[#ffdfa8]' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'} font-semibold cursor-pointer px-6 py-2 rounded-xl transition-all duration-200`}>See More</button>
+                <button className={`${isLight ? 'bg-[#ffeccc] text-slate-900 border border-amber-200 hover:bg-[#ffdfa8]' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'} font-semibold cursor-pointer px-6 py-2 rounded-xl transition-all duration-200`}>See More Detail</button>
               </div>
             </div>
           </div>

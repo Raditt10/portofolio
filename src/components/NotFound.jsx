@@ -54,7 +54,7 @@ const NotFound = () => {
   return (
     <div
       style={{ 
-        fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif",
+        fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif",
         background: themeStyles[theme].bg,
         minHeight: "100vh",
       }}
@@ -82,8 +82,8 @@ const NotFound = () => {
 
         {/* Title */}
         <h2
-          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4"
-          style={{ color: themeStyles[theme].text }}
+          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 font-comic"
+          style={{ color: themeStyles[theme].text, fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
         >
           Halaman Tidak Ditemukan
         </h2>

@@ -214,7 +214,7 @@ const TechStack = () => {
   return (
     <section
       className="relative min-h-screen px-4 sm:px-6 py-20 sm:py-28 overflow-hidden"
-        style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
+        style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
       ref={containerRef}
     >
       {/* Background aligned with About - radial gradient only */}
@@ -233,8 +233,9 @@ const TechStack = () => {
       <div className="max-w-7xl mx-auto">
         <div className="relative z-10 px-4 mb-8 sm:mb-12 md:mb-16">
           <h1 
-            className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center"
+            className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center font-comic"
             style={{
+              fontFamily: '"Sensei Biased", system-ui, sans-serif',
               backgroundImage: isLight
                 ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
                 : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',

@@ -256,7 +256,7 @@ const Hero = () => {
       id="home"
       role="banner"
       style={{ 
-        fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif",
+        fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif",
         color: themeStyles[theme].accent
       }}
       className={`font-sora flex flex-col items-center justify-center relative min-h-screen overflow-hidden pt-20 theme-${theme}`}
@@ -426,11 +426,12 @@ const Hero = () => {
         {/* Konten */}
         <div className="text-center">
           <h1
-            className="text-2xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] font-bold leading-tight mb-6 tracking-tight px-4"
+            className="text-2xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] font-bold leading-tight mb-6 tracking-tight px-4 font-comic"
             id="nama"
             style={{
               color: themeStyles[theme].accent,
-              textShadow: theme === 'dark' ? '0 0 30px rgba(255,255,255,0.3)' : '0 0 18px rgba(15,23,42,0.12)'
+              textShadow: theme === 'dark' ? '0 0 30px rgba(255,255,255,0.3)' : '0 0 18px rgba(15,23,42,0.12)',
+              fontFamily: '"Sensei Biased", system-ui, sans-serif'
             }}
           >
             {renderNameWithSpans()}

@@ -5,7 +5,7 @@ const Opening = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [stage, setStage] = useState("loading");
   const [typedText, setTypedText] = useState("");
-  const fullText = "Welcome to my Portfolio";
+  const fullText = "Selamat datang!";
 
   useEffect(() => {
     let currentIndex = 0;
@@ -58,8 +58,8 @@ const Opening = ({ onComplete }) => {
           transition={{ duration: 1.1, ease: [0.4, 0, 0.2, 1] }}
         >
           <h1
-            className="text-4xl md:text-5xl font-black text-white mb-3 tracking-tight drop-shadow-sm"
-            style={{ fontFamily: '"Fredoka One", "Fredoka", system-ui, sans-serif', fontWeight: 900, letterSpacing: '0.02em' }}
+            className="text-4xl md:text-5xl font-black text-white mb-3 tracking-tight drop-shadow-sm font-comic"
+            style={{ fontFamily: '"Sensei Biased", system-ui, sans-serif', fontWeight: 900, letterSpacing: '0.02em' }}
           >
             Hao!
           </h1>
@@ -92,13 +92,13 @@ const Opening = ({ onComplete }) => {
           <div className="flex items-center justify-between gap-4 mb-4 text-base w-full">
             <span 
               className="flex-1 text-left text-white/80 text-lg sm:text-xl md:text-lg font-semibold"
-              style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
+              style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
             >
               Tunggu bentar yaa..
             </span>
             <span
               className="min-w-[64px] text-right text-white font-black text-2xl sm:text-3xl tracking-tighter tabular-nums"
-              style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif", fontWeight: 900 }}
+              style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif", fontWeight: 900 }}
             >
               {progress}%
             </span>

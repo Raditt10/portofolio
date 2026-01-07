@@ -124,7 +124,7 @@ const About = () => {
       ref={sectionRef}
       id="about" 
       className="relative min-h-screen px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 overflow-hidden"
-      style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
+      style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
     >
       {/* Background gradient - sama seperti TechStack */}
       <div 
@@ -176,8 +176,9 @@ const About = () => {
       <div className="relative z-10 px-4 mb-8 sm:mb-12 md:mb-16">
         <h1 
           ref={titleRef}
-          className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center"
+          className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center font-comic"
           style={{
+            fontFamily: '"Sensei Biased", system-ui, sans-serif',
             backgroundImage: isLight
               ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
               : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',

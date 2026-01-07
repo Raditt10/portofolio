@@ -112,7 +112,7 @@ const Educations = () => {
       id="educations"
       ref={sectionRef}
       className="relative min-h-screen pt-20 pb-20 px-4 sm:px-6 overflow-hidden"
-      style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
+      style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
     >
       {/* Minimal background aligned with global theme */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -129,8 +129,9 @@ const Educations = () => {
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Title */}
         <h1
-          className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center mb-12"
+          className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center mb-12 font-comic"
           style={{
+            fontFamily: '"Sensei Biased", system-ui, sans-serif',
             backgroundImage: isLight
               ? "linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)"
               : "linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)",

@@ -308,7 +308,7 @@ const Projects = () => {
       ref={sectionRef} 
       className="relative min-h-screen py-20 sm:py-24 md:py-32 px-4 sm:px-6 overflow-hidden mt-16 sm:mt-20 md:mt-24"
       style={{ 
-        fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif",
+        fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif",
       }}
     >
       <div className="max-w-7xl mx-auto relative z-10">
@@ -318,13 +318,14 @@ const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center mb-8 sm:mb-12 md:mb-16"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center mb-8 sm:mb-12 md:mb-16 font-comic"
           style={{
             backgroundImage: isLight
               ? "linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)"
               : "linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
+            fontFamily: '"Sensei Biased", system-ui, sans-serif'
           }}
         >
           Featured Projects

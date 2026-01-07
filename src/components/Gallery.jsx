@@ -199,17 +199,18 @@ const Gallery = () => {
     id="gallery" 
     ref={sectionRef} 
     className="relative min-h-screen mt-16 md:mt-24 px-4 md:pt-20 pb-24 md:pb-28 md:px-8 scroll-mt-28"
-      style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif" }} 
+      style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }} 
     >
       <h1
         ref={titleRef}
-        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center relative z-30 overflow-hidden mt-4 mb-8 md:mb-20"
+        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center relative z-30 overflow-hidden mt-4 mb-8 md:mb-20 font-comic"
         style={{
           backgroundImage: isLight
             ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
             : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',
+          fontFamily: '"Sensei Biased", system-ui, sans-serif',
           WebkitTextFillColor: 'transparent',
           textShadow: '0 0 24px rgba(255,255,255,0.25)',
           letterSpacing: '0.05em'

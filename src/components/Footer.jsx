@@ -225,7 +225,7 @@ const Footer = () => {
         </div>
       )}
       
-      <footer id="contact" ref={footerRef} className="relative min-h-screen overflow-hidden py-20 px-4 sm:px-6 md:px-8 lg:px-12" style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif" }}>
+      <footer id="contact" ref={footerRef} className="relative min-h-screen overflow-hidden py-20 px-4 sm:px-6 md:px-8 lg:px-12" style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }}>
         <div ref={lineRef} className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 bg-gradient-to-r ${isLight ? 'from-transparent via-black/20 to-transparent' : 'from-transparent via-white/30 to-transparent'}`} />
 
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-between gap-12 lg:gap-8 pt-12 sm:pt-16 md:pt-20 max-w-7xl mx-auto relative z-20">

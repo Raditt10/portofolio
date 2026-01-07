@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Sensei+Biased&family=JetBrains+Mono:wght@400;600&display=swap');
 
 /* Minecraft Font */
 @font-face {
@@ -11,7 +11,8 @@
 }
 
 :root {
-  --font-sora: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sora: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-comic: "Sensei Biased", "Fredoka", system-ui, sans-serif;
   --font-minecraft: "Minecraft", monospace;
   --font-code: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -22,6 +23,10 @@ body {
 
 .font-sora {
   font-family: var(--font-sora);
+}
+
+.font-comic {
+  font-family: var(--font-comic);
 }
 
 .font-code {

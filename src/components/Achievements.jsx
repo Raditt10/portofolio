@@ -155,7 +155,7 @@
         <section 
           id='achievements'
           ref={sectionRef}
-          style={{ fontFamily: "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
+          style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
           className="relative py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-28 overflow-hidden"
         >
           <div className="max-w-7xl mx-auto relative z-20">
@@ -163,8 +163,9 @@
             <div className="relative mb-12 sm:mb-16 md:mb-20">
               <h1 
                 ref={mainTitleRef}
-                className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center'
+                className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center font-comic'
                 style={{
+                  fontFamily: '"Sensei Biased", system-ui, sans-serif',
                   backgroundImage: isLight
                     ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
                     : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
