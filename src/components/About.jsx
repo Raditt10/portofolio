@@ -288,7 +288,7 @@ const About = () => {
               {/* Description */}
               <div className={`space-y-4 text-base lg:text-lg ${isLight ? 'text-slate-700' : 'text-slate-300'} leading-relaxed`}>
                 <p>
-                  Hao! Saya Rafaditya Syahputra, seorang Full Stack Developer dengan passion dalam 
+                  Hao! Saya Rafaditya Syahputra, seorang Front End Developer dengan passion dalam 
                   menciptakan solusi digital yang inovatif dan efisien. Dengan pengalaman lebih dari
                   2 tahun di industri teknologi, saya telah mengembangkan berbagai aplikasi web dan 
                   mobile yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang 
