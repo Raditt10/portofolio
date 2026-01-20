@@ -102,7 +102,7 @@ const Gallery = () => {
                     ? 'bg-gradient-to-b from-black to-gray-600' 
                     : 'bg-gradient-to-b from-white to-gray-500'
             }`}>
-              Visual Gallery
+              My Gallery
             </span>
           </motion.h1>
           <motion.div 
