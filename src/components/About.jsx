@@ -1,368 +1,242 @@
-import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useState, useMemo, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Marquee from "react-fast-marquee";
 
-// Register GSAP plugin
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 const About = () => {
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const contentRef = useRef(null);
-  const photoRef = useRef(null);
+  const containerRef = useRef(null);
+  const [themeMode, setThemeMode] = useState("dark");
+  const isLight = themeMode === "light";
   const [isMobile, setIsMobile] = useState(false);
-  const [theme, setTheme] = useState(() => {
-    if (typeof window === 'undefined') return 'dark';
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved;
-    return document.documentElement.dataset.theme || 'dark';
-  });
-  const isLight = theme === 'light';
 
-  // Deteksi mobile dengan useEffect
+  // Detect mobile
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Tech stack data untuk marquee background
-  const techStack = useMemo(() => [
-    { name: "React", logo: "https://cdn.simpleicons.org/react/61DAFB" },
-    { name: "JavaScript", logo: "https://cdn.simpleicons.org/javascript/F7DF1E" },
-    { name: "TypeScript", logo: "https://cdn.simpleicons.org/typescript/3178C6" },
-    { name: "Next.js", logo: "https://cdn.simpleicons.org/nextdotjs/000000" },
-    { name: "Tailwind", logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4" },
-    { name: "Python", logo: "https://cdn.simpleicons.org/python" },
-    { name: "Node.js", logo: "https://cdn.simpleicons.org/nodedotjs/339933" },
-    { name: "Git", logo: "https://cdn.simpleicons.org/git/F05032" },
-  ], []);
-
-  const marqueeRows = useMemo(() => [
-    { speed: 25, direction: "left" },
-    { speed: 30, direction: "right" },
-    { speed: 28, direction: "left" },
-  ], []);
-
-  const glowColors = useMemo(() => [
-    "rgba(139, 92, 246, 0.6)",
-    "rgba(59, 130, 246, 0.6)", 
-    "rgba(0, 255, 249, 0.6)",
-  ], []);
-
-  // GSAP animation setup
+  // Theme Sync
   useEffect(() => {
-    if (!sectionRef.current || !titleRef.current || !contentRef.current || !photoRef.current) return;
-
-    const section = sectionRef.current;
-    const title = titleRef.current;
-    const content = contentRef.current;
-    const photo = photoRef.current;
-
-    // Cancel animations jika sudah ada
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-
-    // Set initial states
-    gsap.set(title, { y: -20 });
-    gsap.set(content, { x: isMobile ? 0 : -30, opacity: 0.8 });
-    gsap.set(photo, { x: isMobile ? 0 : 30, scale: 0.95 });
-
-    // Timeline animation
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none none",
-        markers: false
-      },
-      defaults: {
-        ease: "power2.out",
-        duration: 0.5
-      }
-    });
-
-    // Animasi sequence
-    tl.to(title, { y: 0 })
-      .to(content, { x: 0, opacity: 1 }, "-=0.3")
-      .to(photo, { x: 0, scale: 1 }, "-=0.4");
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      tl.kill();
+    const updateTheme = () => {
+      setThemeMode(document.documentElement.getAttribute("data-theme") || "dark");
     };
-  }, [isMobile]);
-
-  // Sync theme from attribute/localStorage
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-    const saved = localStorage.getItem('theme');
-    if (saved) setTheme(saved);
-    
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((m) => {
-        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
-          const current = document.documentElement.dataset.theme;
-          setTheme(current || 'dark');
-        }
-      });
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     return () => observer.disconnect();
   }, []);
 
+  // Parallax Effect
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const yBg = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
+  // Tech stack data for marquee (Grayscale default)
+  const techStack = useMemo(() => [
+    { name: "React", logo: "https://cdn.simpleicons.org/react/000000" }, // Black logos for monochrome vibe
+    { name: "JavaScript", logo: "https://cdn.simpleicons.org/javascript/000000" },
+    { name: "TypeScript", logo: "https://cdn.simpleicons.org/typescript/000000" },
+    { name: "Next.js", logo: "https://cdn.simpleicons.org/nextdotjs/000000" },
+    { name: "Tailwind", logo: "https://cdn.simpleicons.org/tailwindcss/000000" },
+    { name: "Python", logo: "https://cdn.simpleicons.org/python/000000" },
+    { name: "Node.js", logo: "https://cdn.simpleicons.org/nodedotjs/000000" },
+    { name: "Git", logo: "https://cdn.simpleicons.org/git/000000" },
+  ], []);
+
+  // Use distinct marquee rows
+  const marqueeRows = useMemo(() => [
+    { speed: 20, direction: "left", rotate: 2 },
+    { speed: 25, direction: "right", rotate: -1 },
+    { speed: 15, direction: "left", rotate: 1 },
+  ], []);
+
   return (
     <section 
-      ref={sectionRef}
+      ref={containerRef}
       id="about" 
-      className="relative min-h-screen px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 overflow-hidden"
-      style={{ fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif" }}
+      className="relative min-h-screen py-24 sm:py-32 px-4 md:px-8 overflow-hidden"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
-      {/* Background gradient - sama seperti TechStack */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          background: isLight
-            ? 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 50%)'
-            : 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%)'
-        }}
-      />
+      {/* --- BACKGROUND (Clean Monochrome) --- */}
+      <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
+        <div className={`absolute inset-0 transition-colors duration-700 ${isLight ? 'bg-white' : 'bg-black'}`} />
+        <div 
+            className="absolute inset-0 opacity-[0.03]" 
+            style={{ 
+                backgroundImage: `linear-gradient(${isLight ? '#000' : '#fff'} 1px, transparent 1px), linear-gradient(90deg, ${isLight ? '#000' : '#fff'} 1px, transparent 1px)`, 
+                backgroundSize: '40px 40px' 
+            }} 
+        />
+      </div>
 
-      {/* Background Tech Stack Marquee */}
-      <div className="absolute inset-0 opacity-8 pointer-events-none overflow-hidden">
-        {marqueeRows.map((row, rowIndex) => (
+      {/* --- MARQUEE BACKGROUND (Parallax) --- */}
+      <motion.div 
+        style={{ y: yBg }}
+        className="absolute inset-0 -z-10 flex flex-col justify-center gap-20 opacity-[0.03] pointer-events-none select-none overflow-hidden"
+      >
+        {marqueeRows.map((row, idx) => (
           <div 
-            key={`row-${rowIndex}`} 
-            className={`my-12 ${rowIndex % 2 === 0 ? 'rotate-1' : '-rotate-1'}`}
-            style={{ top: `${20 + rowIndex * 25}%` }}
+            key={idx}
+            style={{ transform: `rotate(${row.rotate}deg)` }}
+            className="w-[120vw] -ml-[10vw]"
           >
-            <Marquee 
-              speed={row.speed}
-              direction={row.direction}
-              gradient={false}
-              pauseOnHover={false}
-            >
-              {techStack.map((tech, index) => (
-                <div key={`${rowIndex}-${index}`} className="mx-8">
-                  <div className="relative w-12 h-12">
-                    <img
-                      src={tech.logo}
-                      alt={tech.name}
-                      width={48}
-                      height={48}
-                      loading="lazy"
-                      className="w-full h-full object-contain"
-                      style={{
-                        filter: `drop-shadow(0 0 8px ${glowColors[rowIndex % glowColors.length]})`,
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </Marquee>
+             <Marquee speed={row.speed} direction={row.direction} gradient={false}>
+                {techStack.map((tech, i) => (
+                   <div key={i} className="mx-12">
+                      <img 
+                        src={tech.logo} 
+                        alt={tech.name} 
+                        className={`w-16 h-16 object-contain ${!isLight && 'invert'}`} // Invert for dark mode
+                      />
+                   </div>
+                ))}
+             </Marquee>
           </div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Title Section - sama seperti TechStack */}
-      <div className="relative z-10 px-4 mb-8 sm:mb-12 md:mb-16">
-        <h1 
-          ref={titleRef}
-          className="text-3xl sm:text-4xl md:text-5xl bg-clip-text text-transparent font-semibold text-center font-comic"
-          style={{
-            fontFamily: '"Sensei Biased", system-ui, sans-serif',
-            backgroundImage: isLight
-              ? 'linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)'
-              : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-          }}
-        >
-          About Me
-        </h1>
-      </div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* --- HEADER --- */}
+        <div className="text-center mb-16 md:mb-24">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6"
+            style={{ fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
+          >
+             <span className={`bg-clip-text text-transparent ${
+                isLight 
+                    ? 'bg-gradient-to-b from-black to-gray-600' 
+                    : 'bg-gradient-to-b from-white to-gray-500'
+            }`}>
+                About Me
+            </span>
+          </motion.h1>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className={`h-px w-32 mx-auto ${isLight ? 'bg-black' : 'bg-white'}`} 
+          />
+        </div>
 
-      {/* Main Content Grid */}
+        {/* --- CONTENT GRID --- */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            {/* PHOTO COLUMN */}
+            <motion.div 
+                initial={{ opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 50 : 0 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className={`order-1 ${isMobile ? 'order-1' : 'lg:order-2'} flex justify-center lg:justify-end`}
+            >
+                <div className="relative group">
+                    {/* Frame Border Effect */}
+                    <div className={`absolute -inset-4 border transition-all duration-500 rounded-2xl ${
+                        isLight ? 'border-black/5 group-hover:border-black/20' : 'border-white/5 group-hover:border-white/20'
+                    }`} />
+                    
+                    {/* Photo Container */}
+                    <div className={`relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-xl overflow-hidden shadow-2xl transition-all duration-500 transform group-hover:scale-[1.02] ${
+                        isLight ? 'shadow-black/10' : 'shadow-white/5'
+                    }`}>
+                        {/* Overlay Gradient */}
+                        <div className={`absolute inset-0 z-10 opacity-20 group-hover:opacity-0 transition-opacity duration-500 ${
+                            isLight ? 'bg-black' : 'bg-black' // Subtle dimming
+                        }`} />
 
-      <div className="relative z-10 max-w-6xl mx-auto">
-        {isMobile ? (
-          <div className="flex flex-col gap-8 items-center">
-            {/* Foto di atas */}
-            <div ref={photoRef} className="flex justify-center">
-              <div className="relative">
-                <div className={`
-                  relative w-80 h-80 backdrop-blur-sm rounded-xl border transition-all duration-200 overflow-hidden
-                  ${isLight 
-                    ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60' 
-                    : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30'
-                  }
-                `}>
-                  <img
-                    src="/img/avatar2.png"
-                    alt="Rafaditya Syahputra"
-                    className="w-full h-full object-cover"
-                    width="2481"
-                    height="2479"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                        <img 
+                            src="/img/avatar2.png" 
+                            alt="Rafaditya Syahputra" 
+                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                        />
+                    </div>
+
+                    {/* Decorative Geometric Shapes (Monochrome) */}
+                    <div className={`absolute -bottom-6 -left-6 w-24 h-24 border-b-2 border-l-2 rounded-bl-3xl transition-all duration-500 ${
+                        isLight ? 'border-black group-hover:translate-x-2 group-hover:-translate-y-2' : 'border-white group-hover:translate-x-2 group-hover:-translate-y-2'
+                    }`} />
+                    <div className={`absolute -top-6 -right-6 w-24 h-24 border-t-2 border-r-2 rounded-tr-3xl transition-all duration-500 ${
+                        isLight ? 'border-black group-hover:-translate-x-2 group-hover:translate-y-2' : 'border-white group-hover:-translate-x-2 group-hover:translate-y-2'
+                    }`} />
                 </div>
-                {/* Decorative elements - subtle glow */}
-                <div className={`
-                  absolute -top-4 -right-4 w-20 h-20 rounded-full blur-xl
-                  ${isLight ? 'bg-amber-100' : 'bg-purple-500/20'}
-                `}></div>
-                <div className={`
-                  absolute -bottom-4 -left-4 w-16 h-16 rounded-full blur-xl
-                  ${isLight ? 'bg-orange-100' : 'bg-blue-500/20'}
-                `}></div>
-              </div>
-            </div>
-            {/* Text di bawah */}
-            <div ref={contentRef} className="space-y-6 w-full">
-              {/* Name & Title */}
-              <div className="space-y-3 text-center">
-                <h2 className={`text-2xl font-bold ${isLight ? 'text-slate-900' : 'text-white'} leading-tight`}>
-                  Rafaditya Syahputra
-                </h2>
-                <p className={`text-lg ${isLight ? 'text-amber-600' : 'text-yellow-400'} font-medium`}>
-                  Front end Developer
-                </p>
-                <div className={`mx-auto w-16 h-1 ${isLight ? 'bg-amber-600' : 'bg-yellow-400'} rounded-full`}></div>
-              </div>
-              {/* Description */}
-              <div className={`space-y-4 text-base ${isLight ? 'text-slate-700' : 'text-slate-300'} leading-relaxed`}>
-                <p>
-                  Hao! Saya Rafaditya Syahputra, seorang Front End Developer dengan passion dalam 
-                  menciptakan solusi digital yang inovatif dan efisien. Dengan pengalaman lebih dari
-                  2 tahun di industri teknologi, saya telah mengembangkan berbagai aplikasi web dan 
-                  mobile yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang 
-                  luar biasa.
-                </p>
-                <p>
-                  Sekarang Saya berusia 17 tahun dan sedang menempuh pendidikan SMK di SMKN 13 Bandung,
-                  jurusan Rekayasa Perangkat Lunak. Kelas 11. Selain itu, saya juga aktif berkontribusi
-                  pada proyek open-source dan terus memperbarui keterampilan saya dengan teknologi terbaru.
-                </p>
-              </div>
-              {/* Call to Action */}
-              <div className="pt-4 flex justify-start">
-                <a
-                  href="/file/Rafaditya Syahputra_CV.pdf"
-                  download
-                  className={`
-                    relative flex items-center justify-center px-6 py-3 backdrop-blur-sm rounded-xl border transition-all duration-200 font-medium text-lg
-                    ${isLight 
-                      ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60 text-slate-800' 
-                      : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30 text-white'
-                    } transform hover:-translate-y-1 hover:scale-105
-                  `}
-                >
-                  Download CV
-                </a>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content - About Text */}
-            <div ref={contentRef} className="space-y-6">
-              {/* Name & Title */}
-              <div className="space-y-3">
-                <h2 className={`text-2xl lg:text-3xl font-bold ${isLight ? 'text-slate-900' : 'text-white'} leading-tight`}>
-                  Rafaditya Syahputra
-                </h2>
-                <p className={`text-lg ${isLight ? 'text-amber-600' : 'text-yellow-400'} font-medium`}>
-                  Front end Developer
-                </p>
-                <div className={`w-16 h-1 ${isLight ? 'bg-amber-600' : 'bg-yellow-400'} rounded-full`}></div>
-              </div>
-              {/* Description */}
-              <div className={`space-y-4 text-base lg:text-lg ${isLight ? 'text-slate-700' : 'text-slate-300'} leading-relaxed`}>
-                <p>
-                  Hao! Saya Rafaditya Syahputra, seorang Front End Developer dengan passion dalam 
-                  menciptakan solusi digital yang inovatif dan efisien. Dengan pengalaman lebih dari
-                  2 tahun di industri teknologi, saya telah mengembangkan berbagai aplikasi web dan 
-                  mobile yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang 
-                  luar biasa.
-                </p>
-                <p>
-                  Sekarang Saya berusia 17 tahun dan sedang menempuh pendidikan SMK di SMKN 13 Bandung,
-                  jurusan Rekayasa Perangkat Lunak, Kelas 11. Selain itu, saya juga aktif berkontribusi
-                  pada proyek open-source dan terus memperbarui keterampilan saya dengan teknologi terbaru.
-                </p>
-              </div>
-              {/* Call to Action - dengan styling card seperti TechStack */}
-              <div className="pt-4 flex justify-start">
-                <a
-                  href="/file/Rafaditya Syahputra_CV.pdf"
-                  download
-                  className={`
-                    relative flex items-center justify-center px-6 py-3 backdrop-blur-sm rounded-xl border transition-all duration-200 font-medium text-lg
-                    ${isLight 
-                      ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60 text-slate-800' 
-                      : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30 text-white'
-                    } transform hover:-translate-y-1 hover:scale-105
-                  `}
-                >
-                  Download CV
-                </a>
-              </div>
-            </div>
-            {/* Right Content - Photo dengan styling card */}
-            <div ref={photoRef} className="flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Main Photo Card - menggunakan style card seperti TechStack */}
-                <div className={`
-                  relative w-80 h-80 lg:w-96 lg:h-96 backdrop-blur-sm rounded-xl border transition-all duration-200 overflow-hidden
-                  ${isLight 
-                    ? 'bg-white/70 border-amber-200/50 hover:bg-white/80 hover:border-amber-300/60' 
-                    : 'bg-gray-900/40 border-gray-700/30 hover:bg-gray-800/50 hover:border-purple-500/30'
-                  }
-                `}>
-                  <img
-                    src="/img/avatar2.png"
-                    alt="Rafaditya Syahputra"
-                    className="w-full h-full object-cover"
-                    width="2481"
-                    height="2479"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                {/* Decorative elements - subtle glow */}
-                <div className={`
-                  absolute -top-4 -right-4 w-20 h-20 rounded-full blur-xl
-                  ${isLight ? 'bg-amber-100' : 'bg-purple-500/20'}
-                `}></div>
-                <div className={`
-                  absolute -bottom-4 -left-4 w-16 h-16 rounded-full blur-xl
-                  ${isLight ? 'bg-orange-100' : 'bg-blue-500/20'}
-                `}></div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+            </motion.div>
 
-      {/* Inline CSS untuk reduced motion - sama seperti TechStack */}
-      <style jsx>{`
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
+            {/* TEXT COLUMN */}
+            <motion.div 
+                initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 50 : 0 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                className={`order-2 ${isMobile ? 'order-2' : 'lg:order-1'} space-y-8 text-center lg:text-left`}
+            >
+                <div>
+                    <h2 className={`text-3xl md:text-4xl font-bold mb-2 ${isLight ? 'text-black' : 'text-white'}`}>
+                        Rafaditya Syahputra
+                    </h2>
+                    <p className={`text-lg md:text-xl font-medium tracking-wide ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
+                        Front End Developer
+                    </p>
+                </div>
+
+                <div className={`space-y-6 text-base md:text-lg leading-relaxed ${isLight ? 'text-gray-700' : 'text-gray-300'}`}>
+                    <p>
+                        Hao! Saya Rafaditya Syahputra, seorang Front End Developer dengan passion dalam menciptakan solusi digital yang inovatif dan efisien. 
+                        Dengan pengalaman lebih dari 2 tahun, saya fokus membangun aplikasi web yang fungsional dengan antarmuka yang bersih.
+                    </p>
+                    <p>
+                        Saat ini saya berusia 17 tahun dan sedang menempuh pendidikan di <span className={`font-semibold ${isLight ? 'text-black' : 'text-white'}`}>SMKN 13 Bandung</span>, 
+                        jurusan Rekayasa Perangkat Lunak. Saya juga aktif berkontribusi pada proyek open-source untuk terus mengasah skill.
+                    </p>
+                </div>
+
+                {/* Info Cards (Grid) */}
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                    {[
+                        { label: "Experience", value: "2+ Years" },
+                        { label: "Location", value: "Bandung, ID" },
+                        { label: "Age", value: "17 Years" },
+                        { label: "Status", value: "Student" }
+                    ].map((item, idx) => (
+                        <div key={idx} className={`p-4 rounded-lg border text-center transition-colors hover:border-current ${
+                            isLight 
+                                ? 'bg-gray-50 border-gray-200 hover:text-black hover:bg-white' 
+                                : 'bg-white/5 border-white/10 hover:text-white hover:bg-white/10'
+                        }`}>
+                            <div className={`text-xs uppercase tracking-wider mb-1 ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>{item.label}</div>
+                            <div className={`text-lg font-bold ${isLight ? 'text-black' : 'text-white'}`}>{item.value}</div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* CTA Button */}
+                <div className="pt-6 flex justify-center lg:justify-start">
+                    <a
+                        href="/file/Rafaditya Syahputra_CV.pdf"
+                        download
+                        className={`group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-bold tracking-wide transition-all duration-300 rounded-full overflow-hidden ${
+                            isLight 
+                                ? 'bg-black text-white hover:bg-gray-800' 
+                                : 'bg-white text-black hover:bg-gray-200'
+                        }`}
+                    >
+                        <span className="relative z-10 flex items-center gap-2">
+                            Download CV
+                            <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        </span>
+                    </a>
+                </div>
+            </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

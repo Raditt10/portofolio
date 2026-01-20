@@ -1,69 +1,94 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, ArrowRight } from "lucide-react";
 import { projectsData } from "../../constant";
 import { useNavigate } from "react-router-dom";
 
-// Project Card Component - Optimized untuk mobile
+// --- PROJECT CARD COMPONENT (Monochrome & Spotlight) ---
 const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingSoon, isLight }) => {
   const navigate = useNavigate();
+  const cardRef = useRef(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   const handle404 = (e) => {
     e.preventDefault();
     navigate('/next-demo');
   };
+
   return (
     <div
-      className={`relative h-full bg-gradient-to-br ${
-        isLight ? "from-white to-amber-50/80" : "from-white/5 to-white/[0.02]"
-      } backdrop-blur-md border rounded-xl overflow-hidden group ${
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className={`group relative h-full flex flex-col rounded-2xl border overflow-hidden transition-all duration-500 ${
         isLight
-          ? "border-amber-200 shadow-[0_20px_60px_rgba(0,0,0,0.05)]"
-          : "border-white/10"
+          ? "bg-white border-gray-200 hover:border-black/50 hover:shadow-xl"
+          : "bg-neutral-900 border-neutral-800 hover:border-white/30 hover:shadow-2xl hover:shadow-white/5"
       }`}
     >
-      {/* Image */}
-      <div className="relative h-40 sm:h-48 md:h-52 overflow-hidden">
+      {/* Spotlight Effect */}
+      <div 
+        className={`absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+        style={{
+            background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, ${
+                isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)'
+            }, transparent 40%)`
+        }}
+      />
+
+      {/* Image Section */}
+      <div className="relative h-48 sm:h-52 overflow-hidden z-10">
+        <div className={`absolute inset-0 z-10 transition-colors duration-500 ${
+            isLight ? 'bg-black/10 group-hover:bg-transparent' : 'bg-black/40 group-hover:bg-transparent'
+        }`} />
+        
         <img 
           src={`/img/${gambar}`} 
           alt={judul}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          width="400" height="256"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
           loading="lazy"
-          decoding="async"
-          fetchpriority="low"
-        />
-        <div
-          className={`absolute inset-0 bg-gradient-to-t ${
-            isLight ? "from-black/60 via-black/20" : "from-black/80 via-black/20"
-          } to-transparent`}
         />
         
         {/* Coming Soon Badge */}
         {isComingSoon && (
-          <div className="absolute top-3 right-3 px-3 py-1 bg-yellow-500/90 backdrop-blur-sm rounded-full text-xs font-semibold text-black">
+          <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold z-20 border ${
+            isLight 
+                ? 'bg-black text-white border-transparent' 
+                : 'bg-white text-black border-transparent'
+          }`}>
             Coming Soon
           </div>
         )}
       </div>
 
-      {/* Content */}
-      <div className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
-        <h3 className={`text-lg sm:text-xl font-bold line-clamp-1 ${isLight ? "text-black" : "text-white"}`}>
-          {judul}
-        </h3>
-        <p className={`text-sm line-clamp-2 ${isLight ? "text-gray-700" : "text-gray-300/80"}`}>
-          {parag}
-        </p>
+      {/* Content Section */}
+      <div className="flex-1 p-6 flex flex-col z-10">
+        <div className="mb-4">
+            <h3 className={`text-xl font-bold mb-2 line-clamp-1 ${isLight ? "text-black" : "text-white"}`}>
+            {judul}
+            </h3>
+            <p className={`text-sm line-clamp-2 leading-relaxed ${isLight ? "text-gray-600" : "text-gray-400"}`}>
+            {parag}
+            </p>
+        </div>
 
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-6">
           {tech.map((t, i) => (
             <span 
               key={i}
-              className={`px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 ${
+              className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border transition-colors duration-200 ${
                 isLight
-                  ? "bg-black/5 border border-black/15 text-black hover:bg-black/10"
-                  : "bg-white/5 border border-white/20 text-white/70 hover:bg-white/10"
+                  ? "bg-gray-50 border-gray-200 text-gray-600 group-hover:border-black/20 group-hover:text-black"
+                  : "bg-neutral-800 border-neutral-700 text-gray-400 group-hover:border-white/20 group-hover:text-white"
               }`}
             >
               {t}
@@ -71,432 +96,278 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
           ))}
         </div>
 
-        {/* Links */}
-        <div className="flex gap-3 pt-2">
-          {/* Demo Link */}
-          {(!linkDemo || linkDemo === "#") ? (
-            <a
-              href="/next-demo"
-              aria-label={`Open demo for ${judul} (coming soon)`}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
-                isLight
-                  ? "bg-black/5 hover:bg-black/10 text-black border border-black/10 hover:border-black/20 hover:shadow-lg hover:shadow-amber-100/40"
-                  : "bg-white/10 hover:bg-white/15 text-white hover:shadow-lg hover:shadow-white/20"
-              }`}
-              onClick={handle404}
-            >
-              <ExternalLink size={16} />
-              <span>Demo</span>
-            </a>
-          ) : (
-            <a
-              href={linkDemo}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Open live demo for ${judul}`}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
-                isLight
-                  ? "bg-black/5 hover:bg-black/10 text-black border border-black/10 hover:border-black/20 hover:shadow-lg hover:shadow-amber-100/40"
-                  : "bg-white/10 hover:bg-white/15 text-white hover:shadow-lg hover:shadow-white/20"
-              }`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ExternalLink size={16} />
-              <span>Demo</span>
-            </a>
-          )}
-          {/* Code Link */}
-          {(!linkCode || linkCode === "#") ? (
-            <a
-              href="/next-demo"
-              aria-label={`Open source code for ${judul} (coming soon)`}
-              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
-                isLight
-                  ? "bg-black/5 hover:bg-black/10 border border-black/15 text-black hover:border-black/25"
-                  : "bg-white/10 hover:bg-white/20 border border-white/20 text-white"
-              }`}
-              onClick={handle404}
-            >
-              <Github size={16} />
-              <span className="hidden sm:inline">Code</span>
-            </a>
-          ) : (
-            <a
-              href={linkCode}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Open source code for ${judul}`}
-              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
-                isLight
-                  ? "bg-black/5 hover:bg-black/10 border border-black/15 text-black hover:border-black/25"
-                  : "bg-white/10 hover:bg-white/20 border border-white/20 text-white"
-              }`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Github size={16} />
-              <span className="hidden sm:inline">Code</span>
-            </a>
-          )}
-        </div>
-      </div>
+        {/* Links (Push to bottom) */}
+        <div className="mt-auto flex gap-3">
+          {/* Demo Button */}
+          <a
+            href={(!linkDemo || linkDemo === "#") ? "/next-demo" : linkDemo}
+            onClick={(!linkDemo || linkDemo === "#") ? handle404 : (e) => e.stopPropagation()}
+            target={(!linkDemo || linkDemo === "#") ? "_self" : "_blank"}
+            rel="noopener noreferrer"
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 group/btn ${
+              isLight
+                ? "bg-black text-white hover:bg-gray-800"
+                : "bg-white text-black hover:bg-gray-200"
+            }`}
+          >
+            <span>Live Demo</span>
+            <ExternalLink size={14} className="group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform" />
+          </a>
 
-      {/* Hover Glow */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${
-            isLight ? "from-amber-100/60 via-transparent to-amber-50/40" : "from-white/10 via-transparent to-white/5"
-          }`}
-        />
+          {/* Code Button */}
+          <a
+            href={(!linkCode || linkCode === "#") ? "/next-demo" : linkCode}
+            onClick={(!linkCode || linkCode === "#") ? handle404 : (e) => e.stopPropagation()}
+            target={(!linkCode || linkCode === "#") ? "_self" : "_blank"}
+            rel="noopener noreferrer"
+            className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 border ${
+              isLight
+                ? "border-gray-200 text-black hover:border-black hover:bg-gray-50"
+                : "border-neutral-700 text-white hover:border-white hover:bg-neutral-800"
+            }`}
+          >
+            <Github size={16} />
+          </a>
+        </div>
       </div>
     </div>
   );
 };
 
+// --- MAIN PROJECTS COMPONENT ---
 const Projects = () => {
   const sectionRef = useRef(null);
   const scrollContainerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [themeMode, setThemeMode] = useState(() => {
-    try {
-      const root = document.documentElement;
-      return (
-        root.getAttribute("data-theme") || localStorage.getItem("theme") || "dark"
-      );
-    } catch {
-      return "dark";
-    }
-  });
+  const [themeMode, setThemeMode] = useState("dark");
   const isLight = themeMode === "light";
 
-  // Touch/drag state
+  // Drag State
   const [isDragging, setIsDragging] = useState(false);
   const dragStartX = useRef(0);
   const scrollStartLeft = useRef(0);
 
-  // Update scroll state
+  // Theme Sync
+  useEffect(() => {
+    const updateTheme = () => {
+        setThemeMode(document.documentElement.getAttribute("data-theme") || "dark");
+    };
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
+  // Update Scroll UI
   const updateScrollState = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
       const maxScroll = scrollWidth - clientWidth;
       const progress = maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0;
-      
       setScrollProgress(progress);
       setCanScrollLeft(scrollLeft > 10);
       setCanScrollRight(scrollLeft < maxScroll - 10);
     }
   };
 
-  // Mouse/Touch handlers
+  // Drag Logic
   const handleDragStart = (clientX) => {
     setIsDragging(true);
     dragStartX.current = clientX;
     scrollStartLeft.current = scrollContainerRef.current.scrollLeft;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.scrollSnapType = 'none';
-    }
+    scrollContainerRef.current.style.scrollSnapType = 'none';
+    document.body.style.cursor = 'grabbing';
   };
 
   const handleDragMove = (clientX) => {
     if (!isDragging || !scrollContainerRef.current) return;
-    
     const delta = dragStartX.current - clientX;
     scrollContainerRef.current.scrollLeft = scrollStartLeft.current + delta;
   };
 
   const handleDragEnd = () => {
     setIsDragging(false);
+    document.body.style.cursor = 'default';
     if (scrollContainerRef.current) {
-      // Re-enable snap after drag
-      setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.style.scrollSnapType = 'x mandatory';
-        }
-      }, 50);
+        setTimeout(() => {
+             if (scrollContainerRef.current) scrollContainerRef.current.style.scrollSnapType = 'x mandatory';
+        }, 50);
     }
   };
 
-  // Mouse events
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    handleDragStart(e.clientX);
-  };
-
-  const handleMouseMove = (e) => {
-    handleDragMove(e.clientX);
-  };
-
-  const handleMouseUp = () => {
-    handleDragEnd();
-  };
-
-  // Touch events
-  const handleTouchStart = (e) => {
-    handleDragStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    handleDragMove(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    handleDragEnd();
-  };
-
-  // Navigation
-  const scrollTo = (direction) => {
-    if (!scrollContainerRef.current) return;
-    
-    const container = scrollContainerRef.current;
-    const cardWidth = container.querySelector('.project-card')?.offsetWidth || 0;
-    const gap = 24; // 6 * 4px (gap-6)
-    const scrollAmount = cardWidth + gap;
-    
-    container.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth'
-    });
-  };
-
-  // Scroll listener
+  // Scroll Listener
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
-
     container.addEventListener('scroll', updateScrollState, { passive: true });
-    updateScrollState(); // Initial check
-
+    updateScrollState();
     return () => container.removeEventListener('scroll', updateScrollState);
   }, []);
 
-  // Cleanup drag on unmount
+  // Mouse Up Global
   useEffect(() => {
-    const handleGlobalMouseUp = () => {
-      if (isDragging) handleDragEnd();
-    };
-
-    window.addEventListener('mouseup', handleGlobalMouseUp);
-    return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
+    const handleUp = () => isDragging && handleDragEnd();
+    window.addEventListener('mouseup', handleUp);
+    return () => window.removeEventListener('mouseup', handleUp);
   }, [isDragging]);
 
-  // Sync theme from html[data-theme]
-  useEffect(() => {
-    try {
-      const root = document.documentElement;
-      const initial =
-        root.getAttribute("data-theme") || localStorage.getItem("theme") || "dark";
-      setThemeMode(initial);
-      const observer = new MutationObserver((mutations) => {
-        for (const m of mutations) {
-          if (m.type === "attributes" && m.attributeName === "data-theme") {
-            const current = root.getAttribute("data-theme") || "dark";
-            setThemeMode(current);
-          }
-        }
-      });
-      observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-      return () => observer.disconnect();
-    } catch {
-      // ignore
-    }
-  }, []);
+  // Button Scroll
+  const scrollTo = (direction) => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const scrollAmount = container.clientWidth * 0.8;
+    container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+  };
 
   return (
     <section 
       id="projects" 
       ref={sectionRef} 
-      className="relative min-h-screen py-20 sm:py-24 md:py-32 px-4 sm:px-6 overflow-hidden mt-16 sm:mt-20 md:mt-24"
-      style={{ 
-        fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif",
-      }}
+      className="relative min-h-screen py-24 sm:py-32 px-4 sm:px-6 overflow-hidden"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
+      {/* --- BACKGROUND (Clean Monochrome) --- */}
+      <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
+        <div className={`absolute inset-0 transition-colors duration-700 ${isLight ? 'bg-white' : 'bg-black'}`} />
+        <div 
+            className="absolute inset-0 opacity-[0.05]" 
+            style={{ 
+                backgroundImage: `linear-gradient(${isLight ? '#000' : '#fff'} 1px, transparent 1px), linear-gradient(90deg, ${isLight ? '#000' : '#fff'} 1px, transparent 1px)`, 
+                backgroundSize: '40px 40px' 
+            }} 
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Title */}
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent font-semibold text-center mb-8 sm:mb-12 md:mb-16 font-comic"
-          style={{
-            backgroundImage: isLight
-              ? "linear-gradient(135deg, #1f2937 0%, #334155 50%, #b45309 100%)"
-              : "linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #fef3c7 100%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            fontFamily: '"Sensei Biased", system-ui, sans-serif'
-          }}
-        >
-          Featured Projects
-        </motion.h1>
-          
-        {/* Projects Container */}
-        <div className="relative">
-          {/* Navigation Buttons */}
-          <button
-            onClick={() => scrollTo('left')}
-            disabled={!canScrollLeft}
-            aria-label="Scroll projects left"
-            className={`absolute left-0 top-1/2 -translate-y-1/2 sm:-translate-x-10 lg:-translate-x-16 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full backdrop-blur-xl border flex items-center justify-center transition-all duration-300 hover:scale-110 ${
-              isLight
-                ? "bg-black/5 border-black/20 hover:border-black/30 hover:bg-black/10"
-                : "bg-white/10 border-white/30 hover:border-white/50 hover:bg-white/15"
-            } ${
-              !canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'
-            }`}
-          >
-            <svg className={`w-5 h-5 sm:w-6 sm:h-6 ${isLight ? "text-black" : "text-white"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <button
-            onClick={() => scrollTo('right')}
-            disabled={!canScrollRight}
-            aria-label="Scroll projects right"
-            className={`absolute right-0 top-1/2 -translate-y-1/2 sm:translate-x-10 lg:translate-x-16 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full backdrop-blur-xl border flex items-center justify-center transition-all duration-300 hover:scale-110 ${
-              isLight
-                ? "bg-black/5 border-black/20 hover:border-black/30 hover:bg-black/10"
-                : "bg-white/10 border-white/30 hover:border-white/50 hover:bg-white/15"
-            } ${
-              !canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'
-            }`}
-          >
-            <svg className={`w-5 h-5 sm:w-6 sm:h-6 ${isLight ? "text-black" : "text-white"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          {/* Scroll Container - Optimized untuk Mobile */}
-          <div 
-            ref={scrollContainerRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-4"
-            style={{
-              cursor: isDragging ? 'grabbing' : 'grab',
-              scrollSnapType: 'x mandatory',
-              WebkitOverflowScrolling: 'touch',
-              scrollPaddingLeft: '1rem',
-              scrollPaddingRight: '1rem',
-            }}
-          >
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="flex gap-4 sm:gap-6 md:gap-8 px-1 sm:px-2"
-              style={{
-                userSelect: 'none',
-                touchAction: 'pan-x',
-              }}
-            >
-              {projectsData.map((data, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="project-card flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px]"
-                  style={{
-                    scrollSnapAlign: 'start',
-                  }}
+        
+        {/* --- HEADER --- */}
+        <div className="flex flex-col md:flex-row items-end justify-between mb-12 md:mb-20 gap-6">
+            <div className="text-center md:text-left w-full md:w-auto">
+                <motion.h1 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4"
+                    style={{ fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
                 >
-                  <ProjectCard {...data} isLight={isLight} />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+                    <span className={`bg-clip-text text-transparent ${
+                        isLight 
+                            ? 'bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500' 
+                            : 'bg-gradient-to-r from-white via-gray-200 to-gray-500'
+                    }`}>
+                        Featured Work
+                    </span>
+                </motion.h1>
+                <motion.div 
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    className={`h-1 w-24 rounded-full ${isLight ? 'bg-black' : 'bg-white'} mx-auto md:mx-0`} 
+                />
+            </div>
 
-                aria-label="Open live demo"
-          {/* Gradient Fade - Left & Right */}
-          <div className={`absolute left-0 top-0 bottom-4 w-8 sm:w-12 bg-gradient-to-r ${isLight ? "from-white" : "from-[#050607]"} to-transparent pointer-events-none z-20`} />
-          <div className={`absolute right-0 top-0 bottom-4 w-8 sm:w-12 bg-gradient-to-l ${isLight ? "from-white" : "from-[#050607]"} to-transparent pointer-events-none z-20`} />
+            {/* Navigation Buttons (Desktop) */}
+            <div className="hidden md:flex gap-3">
+                <button
+                    onClick={() => scrollTo('left')}
+                    disabled={!canScrollLeft}
+                    className={`p-4 rounded-full border transition-all duration-300 ${
+                        isLight 
+                            ? "border-black/10 hover:bg-black hover:text-white disabled:opacity-30" 
+                            : "border-white/10 hover:bg-white hover:text-black disabled:opacity-30"
+                    }`}
+                >
+                    <ArrowRight className="rotate-180" size={24} />
+                </button>
+                <button
+                    onClick={() => scrollTo('right')}
+                    disabled={!canScrollRight}
+                    className={`p-4 rounded-full border transition-all duration-300 ${
+                        isLight 
+                            ? "border-black/10 hover:bg-black hover:text-white disabled:opacity-30" 
+                            : "border-white/10 hover:bg-white hover:text-black disabled:opacity-30"
+                    }`}
+                >
+                    <ArrowRight size={24} />
+                </button>
+            </div>
+        </div>
+          
+        {/* --- PROJECTS SLIDER --- */}
+        <div className="relative">
+            {/* Scroll Container */}
+            <div 
+                ref={scrollContainerRef}
+                onMouseDown={(e) => { e.preventDefault(); handleDragStart(e.clientX); }}
+                onMouseMove={(e) => handleDragMove(e.clientX)}
+                onMouseUp={handleDragEnd}
+                onMouseLeave={handleDragEnd}
+                onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+                onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+                onTouchEnd={handleDragEnd}
+                className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-12 -mx-4 px-4 sm:mx-0 sm:px-0"
+                style={{ 
+                    cursor: isDragging ? 'grabbing' : 'grab',
+                    scrollSnapType: 'x mandatory',
+                    scrollPaddingLeft: '0px'
+                }}
+            >
+                <div className="flex gap-6 sm:gap-8 w-max">
+                    {projectsData.map((data, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="w-[85vw] sm:w-[350px] md:w-[380px] lg:w-[420px] flex-shrink-0"
+                            style={{ scrollSnapAlign: 'start' }}
+                        >
+                            <ProjectCard {...data} isLight={isLight} />
+                        </motion.div>
+                    ))}
+                    {/* Spacer di akhir agar kartu terakhir tidak mepet */}
+                    <div className="w-4 sm:w-0" /> 
+                </div>
+            </div>
+
+            {/* Mobile Nav Buttons (Overlay) */}
+            <div className="md:hidden flex justify-center gap-4 mt-4">
+                 <button onClick={() => scrollTo('left')} disabled={!canScrollLeft} className={`p-3 rounded-full border ${isLight ? 'border-black/20 disabled:opacity-30' : 'border-white/20 disabled:opacity-30'}`}>
+                    <ArrowRight className="rotate-180" size={20} />
+                 </button>
+                 <button onClick={() => scrollTo('right')} disabled={!canScrollRight} className={`p-3 rounded-full border ${isLight ? 'border-black/20 disabled:opacity-30' : 'border-white/20 disabled:opacity-30'}`}>
+                    <ArrowRight size={20} />
+                 </button>
+            </div>
         </div>
 
-        {/* Progress Indicator */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-8 sm:mt-12 space-y-4"
-        >
-          {/* Progress Bar */}
-          <div className="max-w-2xl mx-auto">
-            <div className={`relative h-1 rounded-full overflow-hidden backdrop-blur-sm border ${isLight ? "bg-black/5 border-black/10" : "bg-white/5 border-white/10"}`}>
-              <motion.div
-                className={`h-full bg-gradient-to-r rounded-full relative ${
-                  isLight
-                    ? "from-black/40 via-black/30 to-purple-400/50"
-                    : "from-white/40 via-white/30 to-white/40"
-                }`}
-                style={{ 
-                  width: `${scrollProgress}%`,
-                  boxShadow: isLight ? '0 0 10px rgba(0,0,0,0.2)' : '0 0 10px rgba(255,255,255,0.3)'
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Glowing dot at end */}
-                <div
-                  className={`absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full ${
-                    isLight
-                      ? "bg-black shadow-[0_0_8px_rgba(0,0,0,0.4)]"
-                      : "bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                  }`}
+        {/* --- PROGRESS BAR --- */}
+        <div className="mt-12 hidden md:block">
+            <div className={`relative h-[2px] w-full rounded-full overflow-hidden ${isLight ? 'bg-black/10' : 'bg-white/10'}`}>
+                <motion.div 
+                    className={`absolute left-0 top-0 h-full ${isLight ? 'bg-black' : 'bg-white'}`}
+                    style={{ width: `${scrollProgress}%` }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
-              </motion.div>
             </div>
-                    aria-label="Open source code on GitHub"
-            
-            {/* Progress Info */}
-            <div className={`flex justify-between items-center mt-2 px-2 text-xs ${isLight ? "text-gray-600" : "text-gray-400"}`}>
-              <span>Start</span>
-              <span className={`${isLight ? "text-black" : "text-white/70"} font-medium tabular-nums`}>
-                {Math.round(scrollProgress)}%
-              </span>
-              <span>End</span>
+            <div className="flex justify-between mt-2 text-xs font-mono uppercase tracking-widest opacity-50">
+                <span>01</span>
+                <span>0{projectsData.length}</span>
             </div>
-          </div>
+        </div>
 
-          {/* Swipe Instruction - Mobile Only */}
-          <div className="flex justify-center">
-            <motion.div
-              animate={{ x: [-5, 5, -5] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className={`flex items-center gap-3 px-4 py-2 backdrop-blur-sm rounded-full text-sm ${
-                isLight
-                  ? "bg-black/5 border border-black/15 text-black"
-                  : "bg-white/5 border border-white/20 text-white/70"
-              }`}
-            >
-              <svg className={`w-5 h-5 ${isLight ? "text-black/70" : "text-white/70"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-              </svg>
-              <span className="font-medium">Swipe atau Drag</span>
-              <svg className={`w-5 h-5 ${isLight ? "text-black/70" : "text-white/70"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
 
       <style jsx>{`
         .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+            display: none;
         }
         .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
       `}</style>
     </section>

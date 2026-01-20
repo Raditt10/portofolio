@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// Simple viewport-aware mount wrapper that only renders children
-// once its placeholder enters the viewport. Helps defer below-the-fold
-// bundles and cut initial JS bytes.
 export default function LazyMount({ children, height = 500, rootMargin = '400px' }) {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
