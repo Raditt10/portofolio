@@ -1,300 +1,245 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { navlinks } from '../../constant'
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
-  const [theme, setTheme] = useState(() => {
-    if (typeof document === 'undefined') return 'dark'
-    return document.documentElement.dataset.theme || localStorage.getItem('theme') || 'dark'
-  })
+  const [themeMode, setThemeMode] = useState("dark");
+  const isLight = themeMode === 'light';
 
-  const isLight = theme === 'light'
-
-  // Deteksi mobile
+  // --- THEME SYNC ---
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    
+    const updateTheme = () => {
+        setThemeMode(document.documentElement.getAttribute("data-theme") || "dark");
+    };
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
     checkMobile()
     window.addEventListener('resize', checkMobile)
-    
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Animasi masuk navbar mobile
+  // Scroll handler
   useEffect(() => {
-    if (isMobile) {
-      const timer = setTimeout(() => setIsVisible(true), 100)
-      return () => clearTimeout(timer)
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
     }
-  }, [isMobile])
-
-  // Sync with global theme (observes data-theme on <html>)
-  useEffect(() => {
-    if (typeof document === 'undefined') return
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((m) => {
-        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
-          const current = document.documentElement.dataset.theme
-          setTheme(current || 'dark')
-        }
-      })
-    })
-
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
-    return () => observer.disconnect()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Scroll handler untuk mobile saja
-  useEffect(() => {
-    if (isMobile) {
-      const handleScroll = () => {
-        const isScrolled = window.scrollY > 10
-        setScrolled(isScrolled)
-      }
-
-      window.addEventListener('scroll', handleScroll, { passive: true })
-      return () => window.removeEventListener('scroll', handleScroll)
-    }
-  }, [isMobile])
-
-  const toggleSidebar = useCallback(() => {
-    setIsSidebarOpen(prev => !prev)
-  }, [])
-
-  const closeSidebar = useCallback(() => {
-    setIsSidebarOpen(false)
-  }, [])
+  const toggleSidebar = useCallback(() => setIsSidebarOpen(prev => !prev), [])
+  const closeSidebar = useCallback(() => setIsSidebarOpen(false), [])
 
   const toggleThemeMode = useCallback(() => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark'
-    setTheme(newTheme)
+    const newTheme = themeMode === 'dark' ? 'light' : 'dark'
+    setThemeMode(newTheme)
     document.documentElement.dataset.theme = newTheme
     localStorage.setItem('theme', newTheme)
-  }, [theme])
+  }, [themeMode])
 
-  // Desktop navbar - TIDAK DIUBAH sama sekali
+  // --- DESKTOP NAVBAR ---
   const DesktopNavbar = () => (
-    <nav className={`hidden md:flex justify-center font-sora font-semibold items-center h-14 transition-all duration-500 fixed z-50 w-full px-8 bg-transparent mt-6`} role="navigation" aria-label="Main Navigation">
-      <div className="relative group">
-        <div className={`relative px-6 py-2.5 rounded-full backdrop-blur-md transition-all duration-500 group-hover:shadow-lg ${
-          isLight
-            ? 'bg-white/60 border border-slate-200/50 group-hover:bg-white/70 group-hover:border-amber-300/60 group-hover:shadow-amber-200/30'
-            : 'bg-white/10 border border-white/15 group-hover:bg-white/15 group-hover:border-amber-200/40 group-hover:shadow-amber-200/20'
-        }`}>
-          {/* Elegant glow on hover */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-amber-100/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="flex items-center gap-8">
-            {/* Logo */}
-            <div className="relative px-4 py-2 group/logo flex items-center">
-              <span className="sr-only">Home</span>
-              <a href="#home" aria-label="Home" tabIndex={0} className="flex items-center">
-                <img
-                  src="/img/logo2.png"
-                  alt="Logo"
-                  width="612"
-                  height="408"
-                  className="h-20 w-20 object-contain drop-shadow-lg transition-all duration-300 group-hover/logo:scale-110"
-                  style={{ maxHeight: '5rem', filter: 'drop-shadow(0 2px 16px rgba(0,0,0,0.22))', marginTop: '-0.5rem', marginBottom: '-0.5rem' }}
-                />
-              </a>
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-8 bg-gradient-to-b from-transparent via-white/30 to-transparent" />
-            </div>
-          
-            {/* Navigation Links */}
-            <ul className='relative flex gap-1'>
-              {navlinks.map((navlink, index) => (
-              <li key={navlink.id} className="relative group/item">
-                <a 
-                  href={navlink.link}
-                  className={`relative block text-base font-medium px-6 py-2.5 rounded-full transition-all duration-300 hover:scale-105 ${
-                    isLight
-                      ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100/90 hover:border hover:border-slate-200/80'
-                      : 'text-white/80 hover:text-white hover:bg-gradient-to-r hover:from-amber-50/10 hover:via-white/10 hover:to-amber-50/10 hover:drop-shadow-[0_0_15px_rgba(248,236,222,0.4)]'
-                  }`}
-                  tabIndex={0}
-                  aria-label={navlink.text}
-                >
-                  {/* Elegant amber shine effect */}
-                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-amber-100/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500" />
-                  <span className="relative z-10">{navlink.text}</span>
-                </a>
-                {index < navlinks.length - 1 && (
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-                )}
-              </li>
+    <nav className="hidden md:flex fixed top-6 left-0 right-0 z-50 justify-center px-4">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className={`relative flex items-center px-2 py-2 rounded-full border backdrop-blur-xl transition-all duration-300 ${
+            isLight 
+                ? 'bg-white/80 border-gray-200 shadow-lg shadow-gray-200/50' 
+                : 'bg-black/80 border-white/10 shadow-xl shadow-black/50'
+        }`}
+      >
+        {/* Logo */}
+        <a href="#home" className="pl-4 pr-6 flex items-center">
+            <img 
+                src="/img/logo2.png" 
+                alt="Logo" 
+                // PERBAIKAN: Logo default saat Dark Mode (tidak ada filter). 
+                // Saat Light Mode, kita invert agar menjadi hitam (jika logo aslinya putih).
+                className={`h-10 w-auto object-contain transition-all duration-300 hover:scale-110 ${isLight ? 'invert' : ''}`} 
+            />
+        </a>
+
+        {/* Separator */}
+        <div className={`w-px h-6 mr-2 ${isLight ? 'bg-gray-200' : 'bg-white/10'}`} />
+
+        {/* Links */}
+        <ul className="flex items-center gap-1">
+            {navlinks.map((link) => (
+                <li key={link.id}>
+                    <a 
+                        href={link.link}
+                        className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-opacity-10 ${
+                            isLight 
+                                ? 'text-gray-600 hover:text-black hover:bg-black' 
+                                : 'text-gray-400 hover:text-white hover:bg-white'
+                        }`}
+                    >
+                        {link.text}
+                    </a>
+                </li>
             ))}
-            </ul>
-            
-            {/* Theme Toggle Button */}
-            <button
-              type="button"
-              onClick={toggleThemeMode}
-              className="relative w-10 h-10 rounded-full border transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
-              style={{
-                borderColor: isLight ? 'rgba(100, 116, 139, 0.5)' : 'rgba(255, 255, 255, 0.2)',
-                backgroundColor: isLight ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(12px)'
-              }}
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" style={{color: isLight ? '#475569' : '#ffffff'}}>
-                  <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.45-9.45 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05 1 1 0 0 0 21.64 13Z" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 text-amber-500" fill="currentColor">
-                  <path d="M12 18a6 6 0 1 0-6-6 6 6 0 0 0 6 6Zm0-14a1 1 0 0 0 1-1V2a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm0 16a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Zm10-7h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2ZM3 12H2a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm14.95-6.95a1 1 0 0 0-1.41 0l-.71.71a1 1 0 1 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41ZM7.17 16.83a1 1 0 0 0-1.41 0l-.71.71a1 1 0 0 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41Zm12.02 1.41a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 0 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0ZM7.17 7.17a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 1 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0Z" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
+        </ul>
+
+        {/* Theme Toggle */}
+        <button 
+            onClick={toggleThemeMode}
+            className={`ml-4 p-2 rounded-full transition-all duration-300 ${
+                isLight 
+                    ? 'bg-gray-100 text-black hover:bg-gray-200' 
+                    : 'bg-white/10 text-white hover:bg-white/20'
+            }`}
+        >
+            {isLight ? (
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            ) : (
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            )}
+        </button>
+      </motion.div>
     </nav>
   )
 
-  // Mobile Header - dengan animasi slide down
+  // --- MOBILE HEADER ---
   const MobileHeader = () => (
     <header 
-      className={`md:hidden flex items-center justify-between gap-3 transition-all duration-500 fixed top-4 left-4 right-4 z-50 px-4 py-3 rounded-2xl ${
-        scrolled 
-          ? (isLight ? 'bg-white/90 backdrop-blur-lg border border-slate-200 shadow-lg shadow-slate-200/50' : 'bg-black/80 backdrop-blur-lg border border-white/10 shadow-lg')
-          : (isLight ? 'bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-sm shadow-slate-200/40' : 'bg-black/70 backdrop-blur-md')
-      }`} 
-      style={{ 
-        marginTop: 'env(safe-area-inset-top, 0)',
-        transform: isVisible ? 'translateY(0)' : 'translateY(-120%)',
-        opacity: isVisible ? 1 : 0,
-        transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out'
-      }}
+        className={`md:hidden fixed top-4 left-4 right-4 z-50 flex items-center justify-between px-4 py-3 rounded-2xl border backdrop-blur-xl transition-all duration-300 ${
+            scrolled
+                ? (isLight ? 'bg-white/90 border-gray-200 shadow-lg' : 'bg-black/90 border-white/10 shadow-lg')
+                : (isLight ? 'bg-white/50 border-transparent' : 'bg-black/50 border-transparent')
+        }`}
     >
-      <div className="relative z-10 flex items-center">
-        <a href="#home" aria-label="Home" tabIndex={0} className="flex items-center">
-          <img
-            src="/img/logo2.png"
-            alt="Logo"
-            width="612"
-            height="408"
-              className="h-14 w-14 object-contain drop-shadow-lg"
-              style={{ maxHeight: '3.5rem', filter: 'drop-shadow(0 2px 14px rgba(0,0,0,0.20))' }}
-          />
+        {/* Logo */}
+        <a href="#home">
+            <img 
+                src="/img/logo2.png" 
+                alt="Logo" 
+                // PERBAIKAN: Sama seperti desktop, hanya invert saat light mode
+                className={`h-8 w-auto object-contain ${isLight ? 'invert' : ''}`} 
+            />
         </a>
-      </div>
 
-      <div className="flex items-center gap-2 ml-auto mr-2">
-        <button
-          type="button"
-          onClick={toggleThemeMode}
-          className="relative z-10 p-2 rounded-xl transition-all duration-300 backdrop-blur-md active:scale-95"
-          style={{
-            backgroundColor: isLight ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.08)',
-            borderColor: isLight ? 'rgb(226, 232, 240)' : 'rgba(255, 255, 255, 0.2)',
-            border: '1px solid'
-          }}
-          aria-label="Toggle theme"
-        >
-          {theme === 'dark' ? (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" fill="white">
-              <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.45-9.45 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05 1 1 0 0 0 21.64 13Z" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 text-amber-500" fill="currentColor">
-              <path d="M12 18a6 6 0 1 0-6-6 6 6 0 0 0 6 6Zm0-14a1 1 0 0 0 1-1V2a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm0 16a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Zm10-7h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2ZM3 12H2a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm14.95-6.95a1 1 0 0 0-1.41 0l-.71.71a1 1 0 1 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41ZM7.17 16.83a1 1 0 0 0-1.41 0l-.71.71a1 1 0 0 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41Zm12.02 1.41a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 0 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0ZM7.17 7.17a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 1 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0Z" />
-            </svg>
-          )}
-        </button>
-        
-        <button
-          onClick={toggleSidebar}
-          className={`relative z-10 p-2 rounded-xl transition-all duration-300 backdrop-blur-md active:scale-95 ${
-            isLight
-              ? 'text-slate-800 bg-white/90 border border-slate-200 hover:border-amber-300/70 hover:shadow-lg hover:shadow-amber-200/30'
-              : 'text-white bg-gradient-to-r from-white/10 via-white/5 to-white/10 border border-white/20 hover:border-amber-200/40 hover:from-white/15 hover:via-amber-50/10 hover:to-white/15 hover:shadow-lg hover:shadow-amber-200/20'
-          }`}
-          aria-label='Toggle menu'
-        >
-          <div className="relative w-6 h-6 flex flex-col items-center justify-center">
-            <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
-              isSidebarOpen ? 'rotate-45 top-3' : 'top-1.5'
-            }`} />
-            <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
-              isSidebarOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100 top-3'
-            }`} />
-            <span className={`absolute w-6 h-0.5 ${isLight ? 'bg-slate-800' : 'bg-white'} rounded-full transition-all duration-300 ${
-              isSidebarOpen ? '-rotate-45 top-3' : 'top-4.5'
-            }`} />
-          </div>
-        </button>
-      </div>
+        <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button 
+                onClick={toggleThemeMode}
+                className={`p-2 rounded-xl transition-all ${
+                    isLight 
+                        ? 'bg-gray-100 text-black' 
+                        : 'bg-white/10 text-white'
+                }`}
+            >
+                {isLight ? (
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                ) : (
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                )}
+            </button>
+
+            {/* Hamburger Menu */}
+            <button 
+                onClick={toggleSidebar}
+                className={`p-2 rounded-xl transition-all ${
+                    isLight 
+                        ? 'bg-black text-white' 
+                        : 'bg-white text-black'
+                }`}
+            >
+                <div className="w-5 h-5 flex flex-col justify-center gap-1.5">
+                    <span className={`block w-full h-0.5 bg-current transition-all ${isSidebarOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                    <span className={`block w-full h-0.5 bg-current transition-all ${isSidebarOpen ? 'opacity-0' : ''}`} />
+                    <span className={`block w-full h-0.5 bg-current transition-all ${isSidebarOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+                </div>
+            </button>
+        </div>
     </header>
   )
 
-  // Mobile Sidebar - floating sidebar bukan fullscreen
+  // --- MOBILE SIDEBAR ---
   const MobileSidebar = () => (
-    <>
-      {/* Overlay */}
-      <div
-        className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-          isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={closeSidebar}
-      />
-      
-      {/* Floating Sidebar */}
-      <aside
-        className={`md:hidden fixed top-4 right-4 z-50 w-72 rounded-2xl backdrop-blur-xl transition-all duration-300 transform ${
-          isSidebarOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-        } ${isLight ? 'bg-white/95 border border-slate-200 shadow-2xl shadow-slate-200/50' : 'bg-gradient-to-br from-black/98 via-black/95 to-black/98 border border-white/10 shadow-2xl shadow-black/50'}`}
-        style={{ marginTop: `calc(env(safe-area-inset-top, 0) + 60px)` }}
-      >
-        {/* Navigation */}
-        <nav className='p-4'>
-          <div className={`relative px-4 py-4 rounded-2xl backdrop-blur-md shadow-xl ${
-            isLight
-              ? 'bg-white/90 border border-slate-200 shadow-slate-200/40'
-              : 'bg-gradient-to-br from-white/8 via-white/5 to-white/8 border border-white/15 shadow-black/30'
-          }`}>
-            <ul className='relative flex flex-col gap-2'>
-              {navlinks.map((navlink, index) => (
-                <li key={navlink.id} className="group/link">
-                  <a
-                    href={navlink.link}
+    <AnimatePresence>
+        {isSidebarOpen && (
+            <>
+                {/* Overlay */}
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
                     onClick={closeSidebar}
-                    className={`relative block text-base font-medium px-6 py-4 rounded-xl transition-all duration-300 overflow-hidden border border-transparent hover:scale-[1.02] ${
-                      isLight
-                        ? 'text-slate-800 hover:text-slate-900 hover:bg-slate-100/90 hover:border-slate-200 hover:shadow-lg hover:shadow-slate-200/40'
-                        : 'text-white/85 hover:text-white hover:bg-gradient-to-r hover:from-amber-50/10 hover:via-white/10 hover:to-amber-50/10 hover:shadow-lg hover:shadow-amber-200/10 hover:border-white/10'
+                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] md:hidden"
+                />
+                
+                {/* Sidebar Panel */}
+                <motion.aside
+                    initial={{ x: "100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: "100%" }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    className={`fixed top-4 right-4 bottom-4 w-72 z-[70] md:hidden rounded-2xl overflow-hidden flex flex-col border ${
+                        isLight 
+                            ? 'bg-white border-gray-200' 
+                            : 'bg-neutral-900 border-neutral-800'
                     }`}
-                  >
-                    {/* Elegant amber shine effect */}
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/15 to-transparent opacity-0 group-hover/link:opacity-100 transition-opacity duration-500" />
-                    <span className="relative z-10">{navlink.text}</span>
-                  </a>
-                  {index < navlinks.length - 1 && (
-                    <div className="my-2 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
-      </aside>
-    </>
+                >
+                    <div className="p-6 flex flex-col h-full">
+                        <div className="flex items-center justify-between mb-8">
+                            <span className={`text-xs font-bold uppercase tracking-widest ${isLight ? 'text-gray-400' : 'text-gray-500'}`}>Menu</span>
+                            <button onClick={closeSidebar} className={`p-2 rounded-full hover:bg-opacity-10 ${isLight ? 'hover:bg-black text-black' : 'hover:bg-white text-white'}`}>
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+
+                        <ul className="flex flex-col gap-2">
+                            {navlinks.map((link, i) => (
+                                <motion.li 
+                                    key={link.id}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.1 }}
+                                >
+                                    <a 
+                                        href={link.link} 
+                                        onClick={closeSidebar}
+                                        className={`block px-4 py-3 rounded-xl text-lg font-medium transition-all ${
+                                            isLight 
+                                                ? 'text-gray-600 hover:text-black hover:bg-gray-100' 
+                                                : 'text-gray-400 hover:text-white hover:bg-white/10'
+                                        }`}
+                                    >
+                                        {link.text}
+                                    </a>
+                                </motion.li>
+                            ))}
+                        </ul>
+
+                        <div className="mt-auto pt-8 border-t border-dashed border-gray-200 dark:border-neutral-800">
+                            <p className={`text-xs text-center ${isLight ? 'text-gray-400' : 'text-gray-600'}`}>
+                                © 2024 Rafaditya Syahputra
+                            </p>
+                        </div>
+                    </div>
+                </motion.aside>
+            </>
+        )}
+    </AnimatePresence>
   )
 
   return (
     <>
-      <DesktopNavbar /> {/* TIDAK DIUBAH */}
-      <MobileHeader />  {/* Diubah menjadi floating */}
-      <MobileSidebar /> {/* Diubah menjadi floating */}
-      
-      {/* Spacer untuk mobile header agar konten tidak tertutup; invisible so it doesn't look like a second navbar */}
-      <div className="md:hidden h-20 invisible" />
+      <DesktopNavbar />
+      <MobileHeader />
+      <MobileSidebar />
     </>
   )
 }
