@@ -217,16 +217,14 @@
 const navlinks = [
   {
     id: 1,
-    "text" : "Home",
-    "link" : "#home"
+    text: "Home",
+    link: "#home"
   },
-
   {
     id: 2,
-    "text" : "About Me",
-    "link" : "#about"
+    text: "About Me",
+    link: "#about"
   },
-
   {
     id: 3,
     text: "Gallery",
@@ -234,7 +232,7 @@ const navlinks = [
   },
   {
     id: 4,
-    text: " Educations",
+    text: "Educations",
     link: "#educations"
   },
   {
@@ -242,17 +240,15 @@ const navlinks = [
     text: "Featured Projects",
     link: "#projects"
   },
-
   {
     id: 6,
-    "text" : "Achievements",
-    "link" : "#achievements"
+    text: "Achievements",
+    link: "#achievements"
   },
-
   {
-    id: 6,
-    "text" : "Contact Me",
-    "link" : "#contact"
+    id: 7,
+    text: "Contact Me",
+    link: "#contact"
   },
 ]
 
