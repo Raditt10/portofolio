@@ -1,4 +1,4 @@
-# 🌟 Rafaditya Syahputra - Portfolio Website
+# Rafaditya Syahputra - Portfolio Website
 
 A modern, interactive portfolio website for Rafaditya Syahputra, a Full Stack Developer showcasing projects, skills, education, and technical expertise with smooth animations and responsive design.
 
