@@ -1,53 +1,69 @@
+
 # Rafaditya Syahputra - Portfolio Website
 
-A modern, interactive portfolio website for Rafaditya Syahputra, a Full Stack Developer showcasing projects, skills, education, and technical expertise with smooth animations and responsive design.
+A modern, interactive portfolio website for Rafaditya Syahputra, Full Stack Developer. Showcases projects, skills, education, and technical expertise with smooth animations and responsive design. Built with React, Vite, Tailwind CSS, GSAP, Framer Motion, and more.
+
+## 🛠 Built With
+
 
 ## 🛠 Built With
 
 **Frontend Technologies**
-- **React** - Component-based UI library
+- **React 19** - Component-based UI library
+- **Vite** - Fast build tool
+- **Tailwind CSS 4** - Utility-first CSS framework
 - **Framer Motion** - Modern animation library
 - **GSAP** - Professional-grade animations
-- **Tailwind CSS** - Utility-first CSS framework
-- **Vite** - Fast build tool
 - **React Fast Marquee** - Smooth marquee animations
+- **Lucide React** - Icon library
+- **Swiper** - Carousel/slider
 
 **Animation & Effects**
-- GSAP Timeline - Sequential animations
-- Framer Motion - Smooth component transitions
-- Scroll Trigger - Scroll-based animations
-- CSS Transforms - 3D effects
-- Parallax Scrolling - Depth effects
+- GSAP Timeline & ScrollTrigger
+- Framer Motion transitions
+- Parallax & 3D CSS transforms
+- Custom cursor, lightbox, and modals
 
 **UI/UX Features**
-- Responsive Design - Mobile-first approach
-- Dark/Light Theme Toggle
-- Smooth Page Transitions
-- Interactive Components
-- Optimized Performance
+- Responsive design (mobile-first)
+- Dark/Light theme toggle
+- Smooth page transitions
+- Interactive components
+- Optimized performance
+
 
 ## 📁 Project Structure
 
 ```
 src/
-├── components/
-│   ├── Hero.jsx              # Landing section with intro
-│   ├── Navbar.jsx            # Navigation bar
-│   ├── About.jsx             # About section with marquee background
-│   ├── Educations.jsx        # Education timeline
-│   ├── TechStack.jsx         # Technology skills display
-│   ├── Achievements.jsx      # Awards & certifications
-│   ├── Gallery.jsx           # Project gallery
-│   ├── Projects.jsx          # Featured projects
-│   ├── Footer.jsx            # Footer section
-│   └── assets/
-│       ├── Modal.jsx         # Reusable modal
-│       ├── CountUp.jsx       # Number counter animation
-│       ├── SplitText.jsx     # Text split animation
-│       └── ...
 ├── App.jsx
 ├── main.jsx
-└── index.css
+├── index.css
+├── components/
+│   ├── About.jsx
+│   ├── Achievements.jsx
+│   ├── CustomCursor.jsx
+│   ├── Educations.jsx
+│   ├── Footer.jsx
+│   ├── Gallery.jsx
+│   ├── Hero.jsx
+│   ├── LazyMount.jsx
+│   ├── Navbar.jsx
+│   ├── NotFound.jsx
+│   ├── Opening.jsx
+│   ├── Projetcs.jsx  # (typo: Projects)
+│   ├── TechStack.jsx
+│   └── assets/
+│       ├── CertificationCard.jsx
+│       ├── CompetitionCard.jsx
+│       ├── CountUp.jsx
+│       ├── Darkveil.jsx
+│       ├── Modal.jsx
+│       ├── ShinyText.jsx
+│       ├── ShinyText.css
+│       └── SplitText.jsx
+├── assets/
+└── ...
 ```
 
 ## 🎯 Key Features
@@ -62,18 +78,20 @@ src/
 🏆 **Achievements** - Certifications and competitions
 📚 **Education Timeline** - Interactive journey visualization
 
+git clone https://github.com/Raditt10/Porto-React.git
+
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 16+
-- pnpm or npm
+- Node.js 18+
+- pnpm (recommended) or npm
 
 ### Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/Raditt10/Porto-React.git
-cd Porto-React
+cd Portofolio\ 2025
 
 # Install dependencies
 pnpm install
@@ -85,93 +103,57 @@ pnpm run dev
 pnpm run build
 ```
 
+
 ## 📦 Scripts
 
 ```bash
 pnpm dev          # Start development server
-pnpm run build    # Build for production
-pnpm run preview  # Preview production build
-pnpm run lint     # Run ESLint
+pnpm build        # Build for production
+pnpm preview      # Preview production build
+pnpm lint         # Run ESLint
 ```
 
-## 🎨 Sections
 
-### 🎯 Hero
-- Dynamic role text cycling animation
-- Static name "Rafaditya Syahputra"
-- Scroll indicator
-- GitHub link
+## 🎨 Main Sections
 
-### 📖 About
-- Personal introduction
-- Background marquee with tech stack icons
-- Parallax scroll effect
-- CV download button
-
-### 🎓 Educations
-- Timeline view of education history
-- Paper plane animation tracker
-- School logos
-- Organizations/clubs involved
-
-### 💻 Tech Stack
-- 19 technologies displayed
-- Category filtering
-- Monochrome design (grayscale)
-- Simpleicons CDN integration
-- Responsive grid layout
-
-### 🏆 Achievements
-- Certifications display
-- Competitions & awards
-- Achievement cards
-
-### 🎭 Gallery & Projects
-- Interactive project showcase
-- Lightbox viewer
-- Responsive masonry layout
+- **Hero**: Dynamic role text, name, scroll indicator, GitHub link
+- **About**: Personal intro, tech stack marquee, parallax, CV download
+- **Educations**: Timeline, animated tracker, school logos, orgs
+- **Tech Stack**: 19+ technologies, filter, monochrome, responsive
+- **Achievements**: Certifications, competitions, cards, Swiper
+- **Gallery**: Interactive images, lightbox, masonry layout
+- **Projects**: Featured projects, spotlight effect, links
+- **Footer**: Contact form (EmailJS), social links, theme-aware
 
 ## 🎨 Customization
 
-### Change Theme Colors
-Edit Tailwind theme in `tailwind.config.js` or use CSS variables.
 
-### Update Tech Stack
-Edit `techstack` array in `TechStack.jsx`:
+### Customization
 
-```jsx
-const techstack = [
-  {
-    id: 1,
-    name: "React",
-    category: "Frontend",
-    level: "Advanced",
-    src: "https://cdn.simpleicons.org/react/61DAFB",
-  },
-  // Add more technologies...
-];
-```
+- **Change Theme Colors**: Edit Tailwind theme in `tailwind.config.js` or use CSS variables.
+- **Update Tech Stack**: Edit `techstack` array in `TechStack.jsx`.
+- **Edit Education Timeline**: Update `timelineData` in `Educations.jsx`.
+- **Add Projects**: Edit `projectsData` in `constant/index.js`.
+- **Add Achievements/Certifications**: Edit `dataCerti` in `constant/index.js`.
 
-### Modify Education Timeline
-Edit `timelineData` array in `Educations.jsx` to add/remove education entries.
 
 ## 📱 Responsive Design
 
-| Device | Layout | Features |
-|--------|--------|----------|
-| Mobile | Single column | Touch-optimized |
-| Tablet | 2-column | Enhanced interactions |
-| Desktop | Full layout | All animations |
+| Device  | Layout         | Features              |
+|---------|---------------|-----------------------|
+| Mobile  | Single column | Touch-optimized       |
+| Tablet  | 2-column      | Enhanced interactions |
+| Desktop | Full layout   | All animations        |
+
 
 ## 🔧 Performance Optimizations
 
 - Lazy loading for images
-- Optimized GSAP animations
+- Optimized GSAP/Framer Motion animations
 - Prefers-reduced-motion support
-- Efficient re-renders with React
-- Simpleicons CDN for reliable icon loading
-- Minimal background gradients
-- Removed heavy shadow effects
+- Efficient React rendering
+- CDN for icons
+
 
 ## 🌐 Browser Support
 
@@ -179,6 +161,7 @@ Edit `timelineData` array in `Educations.jsx` to add/remove education entries.
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
+
 
 ## 🤝 Contributing
 
@@ -188,17 +171,20 @@ Edit `timelineData` array in `Educations.jsx` to add/remove education entries.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
 
 ## 📞 Contact
 
 - Email: iniakuraditt@gmail.com
 
+
 ## 🙏 Acknowledgments
 
-- GSAP team for amazing animation library
+- GSAP team for animation library
 - Framer Motion for modern animations
 - Tailwind CSS for utility-first approach
 - React community for inspiration
