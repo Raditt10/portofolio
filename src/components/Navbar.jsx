@@ -91,7 +91,7 @@ const Navbar = () => {
                         href={link.link}
                         className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                             isLight
-                                ? 'text-gray-600 hover:text-black hover:bg-black'
+                                ? 'text-gray-600 hover:text-black hover:bg-gray-200'
                                 : 'text-gray-400 hover:text-white hover:bg-gray-700'
                         }`}
                     >
