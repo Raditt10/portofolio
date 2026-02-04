@@ -25,7 +25,7 @@ const CertificationCard = ({ gambar, judul, link, isLight = false }) => {
             className={`absolute inset-0 flex flex-col items-center justify-between rounded-2xl p-6 border ${isLight ? 'border-amber-200/80' : 'border-white/20'}`}
             style={{ backfaceVisibility: 'hidden', gap: '16px', background: isLight ? '#fff7e6' : 'linear-gradient(135deg, rgba(30,30,35,0.98) 0%, rgba(15,15,20,0.98) 100%)' }}
           >
-            <div className={`w-full rounded-2xl p-4 flex items-center justify-center ${isLight ? 'bg-[#fff2d8] border border-amber-100' : 'bg-black/40 border border-white/10'}`}>
+            <div className={`w-full rounded-2xl p-4 flex items-center justify-center ${isLight ? 'bg-[#fff2d8]' : 'bg-black/40'}`}>
               <img src={`/img/${gambar}`} className="max-h-[220px] w-auto object-contain" alt={judul ? `Sertifikat ${judul}` : "Sertifikat"} width="320" height="220" loading="lazy" />
             </div>
             <div className="w-full flex flex-col items-center gap-4">
