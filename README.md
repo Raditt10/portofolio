@@ -1,199 +1,119 @@
+# Personal Portfolio Website
 
-# Rafaditya Syahputra - Portfolio Website
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![GSAP](https://img.shields.io/badge/GSAP-GreenSock-88CE02?style=flat&logo=greensock&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-A modern, interactive portfolio website for Rafaditya Syahputra, Full Stack Developer. Showcases projects, skills, education, and technical expertise with smooth animations and responsive design. Built with React, Vite, Tailwind CSS, GSAP, Framer Motion, and more.
+**Personal Portfolio** adalah website interaktif yang dirancang untuk menampilkan profil profesional, keahlian teknis, pengalaman, serta koleksi proyek yang telah dikerjakan oleh **Rafaditya Syahputra**. Website ini dibangun dengan fokus pada performa tinggi, animasi yang halus, dan tampilan yang responsif.
 
-## 🛠 Built With
+## 📌 Deskripsi Project
+Website ini berfungsi sebagai identitas digital (personal branding) yang memuat:
+* **Showcase Project:** Galeri proyek-proyek unggulan seperti *Kul-Kul*, *Irmaverse*, dan lainnya.
+* **Informasi Profesional:** Riwayat pendidikan, pencapaian kompetisi, dan sertifikasi.
+* **Tech Stack:** Visualisasi teknologi dan tools yang dikuasai.
+* **Kontak:** Sarana bagi pengunjung untuk mengunduh CV atau menghubungi via media sosial.
 
+## 🛠️ Tech Stack
+Teknologi modern yang digunakan dalam pengembangan:
 
-## 🛠 Built With
+* **Frontend Framework:** React.js
+* **Build Tool:** Vite
+* **Styling:** Tailwind CSS (untuk layout responsif dan modern)
+* **Animation:** GSAP (GreenSock Animation Platform) untuk interaksi visual yang dinamis
+* **Icons & Assets:** SVG Custom & React Icons
 
-**Frontend Technologies**
-- **React 19** - Component-based UI library
-- **Vite** - Fast build tool
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **Framer Motion** - Modern animation library
-- **GSAP** - Professional-grade animations
-- **React Fast Marquee** - Smooth marquee animations
-- **Lucide React** - Icon library
-- **Swiper** - Carousel/slider
+## 🚀 Fitur Utama
+* **Hero Section Interaktif**: Animasi pembuka menggunakan GSAP dan efek teks (SplitText/ShinyText).
+* **Custom Cursor**: Kursor kustom untuk meningkatkan pengalaman pengguna (UX).
+* **Project Gallery**: Tampilan grid atau slide untuk daftar portofolio dengan detail teknologi.
+* **Responsive Design**: Tampilan yang optimal di Desktop, Tablet, dan Mobile.
+* **Lazy Loading**: Komponen dimuat secara efisien untuk performa maksimal.
+* **Downloadable CV**: Fitur akses langsung ke dokumen Curriculum Vitae.
 
-**Animation & Effects**
-- GSAP Timeline & ScrollTrigger
-- Framer Motion transitions
-- Parallax & 3D CSS transforms
-- Custom cursor, lightbox, and modals
+## 📁 Struktur Folder
+Gambaran struktur direktori utama project ini:
 
-**UI/UX Features**
-- Responsive design (mobile-first)
-- Dark/Light theme toggle
-- Smooth page transitions
-- Interactive components
-- Optimized performance
+```text
+portofolio/
+├── public/
+│   ├── img/               # Aset gambar (Project, Logo Tech Stack, Foto Profil)
+│   ├── file/              # Dokumen publik (CV.pdf)
+├── src/
+│   ├── assets/            # Aset statis komponen
+│   ├── components/        # Komponen UI (Hero, Navbar, Footer, dll)
+│   │   ├── assets/        # Komponen kecil (Cards, Modal, Text Effects)
+│   ├── constant/          # Data statis (list project, sosmed, dll)
+│   ├── App.jsx            # Komponen utama aplikasi
+│   ├── main.jsx           # Entry point React
+│   └── index.css          # Global style & Tailwind directives
+├── index.html             # HTML entry point
+├── vite.config.js         # Konfigurasi Vite
+└── package.json           # Daftar dependensi project
 
+⚙️ Instalasi & Setup
 
-## 📁 Project Structure
+Ikuti langkah berikut untuk menjalankan project di komputer lokal:
+Prasyarat
 
-```
-src/
-├── App.jsx
-├── main.jsx
-├── index.css
-├── components/
-│   ├── About.jsx
-│   ├── Achievements.jsx
-│   ├── CustomCursor.jsx
-│   ├── Educations.jsx
-│   ├── Footer.jsx
-│   ├── Gallery.jsx
-│   ├── Hero.jsx
-│   ├── LazyMount.jsx
-│   ├── Navbar.jsx
-│   ├── NotFound.jsx
-│   ├── Opening.jsx
-│   ├── Projetcs.jsx  # (typo: Projects)
-│   ├── TechStack.jsx
-│   └── assets/
-│       ├── CertificationCard.jsx
-│       ├── CompetitionCard.jsx
-│       ├── CountUp.jsx
-│       ├── Darkveil.jsx
-│       ├── Modal.jsx
-│       ├── ShinyText.jsx
-│       ├── ShinyText.css
-│       └── SplitText.jsx
-├── assets/
-└── ...
-```
+Pastikan Anda telah menginstal:
 
-## 🎯 Key Features
+    Node.js (versi LTS disarankan)
 
-✨ **Smooth Animations** - GSAP & Framer Motion powered effects
-🎨 **Modern Design** - Clean, professional UI with gradients
-📱 **Fully Responsive** - Works on mobile, tablet, and desktop
-🌓 **Theme Toggle** - Dark and light mode support
-⚙️ **Optimized Performance** - Prefers-reduced-motion support
-🎭 **Interactive Elements** - Hover effects, modal dialogs
-📊 **Tech Stack Showcase** - 19+ technologies displayed
-🏆 **Achievements** - Certifications and competitions
-📚 **Education Timeline** - Interactive journey visualization
+    NPM atau PNPM
 
-git clone https://github.com/Raditt10/Porto-React.git
+Langkah Instalasi
 
-## 🚀 Getting Started
+    Clone Repository
+    Bash
 
-### Prerequisites
-- Node.js 18+
-- pnpm (recommended) or npm
+    git clone [https://github.com/username/portofolio.git](https://github.com/username/portofolio.git)
+    cd portofolio
 
-### Installation
+    Instal Dependensi
+    Bash
 
-```bash
-# Clone the repository
-git clone https://github.com/Raditt10/Porto-React.git
-cd Portofolio\ 2025
+    npm install
+    # atau jika menggunakan pnpm
+    pnpm install
 
-# Install dependencies
-pnpm install
+    Jalankan Mode Development
+    Bash
 
-# Start development server
-pnpm run dev
+    npm run dev
 
-# Build for production
-pnpm run build
-```
+    Website akan berjalan di http://localhost:5173 (port default Vite).
 
+    Build untuk Production Untuk membuat versi produksi yang siap deploy:
+    Bash
 
-## 📦 Scripts
+    npm run build
 
-```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm preview      # Preview production build
-pnpm lint         # Run ESLint
-```
+🔐 Konfigurasi Aset
 
+Pastikan file gambar dan dokumen diletakkan di folder yang sesuai agar dapat diakses:
 
-## 🎨 Main Sections
+    Gambar Project & Tech Stack: public/img/
 
-- **Hero**: Dynamic role text, name, scroll indicator, GitHub link
-- **About**: Personal intro, tech stack marquee, parallax, CV download
-- **Educations**: Timeline, animated tracker, school logos, orgs
-- **Tech Stack**: 19+ technologies, filter, monochrome, responsive
-- **Achievements**: Certifications, competitions, cards, Swiper
-- **Gallery**: Interactive images, lightbox, masonry layout
-- **Projects**: Featured projects, spotlight effect, links
-- **Footer**: Contact form (EmailJS), social links, theme-aware
+    File CV: public/file/ (Sesuaikan nama file di codingan jika Anda mengganti file CV).
 
-## 🎨 Customization
+🤝 Kontribusi
 
+Jika Anda ingin mengembangkan lebih lanjut atau memperbaiki bug:
 
-### Customization
+    Fork repository ini.
 
-- **Change Theme Colors**: Edit Tailwind theme in `tailwind.config.js` or use CSS variables.
-- **Update Tech Stack**: Edit `techstack` array in `TechStack.jsx`.
-- **Edit Education Timeline**: Update `timelineData` in `Educations.jsx`.
-- **Add Projects**: Edit `projectsData` in `constant/index.js`.
-- **Add Achievements/Certifications**: Edit `dataCerti` in `constant/index.js`.
+    Buat branch baru.
 
+    Commit perubahan Anda.
 
-## 📱 Responsive Design
+    Push ke branch tersebut.
 
-| Device  | Layout         | Features              |
-|---------|---------------|-----------------------|
-| Mobile  | Single column | Touch-optimized       |
-| Tablet  | 2-column      | Enhanced interactions |
-| Desktop | Full layout   | All animations        |
+    Buat Pull Request.
 
+📄 Lisensi
 
-## 🔧 Performance Optimizations
+Project ini dilisensikan di bawah MIT License.
 
-- Lazy loading for images
-- Optimized GSAP/Framer Motion animations
-- Prefers-reduced-motion support
-- Efficient React rendering
-- CDN for icons
-
-
-## 🌐 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-
-## 🤝 Contributing
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
-## 📞 Contact
-
-- Email: iniakuraditt@gmail.com
-
-
-## 🙏 Acknowledgments
-
-- GSAP team for animation library
-- Framer Motion for modern animations
-- Tailwind CSS for utility-first approach
-- React community for inspiration
-- Simpleicons for icon library
-
----
-
-<div align="center">
-⭐ Don't forget to star this repo if you found it helpful!
-
-Made with ❤️ by Rafaditya Syahputra • 2025
-</div>
+Dikembangkan oleh [Xealuyaa]
