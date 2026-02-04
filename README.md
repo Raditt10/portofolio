@@ -53,7 +53,7 @@ portofolio/
 └── package.json           # Daftar dependensi project
 ```
 
-⚙️ Instalasi & Setup
+##⚙️ Instalasi & Setup
 
 Ikuti langkah berikut untuk menjalankan project di komputer lokal:
 Prasyarat
@@ -64,7 +64,7 @@ Pastikan Anda telah menginstal:
 
     NPM atau PNPM
 
-Langkah Instalasi
+## Langkah Instalasi
 
     Clone Repository
     Bash
@@ -91,7 +91,7 @@ Langkah Instalasi
 
     npm run build
 
-🔐 Konfigurasi Aset
+##🔐 Konfigurasi Aset
 
 Pastikan file gambar dan dokumen diletakkan di folder yang sesuai agar dapat diakses:
 
@@ -99,7 +99,7 @@ Pastikan file gambar dan dokumen diletakkan di folder yang sesuai agar dapat dia
 
     File CV: public/file/ (Sesuaikan nama file di codingan jika Anda mengganti file CV).
 
-🤝 Kontribusi
+##🤝 Kontribusi
 
 Jika Anda ingin mengembangkan lebih lanjut atau memperbaiki bug:
 
@@ -113,7 +113,7 @@ Jika Anda ingin mengembangkan lebih lanjut atau memperbaiki bug:
 
     Buat Pull Request.
 
-📄 Lisensi
+##📄 Lisensi
 
 Project ini dilisensikan di bawah MIT License.
 
