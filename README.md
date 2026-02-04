@@ -51,6 +51,7 @@ portofolio/
 ├── index.html             # HTML entry point
 ├── vite.config.js         # Konfigurasi Vite
 └── package.json           # Daftar dependensi project
+```
 
 ⚙️ Instalasi & Setup
 
