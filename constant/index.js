@@ -430,61 +430,67 @@ const dataCerti = [
 
   {
     id: 2,
+    gambar: "informatika.png",
+    judul : "1st Place in ISO ( Indonesian Science Olympiad ) Informatika Subject",
+    link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
+  },
+
+  {
+    id: 3,
     gambar: "UPT.jpg",
     judul : "Participation in POSTER MAKER UPT",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
   {
-    id: 3,
+    id: 4,
     gambar: "jhic.png",
     judul : "Semi finalist in Competition and Bootcamp JHIC",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
   {
-    id: 4,
+    id: 5,
     gambar: "samsung.jpg",
     judul : "Participation in Bootcamp digital marketing Samsung Indonesia Tech Institute",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
   {
-    id: 5,
+    id: 6,
     gambar: "dicoding.png",
     judul : "Participation in Basic AI in Bootcamp Dicoding",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
     {
-    id: 6,
+    id: 7,
     gambar: "indo.png",
     judul : "1st Place ISSC (Indonesian Student Science Competition)",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
   
    {
-    id: 7,
+    id: 8,
     gambar: "sejarah.png",
     judul : "2nd Place OSNK in History Subject 2025",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
   {
-    id: 8,
+    id: 9,
     gambar: "ruangguru.jpg",
     judul : "Participation in Event KSR 2025 By Ruangguru",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
     {
-    id: 9,
+    id: 10,
     gambar: "aws.png",
     judul : "AWS Cloud Practitioner Essentials (Fundamental Level)",
     link: "https://drive.google.com/drive/folders/1lQhCp73UNCH-Ky69UEpVG6vwcLmMPa2v"
   },
 
-  
 ]
 export {navlinks, techstack,projectsData, dataCerti}
 
