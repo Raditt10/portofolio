@@ -51,70 +51,81 @@ portofolio/
 ├── index.html             # HTML entry point
 ├── vite.config.js         # Konfigurasi Vite
 └── package.json           # Daftar dependensi project
+
 ```
 
-##⚙️ Instalasi & Setup
+## ⚙️ Instalasi & Setup
 
 Ikuti langkah berikut untuk menjalankan project di komputer lokal:
-Prasyarat
+
+### Prasyarat
 
 Pastikan Anda telah menginstal:
 
-    Node.js (versi LTS disarankan)
+* Node.js (versi LTS disarankan)
+* NPM atau PNPM
 
-    NPM atau PNPM
+### Langkah Instalasi
 
-## Langkah Instalasi
+1. **Clone Repository**
+```bash
+git clone [https://github.com/username/portofolio.git](https://github.com/username/portofolio.git)
+cd portofolio
 
-    Clone Repository
-    Bash
+```
 
-    git clone [https://github.com/username/portofolio.git](https://github.com/username/portofolio.git)
-    cd portofolio
 
-    Instal Dependensi
-    Bash
+2. **Instal Dependensi**
+```bash
+npm install
+# atau jika menggunakan pnpm
+pnpm install
 
-    npm install
-    # atau jika menggunakan pnpm
-    pnpm install
+```
 
-    Jalankan Mode Development
-    Bash
 
-    npm run dev
+3. **Jalankan Mode Development**
+```bash
+npm run dev
 
-    Website akan berjalan di http://localhost:5173 (port default Vite).
+```
 
-    Build untuk Production Untuk membuat versi produksi yang siap deploy:
-    Bash
 
-    npm run build
+Website akan berjalan di `http://localhost:5173` (port default Vite).
+4. **Build untuk Production**
+Untuk membuat versi produksi yang siap deploy:
+```bash
+npm run build
 
-##🔐 Konfigurasi Aset
+```
+
+
+
+## 🔐 Konfigurasi Aset
 
 Pastikan file gambar dan dokumen diletakkan di folder yang sesuai agar dapat diakses:
 
-    Gambar Project & Tech Stack: public/img/
+* Gambar Project & Tech Stack: `public/img/`
+* File CV: `public/file/` (Sesuaikan nama file di codingan jika Anda mengganti file CV).
 
-    File CV: public/file/ (Sesuaikan nama file di codingan jika Anda mengganti file CV).
-
-##🤝 Kontribusi
+## 🤝 Kontribusi
 
 Jika Anda ingin mengembangkan lebih lanjut atau memperbaiki bug:
 
-    Fork repository ini.
+1. Fork repository ini.
+2. Buat branch baru.
+3. Commit perubahan Anda.
+4. Push ke branch tersebut.
+5. Buat Pull Request.
 
-    Buat branch baru.
+## 📄 Lisensi
 
-    Commit perubahan Anda.
+Project ini dilisensikan di bawah **MIT License**.
 
-    Push ke branch tersebut.
+---
 
-    Buat Pull Request.
+*Dikembangkan oleh [Raditt10]*
 
-##📄 Lisensi
+```
 
-Project ini dilisensikan di bawah MIT License.
-
-Dikembangkan oleh [Xealuyaa]
+```
