@@ -124,8 +124,4 @@ Project ini dilisensikan di bawah **MIT License**.
 
 ---
 
-*Dikembangkan oleh [Raditt10]*
-
-```
-
-```
+*Dikembangkan oleh Kanjirouu.*
