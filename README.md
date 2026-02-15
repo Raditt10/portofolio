@@ -123,4 +123,4 @@ Jika Anda ingin mengembangkan lebih lanjut atau memperbaiki bug:
 Project ini dilisensikan di bawah **MIT License**.
 
 ---
-*Hak cipta sepenuhnya milik pengembang Kanjirouu.*
+*Hak cipta sepenuhnya milik pengembang Raditt10.*
