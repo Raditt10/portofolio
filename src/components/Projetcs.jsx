@@ -82,7 +82,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
 
         {/* Tech Stack */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {tech.map((t, i) => (
+          {tech?.map((t, i) => (
             <span 
               key={i}
               className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border transition-colors duration-200 ${

@@ -250,6 +250,7 @@ const navlinks = [
     text: "Contact Me",
     link: "#contact"
   },
+  
 ]
 
 const techstack = [
@@ -381,41 +382,45 @@ const projectsData = [
     id: 3,
     gambar: "irmaverse.png",
     judul: "IrmaVerse",
-    parag: "Coming soon",
-    tech: ["Next.js", "Tailwind", "Prisma", "Supabase", "OpenAI", "TypeScript"],
+    parag: "Official Website of IRMA Extracurricular Activities at SMKN 13 Bandung. ",
+    tech: ["Next.js", "Tailwind", "Prisma", "Supabase", "Gemini API", "TypeScript"],
     linkDemo: "#",
     linkCode: "https://github.com/Raditt10/IRMA-Verse",
     isComingSoon: true
   },
-
   {
     id: 4,
-    gambar: "birthdayio.png",
-    judul: "Birth-Day.io",
-    parag: "Reminder web application for birthdays, integrated with the Gemini Quiz API to assess user conditions, offering personalized rehabilitation plans and an interactive online forum for peer support and discussion.",
-    tech: ["React", "Node.js", "Gemini API"],
-    linkDemo: "#",
-    linkCode: "https://github.com/Raditt10/Birth-Day.io"
-  },
-
+    gambar: "hoshiday.png",
+    judul: "HoshiDay.io",
+    parag: "Application designed to track fictional character birthdays, featuring real-time countdowns, a dynamic roster, and QR code sharing capabilities. ",
+    tech: ["react", "tailwind", "framer-motion", "vite"],
+    linkDemo: "hoshi-day-io.vercel.app/",
+    linkCode: "https://github.com/Raditt10/hoshiDay.io",
+    isComingSoon: true
+  },  
   {
     id: 5,
-    gambar: "bendehara.png",
-    judul: "Class Funds",
-    parag: "Web-based application for managing student funds in schools. This application helps treasurers keep track of student financial transactions, including deposits, withdrawals, and balance checks.",
-    tech: ["PHP Native", "MySQL", "Bootstrap 5"],
+    gambar: "bendeharaku.png",
+    judul: "BendeharaKu",
+    parag: "Web application for recording, monitoring, and managing class finances in a transparent, and easy-to-use manner for the treasurer of class XI RPL 1. ",
+    tech: ["PHP Native", "MySQL", "CSS"],
     linkDemo: "#",
-    linkCode: "https://github.com/Raditt10/Class-Funds",
+    linkCode: "https://github.com/Raditt10/bendeharaKu",
   },
-  
   {
     id: 6,
+    gambar: "foru.png",
+    judul: "For U",
+    parag: "Interactive digital gift web app built with React, Vite, TS, Node.js + MongoDB. Features animated UI and real-time Discord notifications. ",
+    tech: ["React", "Node.js", "MongoDB", "Express", "Vite", "TypeScript", "Confetti", "Discord API"],
+    linkDemo: "#",
+    linkCode: "https://github.com/Raditt10/forU",
+  },
+  {
+    id: 7,
     gambar: "coming-soon.png",
-    judul: "Next Project",
-    parag: "Coming Soon",
-    tech: ["MongoDB", "Express.js", "React"],
-    linkDemo: "",
-    linkCode: "#",
+    judul: "Jalan Sehat",
+    parag: "Coming soon",
     isComingSoon: true
   }
 ]
