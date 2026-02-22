@@ -53,7 +53,7 @@ const ProjectCard = ({ gambar, judul, parag, tech, linkDemo, linkCode, isComingS
         <img 
           src={`/img/${gambar}`} 
           alt={judul}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+          className="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-110 md:grayscale md:group-hover:grayscale-0"
           loading="lazy"
         />
         
