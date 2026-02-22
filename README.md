@@ -124,4 +124,4 @@ Project ini dilisensikan di bawah **MIT License**.
 
 ---
 
-*Dikembangkan oleh Kanjirouu.*
+_© 2025 Hak cipta milik pengembang [Raditt10](https://github.com/Raditt10)._
