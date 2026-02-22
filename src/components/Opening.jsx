@@ -86,7 +86,7 @@ const Opening = ({ onComplete }) => {
       ref={containerRef}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black text-white invisible"
     >
-        {/* Loading Counter */}
+        {/* Loading Counter JS */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden">
             <div 
                 ref={counterRef} 
