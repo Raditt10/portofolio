@@ -394,7 +394,7 @@ const projectsData = [
     judul: "HoshiDay.io",
     parag: "Application designed to track fictional character birthdays, featuring real-time countdowns, a dynamic roster, and QR code sharing capabilities. ",
     tech: ["react", "tailwind", "framer-motion", "vite"],
-    linkDemo: "hoshi-day-io.vercel.app/",
+    linkDemo: "https://hoshi-day-io.vercel.app/",
     linkCode: "https://github.com/Raditt10/hoshiDay.io",
     isComingSoon: true
   },  
