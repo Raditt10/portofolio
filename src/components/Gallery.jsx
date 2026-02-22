@@ -269,7 +269,7 @@ const GalleryCard = ({ image, index, onClick, isLight, className = "" }) => {
                 <img 
                     src={image.src} 
                     alt={image.title} 
-                    className="w-full h-full object-cover grayscale md:grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
+                    className="w-full h-full object-cover md:grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                 />
             </div>

@@ -168,7 +168,7 @@ const Footer = () => {
                     <img 
                         src="/img/meow.jpg" 
                         alt="Logo" 
-                        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                        className="w-full h-full object-cover md:grayscale hover:grayscale-0 transition-all duration-500"
                     />
                 </div>
                 <div>

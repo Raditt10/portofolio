@@ -321,7 +321,7 @@ const TechCard = ({ tech, isLight }) => {
                 <img
                     src={tech.src}
                     alt={tech.name}
-                    className="w-full h-full object-contain transition-all duration-500 grayscale group-hover:grayscale-0"
+                    className="w-full h-full object-contain transition-all duration-500 md:grayscale group-hover:grayscale-0"
                     loading="lazy"
                     onError={(e) => {
                         const img = e.currentTarget;

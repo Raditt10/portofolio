@@ -231,7 +231,7 @@ const TimelineCard = ({ data, index, isEven, isLight }) => {
                   <div className={`w-14 h-14 rounded-xl p-2 shrink-0 flex items-center justify-center border ${
                       isLight ? 'bg-gray-50 border-gray-200' : 'bg-neutral-800 border-neutral-700'
                   }`}>
-                      <img src={data.logo} alt="logo" className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500" />
+                      <img src={data.logo} alt="logo" className="w-full h-full object-contain md:grayscale group-hover:grayscale-0 transition-all duration-500" />
                   </div>
                )}
                <div>
@@ -269,7 +269,7 @@ const TimelineCard = ({ data, index, isEven, isLight }) => {
                               }
                           }}
                       >
-                          <img src={photo} alt="Memories" className="w-full h-full object-cover rounded-sm grayscale group-hover/photos:grayscale-0 transition-all duration-500" />
+                          <img src={photo} alt="Memories" className="w-full h-full object-cover rounded-sm md:grayscale group-hover/photos:grayscale-0 transition-all duration-500" />
                       </motion.div>
                   ))}
                   <motion.div 

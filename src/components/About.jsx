@@ -154,7 +154,7 @@ const About = () => {
                         <img 
                             src="/img/avatar2.png" 
                             alt="Rafaditya Syahputra" 
-                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                            className="w-full h-full object-cover md:grayscale group-hover:grayscale-0 transition-all duration-700"
                         />
                     </div>
 
