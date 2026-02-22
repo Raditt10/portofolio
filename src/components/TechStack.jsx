@@ -74,8 +74,7 @@ const TechStack = () => {
 
   return (
     <section
-      className="relative min-h-screen px-4 sm:px-6 py-24 sm:py-32 overflow-hidden"
-      style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+      className="relative min-h-screen px-4 sm:px-6 py-24 sm:py-32 overflow-hidden font-sans"
       ref={containerRef}
     >
       {/* --- BACKGROUND (Clean Monochrome) --- */}
@@ -95,8 +94,7 @@ const TechStack = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4"
-            style={{ fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 font-heading"
           >
              <span className={`bg-clip-text text-transparent ${
                 isLight 

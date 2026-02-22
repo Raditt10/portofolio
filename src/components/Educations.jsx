@@ -76,8 +76,7 @@ const Educations = () => {
     <section
       id="educations"
       ref={containerRef}
-      className="relative py-24 sm:py-32 overflow-hidden"
-      style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+      className="relative py-24 sm:py-32 overflow-hidden font-sans"
     >
       {/* --- BACKGROUND (Clean Monochrome) --- */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
@@ -106,12 +105,7 @@ const Educations = () => {
             className="text-center mb-24"
         >
           {/* Judul dengan Font Asli "Sensei Biased" Style jika ada, atau fallback ke Sans */}
-          <h1 
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4"
-            style={{ 
-                fontFamily: '"Sensei Biased", system-ui, sans-serif', // Mengembalikan font asli
-            }}
-          >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 font-heading">
             <span className={`bg-clip-text text-transparent ${
                 isLight 
                     ? 'bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500' 

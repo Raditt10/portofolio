@@ -1,32 +1,24 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Sensei+Biased&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Sensei+Biased&family=JetBrains+Mono:wght@400;600&display=swap");
 
 /* Minecraft Font */
 @font-face {
-  font-family: 'Minecraft';
-  src: url('https://fonts.cdnfonts.com/s/12442/Minecraft.woff') format('woff');
+  font-family: "Minecraft";
+  src: url("https://fonts.cdnfonts.com/s/12442/Minecraft.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
-:root {
-  --font-sora: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-comic: "Sensei Biased", "Fredoka", system-ui, sans-serif;
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-heading: "Outfit", system-ui, -apple-system, sans-serif;
   --font-minecraft: "Minecraft", monospace;
-  --font-code: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-code: "JetBrains Mono", monospace;
 }
 
 body {
-  font-family: var(--font-sora);
-}
-
-.font-sora {
-  font-family: var(--font-sora);
-}
-
-.font-comic {
-  font-family: var(--font-comic);
+  font-family: var(--font-sans);
 }
 
 .font-code {
@@ -35,9 +27,9 @@ body {
 
 /* Logo R'e Styling */
 .logo-minecraft {
-  font-family: 'Minecraft', monospace;
+  font-family: "Minecraft", monospace;
   font-weight: bold;
-  text-shadow: 
+  text-shadow:
     3px 3px 0px rgba(0, 0, 0, 0.9),
     4px 4px 0px rgba(0, 0, 0, 0.7),
     5px 5px 0px rgba(255, 255, 255, 0.15),
@@ -49,7 +41,7 @@ body {
 }
 
 .logo-minecraft:hover {
-  text-shadow: 
+  text-shadow:
     3px 3px 0px rgba(0, 0, 0, 0.9),
     4px 4px 0px rgba(0, 0, 0, 0.7),
     5px 5px 0px rgba(255, 255, 255, 0.2),
@@ -59,19 +51,19 @@ body {
 
 .cool-border-gradient {
   border-bottom: 4px solid transparent;
-  background: linear-gradient(to right, #280087, #C00000);
+  background: linear-gradient(to right, #280087, #c00000);
   background-clip: border-box;
   position: relative;
 }
 
 .cool-border-gradient::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(to right, #280087, #C00000);
+  background: linear-gradient(to right, #280087, #c00000);
 }
 
 .masked-img {
@@ -162,14 +154,14 @@ body {
   background: linear-gradient(135deg, #f8ecde, #ffffff, #f8ecde);
   border-radius: 10px;
   border: 3px solid #0a0d12;
-  box-shadow: 
+  box-shadow:
     inset 0 0 10px rgba(255, 255, 255, 0.3),
     0 0 15px rgba(248, 236, 222, 0.4);
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #ffffff, #f8ecde, #ffffff);
-  box-shadow: 
+  box-shadow:
     inset 0 0 12px rgba(255, 255, 255, 0.4),
     0 0 20px rgba(248, 236, 222, 0.6);
 }
@@ -229,8 +221,13 @@ textarea::-webkit-scrollbar-thumb {
 
 /* Animasi untuk scrollbar thumb */
 @keyframes scrollbar-glow {
-  0%, 100% { box-shadow: 0 0 8px rgba(248, 236, 222, 0.3); }
-  50% { box-shadow: 0 0 12px rgba(248, 236, 222, 0.5); }
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(248, 236, 222, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(248, 236, 222, 0.5);
+  }
 }
 
 ::-webkit-scrollbar-thumb {
@@ -249,9 +246,8 @@ textarea::-webkit-scrollbar-thumb {
   ::-webkit-scrollbar {
     width: 12px;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-width: 2px;
   }
 }
-

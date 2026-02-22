@@ -58,8 +58,7 @@ const About = () => {
     <section 
       ref={containerRef}
       id="about" 
-      className="relative min-h-screen py-24 sm:py-32 px-4 md:px-8 overflow-hidden"
-      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      className="relative min-h-screen py-24 sm:py-32 px-4 md:px-8 overflow-hidden font-sans"
     >
       {/* --- BACKGROUND (Clean Monochrome) --- */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
@@ -107,8 +106,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6"
-            style={{ fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
+            className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 font-heading"
           >
              <span className={`bg-clip-text text-transparent ${
                 isLight 

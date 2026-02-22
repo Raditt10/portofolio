@@ -54,11 +54,10 @@ const NotFound = () => {
   return (
     <div
       style={{ 
-        fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif",
         background: themeStyles[theme].bg,
         minHeight: "100vh",
       }}
-      className="flex items-center justify-center px-6"
+      className="flex items-center justify-center px-6 font-sans"
     >
       <div className="text-center max-w-2xl">
         {/* 404 */}
@@ -73,7 +72,7 @@ const NotFound = () => {
                   backgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   color: 'transparent',
-                }),
+                }), 
             display: 'inline-block',
           }}
         >
@@ -82,8 +81,8 @@ const NotFound = () => {
 
         {/* Title */}
         <h2
-          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 font-comic"
-          style={{ color: themeStyles[theme].text, fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
+          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 font-heading"
+          style={{ color: themeStyles[theme].text }}
         >
           Halaman Tidak Ditemukan
         </h2>

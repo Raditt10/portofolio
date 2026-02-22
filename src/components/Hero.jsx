@@ -106,68 +106,37 @@ const Hero = () => {
     let mm = gsap.matchMedia();
 
     const createTypewriterLoop = (chars, speed) => {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 2.5 });
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 3 });
       
       gsap.set(chars, { 
         opacity: 0, 
-        y: 12, 
-        scale: 0.3, 
-        rotateX: -90,
-        rotateY: -45,
-        rotateZ: -30,
+        y: 40,
+        scale: 0.95,
         transformOrigin: "50% 50%",
-        filter: "blur(8px)"
       });
       
-      // Enter animation - Minecraft Explosion Effect
+      // Enter animation - Smooth fade and slide up
       tl.to(chars, {
         opacity: 1,
         y: 0,
-        scale: 1.3,
-        rotateX: 15,
-        rotateY: 0,
-        rotateZ: 0,
-        filter: "blur(0px)",
-        duration: speed * 0.6,
-        ease: "back.out(1.8)",
-        stagger: {
-          each: speed,
-          from: "start"
-        }
-      })
-      .to(chars, {
         scale: 1,
-        rotateX: 0,
-        duration: speed * 0.3,
-        ease: "power2.inOut",
+        duration: 0.8,
+        ease: "expo.out",
         stagger: {
           each: speed,
           from: "start"
         }
-      }, 0)
-      // Bounce effect (soft)
-      .to(chars, {
-        y: -6,
-        duration: 0.4,
-        ease: "sine.inOut",
-        stagger: {
-          each: 0.03,
-          from: "start",
-          yoyo: true,
-          repeat: 1
-        }
       })
-      .to({}, { duration: 1.5 })
-      // Exit animation
+      .to({}, { duration: 2.5 })
+      // Exit animation - Smooth fade and slide out
       .to(chars, {
         opacity: 0,
-        y: -25,
-        scale: 0.7,
-        rotateX: 70,
-        duration: speed * 0.35,
-        ease: "power2.in",
+        y: -20,
+        scale: 0.95,
+        duration: 0.5,
+        ease: "expo.in",
         stagger: {
-          each: speed * 0.4,
+          each: speed * 0.6,
           from: "end"
         },
       });
@@ -233,7 +202,7 @@ const Hero = () => {
     gsap.to(".scroll-arrow", {
       y: -15,
       duration: 2,
-      ease: "power2.inOut",
+      ease: "sine.inOut",
       yoyo: true,
       repeat: -1,
       delay: 3
@@ -256,10 +225,9 @@ const Hero = () => {
       id="home"
       role="banner"
       style={{ 
-        fontFamily: "Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif",
         color: themeStyles[theme].accent
       }}
-      className={`font-sora flex flex-col items-center justify-center relative min-h-screen overflow-hidden pt-20 theme-${theme}`}
+      className={`font-sans flex flex-col items-center justify-center relative min-h-screen overflow-hidden pt-20 theme-${theme}`}
     >
       {/* Elegant Background - keep halo, drop vignette to avoid section edge darkening */}
       <div className="absolute inset-0 z-0">
@@ -426,12 +394,11 @@ const Hero = () => {
         {/* Konten */}
         <div className="text-center">
           <h1
-            className="text-2xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] font-bold leading-tight mb-6 tracking-tight px-4 font-comic"
+            className="text-2xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[80px] font-bold leading-tight mb-6 tracking-tight px-4 font-heading"
             id="nama"
             style={{
               color: themeStyles[theme].accent,
-              textShadow: theme === 'dark' ? '0 0 30px rgba(255,255,255,0.3)' : '0 0 18px rgba(15,23,42,0.12)',
-              fontFamily: '"Sensei Biased", system-ui, sans-serif'
+              textShadow: theme === 'dark' ? '0 0 30px rgba(255,255,255,0.3)' : '0 0 18px rgba(15,23,42,0.12)'
             }}
           >
             {renderNameWithSpans()}

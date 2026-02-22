@@ -104,7 +104,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer id="contact" className="relative pt-24 pb-12 overflow-hidden scroll-mt-24" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <footer id="contact" className="relative pt-24 pb-12 overflow-hidden scroll-mt-24 font-sans">
       
       {/* --- TOAST NOTIFICATION --- */}
       <AnimatePresence>

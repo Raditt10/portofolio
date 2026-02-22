@@ -225,8 +225,7 @@ const Projects = () => {
     <section 
       id="projects" 
       ref={sectionRef} 
-      className="relative min-h-screen py-24 sm:py-32 px-4 sm:px-6 overflow-hidden scroll-mt-24"
-      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      className="relative min-h-screen py-24 sm:py-32 px-4 sm:px-6 overflow-hidden scroll-mt-24 font-sans"
     >
       {/* --- BACKGROUND (Clean Monochrome) --- */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
@@ -249,8 +248,7 @@ const Projects = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4"
-                    style={{ fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
+                    className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 font-heading"
                 >
                     <span className={`bg-clip-text text-transparent ${
                         isLight 

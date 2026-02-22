@@ -39,8 +39,7 @@ const Achievements = () => {
       ref={containerRef}
       // UPDATE 1: overflow-hidden di sini agar halaman tidak scroll horizontal,
       // tapi kita kasih padding vertikal agar konten swiper aman.
-      className="relative min-h-screen py-24 sm:py-32 px-0 sm:px-6 overflow-hidden" 
-      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      className="relative min-h-screen py-24 sm:py-32 px-0 sm:px-6 overflow-hidden font-sans" 
     >
       {/* --- BACKGROUND (Clean Monochrome) --- */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
@@ -62,8 +61,7 @@ const Achievements = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4"
-                style={{ fontFamily: '"Sensei Biased", system-ui, sans-serif' }}
+                className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 font-heading"
             >
                 <span className={`bg-clip-text text-transparent ${
                     isLight 
