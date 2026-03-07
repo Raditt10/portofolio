@@ -454,7 +454,7 @@ const Hero = () => {
              className="text-base sm:text-lg mt-6 max-w-2xl mx-auto italic"
              style={{ color: themeStyles[theme].secondary }}
            >
-             “Bǎoshí bù jīng móliàn jiù bù huì fāguāng, rén bù jīngguò tiǎozhàn jiù bù huì chénggōng.”
+             “Jika kamu tidak tahan lelahnya belajar, maka kamu harus tahan menanggung perihnya kebodohan.”
           </p>
         </div>
 
