@@ -362,7 +362,7 @@ const projectsData = [
     gambar: "kultilas.png",
     judul: "Kultilas",
     parag: "Kultilas is a web-based application designed to facilitate the management of student extracurricular activities in schools.",
-    tech: ["Laravel 12","Alpine.js", "MySQL", "Tailwind CSS"],
+    tech: ["Laravel","Alpine.js", "MySQL", "Tailwind", "Vite"],
     linkDemo : "#",
     linkCode : "https://github.com/Raditt10/Kultilas"
   },
@@ -372,7 +372,7 @@ const projectsData = [
     gambar: "kulkul.png",
     judul: "Kul-kul",
     parag: "Kul-kul is an application for managing finances in schools, especially for extracurricular activities.",
-    tech: ["Laravel 12", "MySQL", "Tailwind CSS"],
+    tech: ["Laravel","MySQL", "Tailwind", "Vite"],
     linkDemo : "#",
     linkCode : "https://github.com/Raditt10/kulkul",
     isComingSoon: true
@@ -393,7 +393,7 @@ const projectsData = [
     gambar: "hoshiday.png",
     judul: "HoshiDay.io",
     parag: "Application designed to track fictional character birthdays, featuring real-time countdowns, a dynamic roster, and QR code sharing capabilities. ",
-    tech: ["react", "tailwind", "framer-motion", "vite"],
+    tech: ["React", "Tailwind", "Framer Motion", "Vite"],
     linkDemo: "https://hoshi-day-io.vercel.app/",
     linkCode: "https://github.com/Raditt10/hoshiDay.io",
     isComingSoon: true
