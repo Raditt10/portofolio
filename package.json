@@ -12,9 +12,6 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "@fontsource-variable/sora": "^5.2.6",
-    "@fontsource/inter": "^5.2.8",
-    "@fontsource/outfit": "^5.2.8",
     "@gsap/react": "^2.1.2",
     "@react-three/drei": "^10.6.1",
     "@react-three/fiber": "^9.3.0",

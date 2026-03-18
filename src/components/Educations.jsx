@@ -190,13 +190,13 @@ const TimelineCard = ({ data, index, isEven, isLight }) => {
       <div className="hidden md:block w-1/2" />
 
       {/* Card Content Area */}
-      <div className={`w-full md:w-1/2 pl-12 md:pl-0 ${isEven ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"}`}>
+      <div className={`w-full md:w-1/2 pl-12 md:pl-0 flex ${isEven ? "md:pr-12 md:justify-end" : "md:pl-12 md:justify-start"}`}>
         <motion.div
           ref={cardRef}
           onMouseMove={handleMouseMove}
-          whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.2 }}
-          className={`group relative p-8 rounded-2xl border transition-all duration-500 overflow-hidden ${
+          className={`group relative p-6 sm:p-8 rounded-2xl border transition-all duration-500 overflow-hidden w-full max-w-[540px] ${
             isLight 
                 ? "bg-white border-gray-200 hover:border-black shadow-lg hover:shadow-xl" 
                 : "bg-neutral-900 border-neutral-800 hover:border-white/50 shadow-lg hover:shadow-white/5"
@@ -216,36 +216,35 @@ const TimelineCard = ({ data, index, isEven, isLight }) => {
 
           <div className="relative z-10">
             {/* Year Badge */}
-            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold mb-6 border ${
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold mb-4 border ${
               isLight 
                 ? 'bg-black text-white border-transparent' 
                 : 'bg-white text-black border-transparent'
-            } ${isEven ? "md:ml-auto" : ""}`}>
+            }`}>
               {data.year} 
               {data.current && <span className={`flex h-1.5 w-1.5 rounded-full ${isLight ? 'bg-white' : 'bg-black'} animate-pulse`} />}
             </div>
 
-            {/* Header: Logo & Title */}
-            <div className={`flex items-center gap-5 mb-6 ${isEven ? "md:flex-row-reverse" : "flex-row"}`}>
+            <div className={`flex items-center gap-5 mb-4`}>
                {data.logo && (
-                  <div className={`w-14 h-14 rounded-xl p-2 shrink-0 flex items-center justify-center border ${
+                  <div className={`w-12 h-12 rounded-xl p-2 shrink-0 flex items-center justify-center border ${
                       isLight ? 'bg-gray-50 border-gray-200' : 'bg-neutral-800 border-neutral-700'
                   }`}>
                       <img src={data.logo} alt="logo" className="w-full h-full object-contain md:grayscale group-hover:grayscale-0 transition-all duration-500" />
                   </div>
                )}
                <div>
-                  <h3 className={`text-2xl font-bold mb-1 ${isLight ? 'text-black' : 'text-white'}`}>
+                  <h3 className={`text-xl sm:text-2xl font-bold mb-0.5 ${isLight ? 'text-black' : 'text-white'}`}>
                       {data.title}
                   </h3>
-                  <p className={`text-sm font-medium uppercase tracking-wider ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <p className={`text-[10px] sm:text-xs font-medium uppercase tracking-widest ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
                       {data.subtitle}
                   </p>
                </div>
             </div>
 
             {/* Description */}
-            <p className={`text-base leading-relaxed mb-8 ${isLight ? 'text-gray-600' : 'text-gray-400'}`}>
+            <p className={`text-sm sm:text-base leading-relaxed mb-6 ${isLight ? 'text-gray-600' : 'text-gray-400'}`}>
               {data.description}
             </p>
 

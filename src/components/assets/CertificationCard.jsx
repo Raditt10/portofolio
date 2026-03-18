@@ -5,64 +5,110 @@ const CertificationCard = ({ gambar, judul, link, isLight = false }) => {
   const wrapRef = useRef(null);
 
   return (
-    <article className='relative'>
-      <section
-        ref={wrapRef}
-        onClick={() => setFlipped((v) => !v)}
-        className="cursor-pointer max-w-[410px] min-h-[400px] rounded-2xl p-1 relative"
-        style={{ perspective: 1000 }}
+    <article
+      ref={wrapRef}
+      onClick={() => setFlipped((v) => !v)}
+      className="relative group cursor-pointer w-full"
+      style={{ perspective: 1500 }}
+    >
+      <div
+        className="relative w-full transition-all duration-700"
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+        }}
       >
+        {/* Front Face — this one is in normal flow so it sets the height */}
         <div
-          className="relative w-full h-full"
-          style={{
-            transformStyle: 'preserve-3d',
-            transition: 'transform 0.6s',
-            transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
-          }}
+          className={`relative flex flex-col rounded-2xl p-5 border transition-all duration-500 overflow-hidden ${
+              isLight 
+                  ? 'bg-white/80 border-gray-100 hover:border-gray-300 hover:shadow-lg backdrop-blur-sm' 
+                  : 'bg-neutral-900/60 border-white/5 hover:border-white/20 hover:shadow-2xl hover:shadow-white/5 backdrop-blur-md'
+          }`}
+          style={{ backfaceVisibility: 'hidden' }}
         >
-          {/* Front */}
-          <div
-            className={`absolute inset-0 flex flex-col items-center justify-between rounded-2xl p-6 border ${isLight ? 'border-amber-200/80' : 'border-white/20'}`}
-            style={{ backfaceVisibility: 'hidden', gap: '16px', background: isLight ? '#fff7e6' : 'linear-gradient(135deg, rgba(30,30,35,0.98) 0%, rgba(15,15,20,0.98) 100%)' }}
-          >
-            <div className={`w-full rounded-2xl p-4 flex items-center justify-center ${isLight ? 'bg-[#fff2d8]' : 'bg-black/40'}`}>
-              <img src={`/img/${gambar}`} className="max-h-[220px] w-auto object-contain" alt={judul ? `Sertifikat ${judul}` : "Sertifikat"} width="320" height="220" loading="lazy" />
-            </div>
-            <div className="w-full flex flex-col items-center gap-4">
-              <h1 className={`${isLight ? 'text-slate-900' : 'text-white'} font-semibold text-lg md:text-2xl text-center leading-snug`}>{judul}</h1>
-              <div className="mt-2">
-                <button className={`${isLight ? 'bg-[#ffeccc] text-slate-900 border border-amber-200 hover:bg-[#ffdfa8]' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'} font-semibold cursor-pointer px-6 py-2 rounded-xl transition-all duration-200`}>See More Detail</button>
-              </div>
-            </div>
+          {/* Image */}
+          <div className={`relative w-full aspect-[4/3] rounded-xl overflow-hidden mb-5 flex items-center justify-center ${
+              isLight ? 'bg-gray-50' : 'bg-white/5'
+          }`}>
+            <img 
+              src={`/img/${gambar}`} 
+              className="w-full h-full object-contain p-3" 
+              alt={judul || "Sertifikat"} 
+              loading="lazy" 
+            />
           </div>
 
-          {/* Back */}
-          <div
-            className={`absolute inset-0 flex flex-col items-center justify-between rounded-2xl p-6 text-center border ${isLight ? 'border-amber-200/80' : 'border-white/20'}`}
-            style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden', background: isLight ? '#fff7e6' : 'linear-gradient(135deg, rgba(15,15,20,0.98) 0%, rgba(30,30,35,0.98) 100%)' }}
-          >
-            <div />
-            <div>
-              <h2 className={`${isLight ? 'text-slate-900' : 'text-white'} font-bold text-xl mb-2`}>Certificate Detail</h2>
-              <p className={`text-sm px-4 mb-4 ${isLight ? 'text-gray-700' : 'text-gray-300'}`}>{judul}</p>
-              <a href={link} target="_blank" rel="noopener noreferrer">
-                <button className={`mt-3 px-4 py-2 rounded-md font-semibold transition-all duration-200 ${isLight ? 'bg-[#ffeccc] text-slate-900 border border-amber-200 hover:bg-[#ffdfa8]' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'}`}>Open</button>
-              </a>
+          {/* Title */}
+          <h3 className={`text-sm font-semibold tracking-tight leading-snug text-center mb-5 ${
+              isLight ? 'text-gray-900' : 'text-white'
+          }`}>
+            {judul}
+          </h3>
+
+          {/* Action */}
+          <div className="mt-auto flex flex-col items-center gap-2">
+            <div className={`px-4 py-2 rounded-lg text-[10px] font-semibold uppercase tracking-widest transition-all duration-300 ${
+                isLight 
+                    ? 'bg-black text-white hover:bg-gray-800' 
+                    : 'bg-white/10 text-white border border-white/10 hover:bg-white/20'
+            }`}>
+              View Details
             </div>
-            <div className="w-full flex justify-center">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setFlipped(false);
-                }}
-                className={`mt-3 text-sm underline ${isLight ? 'text-gray-600' : 'text-gray-300'}`}
-              >
-                Close
-              </button>
-            </div>
+            <span className={`text-[9px] uppercase tracking-[0.2em] opacity-30 ${isLight ? 'text-black' : 'text-white'}`}>
+              Tap to flip
+            </span>
           </div>
         </div>
-      </section>
+
+        {/* Back Face — absolutely positioned, overlays the front */}
+        <div
+          className={`absolute inset-0 flex flex-col items-center justify-center rounded-2xl p-6 text-center border transition-all duration-500 ${
+              isLight 
+                  ? 'bg-white border-gray-100 shadow-xl' 
+                  : 'bg-neutral-900 border-white/10 shadow-2xl backdrop-blur-xl'
+          }`}
+          style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
+        >
+          <div className="flex flex-col items-center w-full">
+            <div className={`h-1 w-16 rounded-full mb-6 ${isLight ? 'bg-black/10' : 'bg-white/10'}`} />
+            
+            <h2 className={`text-base font-bold mb-3 tracking-tight ${isLight ? 'text-gray-900' : 'text-white'}`}>
+              Certificate Info
+            </h2>
+            
+            <p className={`text-xs mb-8 leading-relaxed ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
+              {judul}
+            </p>
+            
+            <a 
+              href={link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className={`w-full py-2.5 rounded-xl font-bold text-xs text-center transition-all duration-300 block ${
+                  isLight 
+                      ? 'bg-black text-white hover:bg-gray-800 active:scale-95' 
+                      : 'bg-white text-black hover:bg-gray-200 active:scale-95'
+              }`}
+            >
+              Open Certificate
+            </a>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setFlipped(false);
+              }}
+              className={`mt-4 text-[10px] font-medium uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity ${
+                  isLight ? 'text-black' : 'text-white'
+              }`}
+            >
+              Go Back
+            </button>
+          </div>
+        </div>
+      </div>
     </article>
   )
 }
